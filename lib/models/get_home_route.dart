@@ -1,7 +1,9 @@
 class GetHomeRoute {
-  // TODO Declare the attributes necessary to display the route correctly
-  final DateTime departureTime;
-  final String line;
+  DateTime departureTime;
+  int walkingTimeMinutes;
+  int changes;
+  String firstLine;
 
-  GetHomeRoute({required this.departureTime, required this.line});
+  GetHomeRoute({required this.departureTime, required this.walkingTimeMinutes, required this.changes, required this.firstLine});
+
 }
