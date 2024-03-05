@@ -1,16 +1,23 @@
 # gethome
 
-A new Flutter project.
+## Conventions
+Dokumentation der TODOs:
+>// TODO [Thema/Aufgabe]: Kommentar
 
-## Getting Started
+<br/><br/>
+## Coding Workflow
+Aufgabenübersicht -> Jira Kanban Board: [https://gethome.atlassian.net/jira/software/projects/GH/boards/1](https://gethome.atlassian.net/jira/software/projects/GH/boards/1)
 
-This project is a starting point for a Flutter application.
+Folgender Workflow, nachdem man sich entschieden hat oder besprochen wurde, eine **Aufgabe zu übernehmen**:
+1) Ticket in _In Progress_ verschieben
 
-A few resources to get you started if this is your first Flutter project:
+2) Git Branch erstellen: **GH-XX_NameDerAufgabe**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+3) Inhaltliche Changes mit Kommentar zu diesem Aufgabenbranch committen und pushen
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+4) Aufgabe abgeschlossen (Schnittstellen bereitgestellt & Sicherheit(Exceptions, Error Handling, edge cases etc.)):                               
+     -> **Pull Request** auf GitHub erstellen, Aufgabenbranch -> main. Detaillierte Beschreibung mit Link zu Jira Ticket
+
+5) Ticket in _Waiting for Review_ verschieben und berichten (zB. Kurzer Kommentar auf Slack)
+
+6) Nach Erfolgreichem Review kann der Reviewer die Pull Request approven und Ticket in _Done_ verschieben
