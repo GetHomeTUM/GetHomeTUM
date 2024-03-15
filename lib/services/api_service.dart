@@ -8,17 +8,38 @@ class GoogleAPI {
   static String curr_longitude = "11.6717073";
   static String home_latitude = "48.1374";
   static String home_longitude = "11.5754";
-  static String uri = 'https://maps.googleapis.com/maps/api/directions/json?destination=$home_latitude,$home_longitude&origin=$curr_latitude,$curr_longitude&mode=transit&key=AIzaSyDQQTxn6Aak4y1HQcKzJ6svMoMLIvAV_rg';
+  //interne Attribute
+  static int time = DateTime.now().millisecondsSinceEpoch ~/ 1000; //für Google API time als Sekunden nach 1970
+  static String uri = 'https://maps.googleapis.com/maps/api/directions/json?departure_time=$time&destination=$home_latitude,$home_longitude&origin=$curr_latitude,$curr_longitude&mode=transit&key=AIzaSyDQQTxn6Aak4y1HQcKzJ6svMoMLIvAV_rg';
   static String output = ''; //hier steht dann der json-String -> stringToJsonMap(output) benutzen zum Decoden
 
-  //Testmethode
-  static void test() async {
-    //wichtig bei jeder Abfrage:
-    await getResponse(fetchAlbum());
-    Map<String, dynamic> map = stringToJsonMap(output);
+
+  //Returned ein Future, das gefragte liste zurückgibt -> "await getRoutes()" zum Abfragen benutzen
+  static Future<List<GetHomeRoute>> getRoutes() async {
+    List<GetHomeRoute> routes = [];
+
+    //calls der nächsten drei Routen
+    for (int i = 0; i < 3; i++) {
+      //API call
+      await getResponse(fetchAlbum());
+      Map<String, dynamic> map = stringToJsonMap(output);
+
+      //Test für Error
+      if (output != '-Error-') {
+        //Erstellen einer neuen GetHomeRoute
+        GetHomeRoute simpleRoute = GetHomeRoute.fromJson(map);
+        routes.add(simpleRoute);
+        //früheste Startzeit der nächsten Verbindung setzen
+        int timeDiff = simpleRoute.departureTime.millisecondsSinceEpoch ~/ 1000 - time;
+        time += timeDiff +1;
+      }
+      
+    }
+
+    //Zeit Zurücksetzen für weitere calls
+    time = DateTime.now().millisecondsSinceEpoch ~/ 1000;
     
-    //test values hier abfragen
-    print(map['routes'][0]['legs'][0]['departure_time']['text']);
+    return routes;
   }
 
   //Hilfsmethode -> stringToJsonMap(ouput) aufrufen
@@ -28,7 +49,11 @@ class GoogleAPI {
   }
 
   //Methoden, um von URL zu fetchen
+  static void refreshUri() {
+    uri = 'https://maps.googleapis.com/maps/api/directions/json?departure_time=$time&destination=$home_latitude,$home_longitude&origin=$curr_latitude,$curr_longitude&mode=transit&key=AIzaSyDQQTxn6Aak4y1HQcKzJ6svMoMLIvAV_rg';
+  }
   static Future<http.Response> fetchAlbum() {
+    refreshUri();
     return http.get(Uri.parse(uri));
   }
   static Future<void> getResponse(Future<http.Response> future) async {
@@ -39,18 +64,12 @@ class GoogleAPI {
       output = '-Error-';
     }
   }
-
-  //TODO
-  static List<GetHomeRoute> getRoutes() {
-    // TODO Make the API calls and return a list of possible routes
-    return List.empty();
-  }
 }
 
 
-//main
 void main() async {
-
-  GoogleAPI.test();
-
+  List<GetHomeRoute> list = await GoogleAPI.getRoutes();
+  print(list[0]);
+  print(list[1]);
+  print(list[2]);
 }
