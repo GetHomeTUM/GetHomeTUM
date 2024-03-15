@@ -61,5 +61,4 @@ class URLBuilder {
   set longDest(double? value) {
     _longDest = value;
   }
-
 }
