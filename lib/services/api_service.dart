@@ -73,15 +73,3 @@ class GoogleAPI {
     }
   }
 }
-
-/// main zum Testen
-void main() async {
-  List<String> cords = ['48.2655045', '11.6717073', '48.1374', '11.5754'];
-  String apiKey = 'AIzaSyDQQTxn6Aak4y1HQcKzJ6svMoMLIvAV_rg';
-  List<GetHomeRoute> list = await GoogleAPI.getRoutes(apiKey, cords);
-  print(URLBuilder.buildUri(apiKey, cords, DateTime.now()).toString());
-  print(list[0]);
-  print(list[1]);
-  print(list[2]);
-
-}
