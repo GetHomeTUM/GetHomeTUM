@@ -29,6 +29,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('GetHome'),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.blue,
       ),
       body: ListView(
@@ -44,9 +45,9 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/firstScreen');
             },
           ),
-          Divider(), // Add a divider between settings
+          const Divider(), // Add a divider between settings
           ListTile(
-            leading: Icon(Icons.settings,
+            leading: const Icon(Icons.settings,
             size: 30,
             ),
             title: Text('More Settings'),
