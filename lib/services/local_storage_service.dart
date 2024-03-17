@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:gethome/models/get_home_location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// TODO: (GH-13) add Documentation
 class LocalStorageService{
   // instance of shared preferences
   static SharedPreferences? _preferences;
@@ -30,16 +31,28 @@ class LocalStorageService{
 
 
   // TODO: (GH-13) Implement error handling
-  Future<GetHomeLocation> loadLocation(String locationId) async {
+  Future<GetHomeLocation?> loadLocation(String locationId) async {
     // Check if _preferences Instance has been initialized
     if(_preferences == null) await _initializePreferencesInstance();
 
-    // Load the location as a JSON String from _preferences
-    String? locationJson = _preferences!.getString(locationId);
+    // Check if the location with the given id exists
+    if(_preferences!.containsKey(locationId)){
+      // Load the location as a JSON String from _preferences
+      String? locationJson = _preferences!.getString(locationId);
+      
+      // Convert the JSON String to a GetHomeLocation object
+      return GetHomeLocation.fromJson(jsonDecode(locationJson!));
+    }
+    
+    return null;
+  }
 
-    // Convert the JSON String to a GetHomeLocation object
-    GetHomeLocation location = GetHomeLocation.fromJson(jsonDecode(locationJson!));
+  // Method for checking if a location with a given id exists
+  Future<bool> checkLocation(String locationId) async {
+    // Check if _preferences Instance has been initialized
+    if(_preferences == null) await _initializePreferencesInstance();
 
-    return location;
+    // Check if the location with the given id exists
+    return _preferences!.containsKey(locationId);
   }
 }
