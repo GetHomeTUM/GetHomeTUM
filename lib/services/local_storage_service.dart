@@ -17,24 +17,19 @@ class LocalStorageService{
   // Instance of shared preferences
   static SharedPreferences? _preferences;
   
-  // Constructor
-  LocalStorageService(){
-    // Call the _initializePreferencesInstance method once the LocalStorageService is used
-    _initializePreferencesInstance();
-  }
+  // private constructor
+  LocalStorageService._();
   
-  static Future<void> _initializePreferencesInstance() async {
-    // initialize the shared preferences instance
-    _preferences = await SharedPreferences.getInstance();
+  // Private method for checking and initializing the shared preferences instance
+  static Future<void> _checkPreferencesInitialization() async {
+    // if not already initialized, initialize the shared preferences instance
+    if(_preferences == null) await SharedPreferences.getInstance();
   }
 
   
   // Method for saving a location with a given id -> overwrites the location if it already exists and returns true if successful
-  Future<bool> saveLocation(GetHomeLocation location) async {
-
-
-    // Check if _preferences Instance has been initialized
-    if(_preferences == null) await _initializePreferencesInstance();
+  static Future<bool> saveLocation(GetHomeLocation location) async {
+    await _checkPreferencesInitialization();
     
     // Convert the GetHomeLocation object to a JSON String
     String locationJson;
@@ -56,9 +51,8 @@ class LocalStorageService{
 
 
   // Method for loading a location with a given id -> returns null if locationId does not exist
-  Future<GetHomeLocation?> loadLocation(String locationId) async {
-    // Check if _preferences Instance has been initialized
-    if(_preferences == null) await _initializePreferencesInstance();
+  static Future<GetHomeLocation?> loadLocation(String locationId) async {
+    await _checkPreferencesInitialization();
 
     // Check if the location with the given id exists
     if(_preferences!.containsKey(locationId)){
@@ -74,9 +68,8 @@ class LocalStorageService{
 
 
   // Method for checking if a location with a given id exists
-  Future<bool> checkLocation(String locationId) async {
-    // Check if _preferences Instance has been initialized
-    if(_preferences == null) await _initializePreferencesInstance();
+  static Future<bool> checkLocation(String locationId) async {
+    await _checkPreferencesInitialization();
 
     // Check if the location with the given id exists
     return _preferences!.containsKey(locationId);
@@ -84,9 +77,8 @@ class LocalStorageService{
 
 
   // Method for removing a location with a given id
-  Future<void> removeLocation(String locationId) async {
-    // Check if _preferences Instance has been initialized
-    if(_preferences == null) await _initializePreferencesInstance();
+  static Future<void> removeLocation(String locationId) async {
+    await _checkPreferencesInitialization();
 
     // Delete the location with the given id
     await _preferences!.remove(locationId);
