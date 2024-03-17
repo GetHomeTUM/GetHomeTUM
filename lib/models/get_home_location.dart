@@ -41,8 +41,10 @@ class GetHomeLocation {
     };
   }
 
-  // Getter for the locationId
+  // Getters
   String getId() => _id;
+  double getLatitude() => _lat;
+  double getLongitude() => _lng;
 
   //toString method
   @override
