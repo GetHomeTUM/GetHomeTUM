@@ -13,6 +13,14 @@ class GetHomeLocation {
     );
   }
 
+  // Converts a GetHomeLocation to a JSON-encodable map (default call by dart:convert.jsonEncode()).
+  Map<String, dynamic> toJson() {
+    return {
+      'lat': _lat,
+      'lng': _lng,
+    };
+  }
+
   //toString method
   @override
   String toString() {
