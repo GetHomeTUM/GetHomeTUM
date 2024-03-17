@@ -18,23 +18,23 @@ Folgender Workflow, nachdem man sich entschieden hat oder besprochen wurde, eine
 2) **Aufgabe abgeschlossen:**
      -  Check: Schnittstellen, Sicherheit(Exceptions, Error Handling, edge cases etc.), Coventions einhalten
      -  **Pull Request** erstellen, main <- AufgabenBranch (Kurze Beschreibung, Link zu Jira Ticket)
-     -  in _#review_ auf Slack kurze Nachricht:
-          1) GH-XX:
-          2) Link zur GitHub Pull Request
-          3) Link zum Jira Ticket
-          4) Reviewer markieren
      - Jira Ticket auf _Waiting for Review_
+     -  in _#review_ auf Slack kurze Nachricht:
+          - GH-XX:
+          - Link zur GitHub Pull Request
+          - Link zum Jira Ticket
+          - Reviewer markieren
 
 3) **Review:**
      - Falls alles passt:
-          1) PR auf GitHub mergen
-          2) Jira Ticket in _Done_ verschieben
-          3) in _#review_ auf Slack entsprechendes Feedback geben (zB. reacten, in Thread schreiben ist gemerged)
+          - PR auf GitHub mergen
+          - Jira Ticket in _Done_ verschieben
+          - Feedback auf Slack in _#review_ (zB. reacten, in Thread schreiben 'ist gemerged')
      
      - Falls Überarbeitung nötig:
-          1) Inhaltlichen Kommentar in die Conversation der Pull Request auf GitHub schreiben, Betroffenen markieren
-          2) Jira Ticket in _In Progress_ verschieben
-          3) in _#review_ auf Slack entsprechendes Feedback geben (zB. Kommentar in PR geschrieben, bitte nochmal drüberschauen)
+          - Inhaltlichen Kommentar in die Conversation der Pull Request auf GitHub schreiben, Betroffenen markieren
+          - Jira Ticket in _In Progress_ verschieben
+          - Feedback auf Slack in _#review_ (zB. 'Kommentar in PR geschrieben', 'bitte nochmal drüberschauen')
 
 <br/><br/>
 ## Conventions
