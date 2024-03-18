@@ -23,7 +23,7 @@ class LocalStorageService{
   // Private method for checking and initializing the shared preferences instance
   static Future<void> _checkPreferencesInitialization() async {
     // if not already initialized, initialize the shared preferences instance
-    if(_preferences == null) await SharedPreferences.getInstance();
+    _preferences ??= await SharedPreferences.getInstance();
   }
 
   
