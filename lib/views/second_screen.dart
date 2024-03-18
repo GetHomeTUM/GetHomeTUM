@@ -6,7 +6,6 @@ class SecondScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('More Settings'),
-        backgroundColor: Colors.blue,
       ),
       body: const Center(
         child: Padding(
