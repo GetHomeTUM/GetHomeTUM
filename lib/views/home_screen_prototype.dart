@@ -30,7 +30,6 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('GetHome'),
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
       ),
       body: ListView(
         children: <Widget>[

@@ -16,12 +16,11 @@ class MapSampleState extends State<MapSample> {
   Set<Marker> _markers = {};
   // Variable to check whether a marker has been set
   bool _markerChanged = false;
-  LocalStorageService localStorageService = LocalStorageService();
 
   // default camera position
-  static const CameraPosition _kGooglePlex = CameraPosition(
+  static CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(48.263042, 11.670198),
-    zoom: 14.4746,
+    zoom: 11,
   );
 
   /// Updates the set of markers by adding a new marker on the tappedPoint and deleting all the 
@@ -46,7 +45,8 @@ class MapSampleState extends State<MapSample> {
 
   // saving a position with the new LocalStorageService class
   void _saveLocation(LatLng position, String label) {
-    localStorageService.saveLocation(label, GetHomeLocation(lat: position.latitude, lng: position.longitude));
+    LocalStorageService.saveLocation(GetHomeLocation(id: label, lat: position.latitude, lng: position.longitude));
+    _markerChanged = false;
   }
 
   // method to Set the state of _markerChanged and update other instances that are using it
@@ -56,20 +56,23 @@ class MapSampleState extends State<MapSample> {
     });
   }
 
-  /// Loads the location with the given ID into the set of markers.
+  /// Loads the location with the given ID into the set of markers. When the function has finished, the loaded
+  /// marker will be displayed on the map.
   void _loadLocation(String label) async {
-    GetHomeLocation ?location = await localStorageService.loadLocation(label);
+    //GetHomeLocation location = GetHomeLocation(id: 'Home', lat: 48.263042, lng: 11.670198);
+    GetHomeLocation? location = await LocalStorageService.loadLocation(label);
     if (location != null) {
-      _markers.add(
-        Marker(
-          markerId: MarkerId(location.toString()),
-          position: LatLng(location.toJson()['lat'], location.toJson()['lng']),
-          infoWindow: InfoWindow(
-            title: label,
-          ),
-          icon: BitmapDescriptor.defaultMarker,
-        )
-      );
+      _updateMarker(LatLng(location.getLatitude(), location.getLongitude()), label);
+      _markerChanged = false;
+
+      
+      // set camera postion to loaded location
+      final GoogleMapController controller = await _controller.future;
+      await controller.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(location.getLatitude(), location.getLongitude()), // New York coordinates
+            zoom: 12,
+          ),));
     }
   }
 
@@ -78,14 +81,12 @@ class MapSampleState extends State<MapSample> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Setup Home Location'),
-        backgroundColor: Colors.blue,
         actions: <Widget>[
           // 'Done' Button which saves the chosen position
           TextButton(
             onPressed: () {
               if (_markerChanged) {
                 _saveLocation(_markers.elementAt(0).position, 'Home');
-                _markerChanged = false;
                 // go back to home screen
                 Navigator.pop(context);
               }
@@ -94,7 +95,7 @@ class MapSampleState extends State<MapSample> {
               'Done',
               style: TextStyle(
                 // style of the Button changing depending on marker status
-                color: _markerChanged ? Colors.white : Colors.grey,
+                color: _markerChanged ? Colors.black : Colors.grey,
               )
               ),
           )
@@ -102,6 +103,7 @@ class MapSampleState extends State<MapSample> {
       ),
       body: GoogleMap(
         mapType: MapType.normal,
+        myLocationButtonEnabled: false,
         initialCameraPosition: _kGooglePlex,
         // starting all the following actions when the map is opened
         onMapCreated: (GoogleMapController controller) {
