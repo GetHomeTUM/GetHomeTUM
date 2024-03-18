@@ -21,12 +21,12 @@ class GetHomeLocation {
   final double _lng;
 
   // Creates a GetHomeLocation with the given latitude and longitude.
-  GetHomeLocation({required String id, required double lat, required double lng}) : _id = id, _lat = lat, _lng = lng;
+  GetHomeLocation({required String id, required double lat, required double lng}) : _id = id.trim().toLowerCase(), _lat = lat, _lng = lng;
 
   // Converts a JSON object to a GetHomeLocation
   factory GetHomeLocation.fromJson(Map<String, dynamic> json) {
     return GetHomeLocation(
-      id: json['id'],
+      id: json['id'].toString().trim().toLowerCase(),
       lat: json['lat'],
       lng: json['lng'],
     );
