@@ -1,5 +1,5 @@
 import 'package:gethome/models/get_home_route.dart';
-import 'package:gethome/services/api_service_urlBuilder.dart';
+import 'package:gethome/services/api_service_url_builder.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -30,9 +30,9 @@ class GoogleAPI {
       // Abfrage, ob Verbindung zulässig ist
       if (map['routes'] != null && map['routes'][0]['legs'] != null) {
         // tatsächliche Startzeit der Verbindung ermittlen (wurde nicht in GetHomeRoute ermittelt)
-        var start_time = map['routes'][0]['legs'][0]['departure_time']['value'];
+        var startTime = map['routes'][0]['legs'][0]['departure_time']['value'];
         //früheste Startzeit der nächsten Verbindung setzen
-        int timeDiff = start_time - (time.millisecondsSinceEpoch ~/ 1000);
+        int timeDiff = startTime - (time.millisecondsSinceEpoch ~/ 1000);
         time = time.add(Duration(seconds: timeDiff+1));
       }
     }
