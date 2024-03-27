@@ -38,4 +38,6 @@ Folgender Workflow, nachdem man sich entschieden hat oder besprochen wurde, eine
 
 <br/><br/>
 ## Conventions
-**Dateinamen:** snake_case_nicht_camel_case
+- **Documentations:** /// Methode um X zu berechnen -> mit **drei ///** wird erkannt, dass es eine Dokumentation ist und kein Comment, diese wird global als tooltip bei hover angezeigt
+- **Dateinamen:** snake_case_nicht_camel_case
+- **Im Code**(Methoden, Variablen, etc.)**:** camelCase
