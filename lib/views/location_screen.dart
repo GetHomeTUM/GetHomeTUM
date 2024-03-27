@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'package:gethome/services/local_storage_service.dart';
 
+/// Creates a new App Page of the MapSampleState which displays the Google Map with its markers.
 class MapSample extends StatefulWidget {
   const MapSample({super.key});
 
@@ -18,7 +19,7 @@ class MapSampleState extends State<MapSample> {
   bool _markerChanged = false;
 
   // default camera position
-  static CameraPosition _kGooglePlex = CameraPosition(
+  static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(48.263042, 11.670198),
     zoom: 11,
   );
@@ -65,7 +66,7 @@ class MapSampleState extends State<MapSample> {
       _updateMarker(LatLng(location.getLatitude(), location.getLongitude()), label);
       _markerChanged = false;
 
-      
+
       // set camera postion to loaded location
       final GoogleMapController controller = await _controller.future;
       await controller.animateCamera(CameraUpdate.newCameraPosition(
@@ -101,6 +102,7 @@ class MapSampleState extends State<MapSample> {
           )
         ],
       ),
+      // View of the Google Map
       body: GoogleMap(
         mapType: MapType.normal,
         myLocationButtonEnabled: false,
