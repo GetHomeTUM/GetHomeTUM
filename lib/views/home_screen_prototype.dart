@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gethome/views/next_routes.dart';
 import 'second_screen.dart';
 import 'location_screen.dart';
 
+// TODO: main bei merge entfernen
 void main() {
   runApp(GetHomeApp());
 }
@@ -18,6 +20,7 @@ class GetHomeApp extends StatelessWidget {
       routes: {
         '/firstScreen': (context) => MapSample(),
         '/secondScreen': (context) => SecondScreen(),
+        '/thirdScreen': (context) => RouteSample(),
       },
     );
   }
@@ -55,6 +58,18 @@ class HomeScreen extends StatelessWidget {
             },
           ),
           Divider(), // Add a divider between settings
+          ListTile(
+            leading: const Icon(
+              Icons.train,
+              color: Colors.grey,
+              size: 30
+              ),
+            title: const Text('Next connections'),
+            onTap: () {
+              Navigator.pushNamed(context, '/thirdScreen');
+            },
+          ),
+          Divider(),
           // Add more ListTile widgets for additional settings
         ],
       ),
