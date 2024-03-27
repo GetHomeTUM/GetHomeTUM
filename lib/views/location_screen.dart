@@ -45,7 +45,7 @@ class MapSampleState extends State<MapSample> {
 
   // saving a position with the new LocalStorageService class
   void _saveLocation(LatLng position, String label) {
-    LocalStorageService.saveLocation(GetHomeLocation(id: label, lat: position.latitude, lng: position.longitude));
+    LocalStorageService.saveLocation(GetHomeLocation(name: label, lat: position.latitude, lng: position.longitude));
     _markerChanged = false;
   }
 
