@@ -120,16 +120,19 @@ class GetHomeRoute {
     int? color;
     if (data['routes'] != null && data['routes'][0]['legs'] != null) {
       for (var step in data['routes'][0]['legs'][0]['steps']) {
-        if(step != null && step['travel_mode'] == "TRANSIT" && step['transit_details'] != null && step['transit_details']['line'] != null && step['transit_details']['line']['color'] != null) {
-          int alpha = 0xFF; // Der Transparenzwert für volle Opazität
-          String hex = step['transit_details']['line']['color'].substring(1);
-          int color = int.parse(hex, radix: 16);
-          int argbInt = (alpha << 24) | color;
-          return argbInt;
+        if(step != null && step['travel_mode'] == "TRANSIT" ) {
+          if( step['transit_details'] != null && step['transit_details']['line'] != null && step['transit_details']['line']['color'] != null) {
+            int alpha = 0xFF; // Der Transparenzwert für volle Opazität
+            String hex = step['transit_details']['line']['color'].substring(1);
+            int color = int.parse(hex, radix: 16);
+            int argbInt = (alpha << 24) | color;
+            return argbInt;
+          }
+          break;
         }
       }
     }
-    return color;
+    return null;
   }
 
   /// Returns the departure time of the route.
