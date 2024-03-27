@@ -61,19 +61,6 @@ class LocalStorageService{
       return GetHomeLocation.fromJson(jsonDecode(locationJson!));
     }
     
-  // Method for loading a location with a given id -> returns null if locationId does not exist
-  static Future<GetHomeLocation?> loadLocation(String locationId) async {
-    await _checkPreferencesInitialization();
-
-    // Check if the location with the given id exists
-    if(_preferences!.containsKey(locationId)){
-      // Load the location as a JSON String from _preferences
-      String? locationJson = _preferences!.getString(locationId);
-
-      // Convert the JSON String to a GetHomeLocation object
-      return GetHomeLocation.fromJson(jsonDecode(locationJson!));
-    }
-
     return null;
   }
 

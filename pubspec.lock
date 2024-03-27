@@ -106,10 +106,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: e2a421b7e59244faef694ba7b30562e489c2b489866e505074eb005cd7060db7
+      sha256: "9e8c3858111da373efc5aa341de011d9bd23e2c5c5e0c62bccf32438e192d7b1"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -140,10 +140,10 @@ packages:
     dependency: transitive
     description:
       name: geolocator_android
-      sha256: "136f1c97e1903366393bda514c5d9e98843418baea52899aa45edae9af8a5cd6"
+      sha256: f15d1536cd01b1399578f1da1eb5d566e7a718db6a3648f2c24d2e2f859f0692
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.2"
+    version: "4.5.4"
   geolocator_apple:
     dependency: transitive
     description:
@@ -176,7 +176,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.3"
-  http:
   google_maps:
     dependency: transitive
     description:
@@ -205,10 +204,10 @@ packages:
     dependency: transitive
     description:
       name: google_maps_flutter_ios
-      sha256: "0997f99d8bd8712f648a49bfc96a3cf2713cfdaf73a005c719aab74eaef94030"
+      sha256: "6c50bce26ff73079b4401de5bfe77e89d89138897b9dcc6bdfbc7ada842f2bc1"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.2"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -233,6 +232,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.4"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      sha256: "761a297c042deedc1ffbb156d6e2af13886bb305c2a343a4d972504cd67dd938"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
+  http_parser:
+    dependency: transitive
+    description:
+      name: http_parser
+      sha256: "2aa08ce0341cc9b354a498388e30986515406668dbcc4f7c950c3e715496693b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.2"
   js:
     dependency: transitive
     description:
@@ -526,22 +541,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
-  win32:
-    dependency: transitive
-    description:
-      name: win32
-      sha256: "8cb58b45c47dcb42ab3651533626161d6b67a2921917d8d429791f76972b3480"
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.3.0"
-  xdg_directories:
-    dependency: transitive
-    description:
-      name: xdg_directories
-      sha256: faea9dee56b520b55a566385b84f2e8de55e7496104adada9962e0bd11bcff1d
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
   win32:
     dependency: transitive
     description:
