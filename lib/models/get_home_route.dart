@@ -5,16 +5,18 @@ class GetHomeRoute {
   String? _firstLine;
   String? _typeOfFirstLine;
   String? _locationOfFirstDeparture;
+  int? _color;
 
   /// Creates a GetHomeRoute.
   /// The GetHomeRoute contains the departure time, the walking time to the first transit, the number of changes, the first line, the type of the first line, and the location of the first departure.
-  GetHomeRoute({DateTime? departureTime, num? walkingTimeMinutes, num? changes, String? firstLine, String? typeOfFirstLine, String? locationOfFirstDeparture}) {
+  GetHomeRoute({DateTime? departureTime, num? walkingTimeMinutes, num? changes, String? firstLine, String? typeOfFirstLine, String? locationOfFirstDeparture, int? color}) {
     _departureTime = departureTime;
     _walkingTimeMinutes = walkingTimeMinutes;
     _changes = changes;
     _firstLine = firstLine;
     _typeOfFirstLine = typeOfFirstLine;
     _locationOfFirstDeparture = locationOfFirstDeparture;
+    _color = color;
   }
 
   /// Creates a GetHomeRoute from a JSON object.
@@ -27,6 +29,7 @@ class GetHomeRoute {
       firstLine: computeFirstLine(data)!.values.first,
       typeOfFirstLine: computeFirstLine(data)!.values.elementAt(1),
       locationOfFirstDeparture: computeFirstLine(data)!.values.last,
+      color: computeColor(data)
     );
   }
 
@@ -109,6 +112,26 @@ class GetHomeRoute {
     return firstLine;
   }
 
+  /// Calculates the color of the first line of the route.
+  /// The color is an integer in the format 0xAARRGGBB.
+  /// The color is null if there is no transit in the route.
+  /// The color is null if the color of the first line is not available.
+  static int? computeColor(Map<String, dynamic> data) {
+    int? color;
+    if (data['routes'] != null && data['routes'][0]['legs'] != null) {
+      for (var step in data['routes'][0]['legs'][0]['steps']) {
+        if(step != null && step['travel_mode'] == "TRANSIT" && step['transit_details'] != null && step['transit_details']['line'] != null && step['transit_details']['line']['color'] != null) {
+          int alpha = 0xFF; // Der Transparenzwert für volle Opazität
+          String hex = step['transit_details']['line']['color'].substring(1);
+          int color = int.parse(hex, radix: 16);
+          int argbInt = (alpha << 24) | color;
+          return argbInt;
+        }
+      }
+    }
+    return color;
+  }
+
   /// Returns the departure time of the route.
   DateTime? get departureTime => _departureTime;
   /// Returns the walking time to the first transit.
@@ -121,6 +144,8 @@ class GetHomeRoute {
   String? get typeOfFirstLine => _typeOfFirstLine;
   /// Returns the location of the first departure of the route.
   String? get locationOfFirstDeparture => _locationOfFirstDeparture;
+  /// Returns the color as integer of the first line of the route.
+  int? get color => _color;
 
   /// Returns a string representation of the GetHomeRoute.
   @override
@@ -132,6 +157,7 @@ class GetHomeRoute {
         '\n firstLine = $_firstLine '
         '\n type = $_typeOfFirstLine '
         '\n departureLocation = $_locationOfFirstDeparture '
+        '\n color = $_color '
         '\n';
   }
 
