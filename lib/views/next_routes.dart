@@ -6,6 +6,7 @@ import 'package:gethome/services/local_storage_service.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gethome/services/current_location_service.dart';
+import 'package:geolocator/geolocator.dart';
 
 const String _apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
 

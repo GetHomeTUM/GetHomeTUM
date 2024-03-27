@@ -3,11 +3,6 @@ import 'package:gethome/views/next_routes.dart';
 import 'second_screen.dart';
 import 'location_screen.dart';
 
-// TODO: main bei merge entfernen
-void main() {
-  runApp(GetHomeApp());
-}
-
 class GetHomeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -62,6 +62,7 @@ class GoogleAPI {
   /// Falls die http Request fehlerhaft war, wird ein Error geworfen
   /// Parameter: future: Future, welches eine http Request macht und eine http.Response ausgibt
   static Future<http.Response> _fetchAlbum(String apiKey, List<String> cords, DateTime time) {
+    print(URLBuilder.buildUri(apiKey, cords, time).toString());
     return http.get(URLBuilder.buildUri(apiKey, cords, time));
   }
   static Future<String> _getResponse(Future<http.Response> future) async {
