@@ -42,8 +42,7 @@ class GetHomeLocation {
   String getName() => _name;
   double getLatitude() => _lat;
   double getLongitude() => _lng;
-
-  /// toString method
+  //toString method
   @override
   String toString() {
     return 
