@@ -45,6 +45,7 @@ class RoutesScreen extends State<RouteSample> {
     if (location != null) {
       setState(() {
         _homePosition = LatLng(location.getLatitude(), location.getLongitude());
+        _errorMessage = 'Waiting for the device\'s location...';
       });
     }
   }
@@ -73,6 +74,9 @@ class RoutesScreen extends State<RouteSample> {
       // list of coordinates
       List<String> cords = [position!.latitude.toString(), position!.longitude.toString(), _homePosition!.latitude.toString(), _homePosition!.longitude.toString()];
       List<GetHomeRoute> list = List.empty();
+      setState(() {
+        _errorMessage = 'Searching for connections...';
+      });
       try {
         // API call
         list = await GoogleAPI.getRoutes(apiKey, cords);
