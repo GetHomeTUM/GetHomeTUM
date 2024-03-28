@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gethome/views/home_screen_prototype.dart';
 
+/// Main for testing the application. Insert your own key for the directions API here.
 void main() {
-  runApp(GetHomeApp());
+  const String apiKey = '';
+  runApp(const GetHomeApp(apiKey));
 }

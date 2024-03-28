@@ -117,7 +117,6 @@ class GetHomeRoute {
   /// The color is null if there is no transit in the route.
   /// The color is null if the color of the first line is not available.
   static int? computeColor(Map<String, dynamic> data) {
-    int? color;
     if (data['routes'] != null && data['routes'][0]['legs'] != null) {
       for (var step in data['routes'][0]['legs'][0]['steps']) {
         if(step != null && step['travel_mode'] == "TRANSIT" ) {
