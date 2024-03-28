@@ -4,6 +4,10 @@ import 'second_screen.dart';
 import 'location_screen.dart';
 
 class GetHomeApp extends StatelessWidget {
+  final String _apiKey;
+
+  const GetHomeApp(this._apiKey);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +19,7 @@ class GetHomeApp extends StatelessWidget {
       routes: {
         '/firstScreen': (context) => MapSample(),
         '/secondScreen': (context) => SecondScreen(),
-        '/thirdScreen': (context) => RouteSample(),
+        '/thirdScreen': (context) => RouteSample(_apiKey),
       },
     );
   }

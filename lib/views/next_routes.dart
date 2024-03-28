@@ -8,13 +8,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:geolocator/geolocator.dart';
 
-const String _apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
 
 class RouteSample extends StatefulWidget {
-  const RouteSample({super.key});
+  final String _apiKey;
+
+  const RouteSample(this._apiKey, {super.key});
 
   @override
-  State<RouteSample> createState() => RoutesScreen();
+  State<RouteSample> createState() => RoutesScreen(_apiKey);
 }
 
 
@@ -22,6 +23,9 @@ class RoutesScreen extends State<RouteSample> {
   List<GetHomeRoute>? _nextRoutes;
   LatLng? _homePosition;
   String _errorMessage = 'Unknown error';
+  final String _apiKey;
+
+  RoutesScreen(this._apiKey);
 
   Future<void> _updateHomePostion() async {
     GetHomeLocation? location = await LocalStorageService.loadLocation('Home');
@@ -43,7 +47,7 @@ class RoutesScreen extends State<RouteSample> {
       try {
         list = await GoogleAPI.getRoutes(apiKey, cords);
       } catch (error) {
-        _errorMessage = 'Couldn\'t connect to server.';
+        _errorMessage = 'No connection found.';
       }
       setState(() {
         _nextRoutes = list;
