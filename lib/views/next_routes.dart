@@ -27,6 +27,12 @@ class RoutesScreen extends State<RouteSample> {
 
   RoutesScreen(this._apiKey);
 
+  @override
+  void initState(){
+    super.initState();
+    _updateNextRoutes(_apiKey);
+  }
+
   Future<void> _updateHomePostion() async {
     GetHomeLocation? location = await LocalStorageService.loadLocation('Home');
     if (location != null) {
