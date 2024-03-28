@@ -3,6 +3,7 @@ import 'package:gethome/views/next_routes.dart';
 import 'second_screen.dart';
 import 'location_screen.dart';
 
+/// Class for the logic of the home screen. Provides the links for the other app pages.
 class GetHomeApp extends StatelessWidget {
   final String _apiKey;
 
@@ -16,25 +17,33 @@ class GetHomeApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: HomeScreen(),
+
       routes: {
         '/firstScreen': (context) => MapSample(),
         '/secondScreen': (context) => SecondScreen(),
         '/thirdScreen': (context) => RouteSample(_apiKey),
       },
+      
     );
   }
 }
 
+/// Class for the design of the home screen. Creates a scrollable list on the screen where you can tap on to 
+/// get to the desired page.
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: const Text('GetHome'),
         automaticallyImplyLeading: false,
       ),
+
       body: ListView(
+        // list of widgets that are displayed as a scrollable list in the given order
         children: <Widget>[
+          // ListTile that represents one simple page. By tapping on it, you get directed to this page.
           ListTile(
             leading: const Icon(
               Icons.home,
@@ -69,9 +78,10 @@ class HomeScreen extends StatelessWidget {
             },
           ),
           Divider(),
-          // Add more ListTile widgets for additional settings
+          // Add more ListTile widgets for additional pages
         ],
       ),
+
     );
   }
 }

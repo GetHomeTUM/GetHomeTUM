@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Screen for more settings
 class SecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -7,6 +8,7 @@ class SecondScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('More Settings'),
       ),
+      
       body: const Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
