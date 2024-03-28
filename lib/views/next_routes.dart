@@ -37,12 +37,21 @@ class RoutesScreen extends State<RouteSample> {
   }
 
   void _updateNextRoutes(String apiKey) async {
+
     if (_homePosition == null) {
       await _updateHomePostion();
     }
-    Position? _position = await LocationService.getCurrentLocation();
-    if (_position != null && _homePosition != null) {
-      List<String> cords = [_position!.latitude.toString(), _position!.longitude.toString(), _homePosition!.latitude.toString(), _homePosition!.longitude.toString()];
+
+    Position? position;
+    await LocationService.getCurrentLocation()
+      .then((value) => position = value)
+      .catchError((error) {
+        position = null;
+        return Future.value(position);
+      });
+
+    if (position != null && _homePosition != null) {
+      List<String> cords = [position!.latitude.toString(), position!.longitude.toString(), _homePosition!.latitude.toString(), _homePosition!.longitude.toString()];
       List<GetHomeRoute> list = List.empty();
       try {
         list = await GoogleAPI.getRoutes(apiKey, cords);
@@ -52,7 +61,7 @@ class RoutesScreen extends State<RouteSample> {
       setState(() {
         _nextRoutes = list;
       });
-    } else if (_position == null) {
+    } else if (position == null) {
       _errorMessage = 'Error getting device\'s location.';
     } else {
       _errorMessage = 'Setup your home location to see connection.';
