@@ -3,11 +3,14 @@ import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/models/get_home_route.dart';
 import 'package:gethome/services/api_service.dart';
 import 'package:gethome/services/local_storage_service.dart';
+import 'package:gethome/views/home_widget.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
+
+import 'package:home_widget/home_widget.dart';
 
 
 class RouteSample extends StatefulWidget {
@@ -37,6 +40,9 @@ class RoutesScreen extends State<RouteSample> {
   @override
   void initState(){
     super.initState();
+
+    HomeWidget.setAppGroupId('group.flutter_test_widget');
+
     _updateNextRoutes(_apiKey);
   }
 
@@ -81,6 +87,10 @@ class RoutesScreen extends State<RouteSample> {
       try {
         // API call
         list = await GoogleAPI.getRoutes(apiKey, cords);
+
+        // test update home widget
+        updateHomeWidget(RoutesScreen(_apiKey) as Scaffold);
+
       } catch (error) {
         _errorMessage = 'No connection found.';
       }
