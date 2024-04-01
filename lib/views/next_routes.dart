@@ -45,6 +45,7 @@ class RoutesScreen extends State<RouteSample> {
   void initState(){
     super.initState();
 
+    // could be unnecessary
     HomeWidget.setAppGroupId('group.flutter_test_widget');
 
     _updateNextRoutes(_apiKey);
@@ -104,33 +105,8 @@ class RoutesScreen extends State<RouteSample> {
       _errorMessage = 'Setup your home location to see connection.';
     }
 
-     if (_globalKey.currentContext != null) {
-            var path = await HomeWidget.renderFlutterWidget(
-              _nextRoutes != null ?
-              ///*
-              SizedBox(
-                height: 180,
-                child: Column(
-                  children: [
-                    RouteListTile(route: _nextRoutes![0]),
-                    RouteListTile(route: _nextRoutes![1]),
-                    RouteListTile(route: _nextRoutes![2]),
-                  ],
-                )
-              )
-              //*/
-              //RouteListTile(route: _nextRoutes![0])
-              : TestImage(),
-              key: 'filename',
-              logicalSize: _globalKey.currentContext!.size!,
-              pixelRatio:
-                  MediaQuery.of(_globalKey.currentContext!).devicePixelRatio,
-            ) as String;
-            setState(() {
-              imagePath = path;
-            });
-          }
-        updateHomeWidget(imagePath ?? 'No path available');
+    
+    updateHomeWidget(_globalKey, _nextRoutes);
   }
     
 
