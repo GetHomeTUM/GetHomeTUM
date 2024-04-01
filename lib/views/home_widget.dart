@@ -6,7 +6,7 @@ void updateHomeWidget(String path) async {
   print('Updating Widget...');
     HomeWidget.setAppGroupId('group.flutter_test_widget');
     //HomeWidget.saveWidgetData('filename', path);
-    HomeWidget.saveWidgetData<String>('headline_title', 'hello test');
+    HomeWidget.saveWidgetData<String>('headline_title', 'hello');
     HomeWidget.saveWidgetData<String>(
       'headline_description', 'hello test');
     HomeWidget.updateWidget(

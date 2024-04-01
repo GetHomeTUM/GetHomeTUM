@@ -3,7 +3,7 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> GetHome_WidgetEntry {
-      GetHome_WidgetEntry(date: Date(), title: "Placholder Title", description: "Placholder description", filename: "No screenshot available",  displaySize: context.displaySize)
+      GetHome_WidgetEntry(date: Date(), title: "GetHome", description: "Next connections.", filename: "No screenshot available",  displaySize: context.displaySize)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (GetHome_WidgetEntry) -> ()) {
@@ -63,7 +63,7 @@ struct GetHome_WidgetEntryView: View {
         if let uiImage = UIImage(contentsOfFile: entry.filename) {
             let image = Image(uiImage: uiImage)
                 .resizable()
-                .frame(width: entry.displaySize.height*0.5, height: entry.displaySize.height*0.5, alignment: .center)
+                .frame(width: entry.displaySize.width*1, height: entry.displaySize.height*1, alignment: .center)
             return AnyView(image)
         }
         print("The image file could not be loaded")
@@ -73,9 +73,8 @@ struct GetHome_WidgetEntryView: View {
 
   var body: some View {
     VStack {
-        Text(entry.title).font(Font.custom("Chewy", size: 13))
-        Text(entry.description).font(.system(size: 12)).padding(10)
-        // New: add the ChartImage to the NewsWidgetEntryView
+        //Text(entry.title).font(Font.custom("Chewy", size: 13))
+        //Text(entry.description).font(.system(size: 12)).padding(10)
         ChartImage
     }
   }

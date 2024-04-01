@@ -106,10 +106,10 @@ class RoutesScreen extends State<RouteSample> {
 
      if (_globalKey.currentContext != null) {
             var path = await HomeWidget.renderFlutterWidget(
-              _nextRoutes != null ? 
+              _nextRoutes != null ?
               ///*
               SizedBox(
-                height: 200,
+                height: 180,
                 child: Column(
                   children: [
                     RouteListTile(route: _nextRoutes![0]),
@@ -186,9 +186,10 @@ class RoutesScreen extends State<RouteSample> {
           ),
           const Divider(),
           (_nextRoutes != null ? ListTile(
-            key: _globalKey,
+            
             title: SizedBox(
-                height: 200,
+              key: _globalKey,
+                height: 180,
                 child: Column(
                   children: [
                     RouteListTile(route: _nextRoutes![0]),

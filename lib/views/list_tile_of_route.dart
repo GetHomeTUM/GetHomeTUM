@@ -13,8 +13,9 @@ class RouteListTile extends StatelessWidget {
   Widget build(BuildContext context) {
   return SizedBox(
     height: 60, // Adjust height as needed
+    width: 258,
     child: Padding(
-      padding: const EdgeInsets.only(left: 0.0), //22.0
+      padding: const EdgeInsets.only(left: 10.0), //22.0
     child: Row(
       children: [
         // Leading column
@@ -73,13 +74,13 @@ class RouteListTile extends StatelessWidget {
 
         // Trailing row
         Padding(
-          padding: const EdgeInsets.only(right: 0.0), //40.0
+          padding: const EdgeInsets.only(right: 10.0), //40.0
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               // Displaying the walking time and a walking person icon
               Icon(Icons.directions_walk),
-              SizedBox(width: 5),
+              SizedBox(width: 2),
               Text(
                 '${(route.walkingTimeMinutes == null ? 0 : route.walkingTimeMinutes!) ~/ 60} min',
                 style: TextStyle(fontSize: 20, color: Colors.black),
