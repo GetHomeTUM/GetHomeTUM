@@ -22,7 +22,7 @@ Future<String> renderWidget(var globalKey, List<GetHomeRoute>? nextRoutes) async
       nextRoutes != null ?
       RouteWidget(nextRoutes: nextRoutes)
       :
-      const TestImage(),
+      const DefaultImage(),
 
       key: 'filename',
       logicalSize: globalKey.currentContext!.size!,
@@ -63,17 +63,17 @@ class RouteWidget extends StatelessWidget {
       );
   }}
 
-class TestImage extends StatelessWidget {
-  const TestImage({
+class DefaultImage extends StatelessWidget {
+  const DefaultImage({
     super.key,
   });
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return const SizedBox(
       width: 200,
       height: 200,
-      child: Text('hello world',
-        style: TextStyle(fontSize: 20),),
+      child: Text('Connections not available',
+        style: TextStyle(fontSize: 20, color: Colors.black)),
     );
   }
 }
