@@ -33,6 +33,10 @@ class RoutesScreen extends State<RouteSample> {
   // API key
   final String _apiKey;
 
+  final _globalKey = GlobalKey();
+  String? imagePath;
+  RouteListTile? testTile;
+
   // constructor that takes the API key
   RoutesScreen(this._apiKey);
 
@@ -87,10 +91,6 @@ class RoutesScreen extends State<RouteSample> {
       try {
         // API call
         list = await GoogleAPI.getRoutes(apiKey, cords);
-
-        // test update home widget
-        updateHomeWidget(RoutesScreen(_apiKey) as Scaffold);
-
       } catch (error) {
         _errorMessage = 'No connection found.';
       }
@@ -103,6 +103,34 @@ class RoutesScreen extends State<RouteSample> {
     } else {
       _errorMessage = 'Setup your home location to see connection.';
     }
+
+     if (_globalKey.currentContext != null) {
+            var path = await HomeWidget.renderFlutterWidget(
+              _nextRoutes != null ? 
+              ///*
+              SizedBox(
+                height: 200,
+                child: Column(
+                  children: [
+                    RouteListTile(route: _nextRoutes![0]),
+                    RouteListTile(route: _nextRoutes![1]),
+                    RouteListTile(route: _nextRoutes![2]),
+                  ],
+                )
+              )
+              //*/
+              //RouteListTile(route: _nextRoutes![0])
+              : TestImage(),
+              key: 'filename',
+              logicalSize: _globalKey.currentContext!.size!,
+              pixelRatio:
+                  MediaQuery.of(_globalKey.currentContext!).devicePixelRatio,
+            ) as String;
+            setState(() {
+              imagePath = path;
+            });
+          }
+        updateHomeWidget(imagePath ?? 'No path available');
   }
     
 
@@ -157,13 +185,28 @@ class RoutesScreen extends State<RouteSample> {
             RouteListTile(route: _nextRoutes![2])
           ),
           const Divider(),
+          (_nextRoutes != null ? ListTile(
+            key: _globalKey,
+            title: SizedBox(
+                height: 200,
+                child: Column(
+                  children: [
+                    RouteListTile(route: _nextRoutes![0]),
+                    RouteListTile(route: _nextRoutes![1]),
+                    RouteListTile(route: _nextRoutes![2]),
+                  ],
+                )
+              ))
+              :
+              const Divider())
         ],
       ),
 
       // refresh button
       floatingActionButton: FloatingActionButton(
-      onPressed: () {
+      onPressed: () async {
         _updateNextRoutes(_apiKey);
+       
       },
       child: const Icon(Icons.refresh),
     ),
