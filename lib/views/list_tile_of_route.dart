@@ -59,12 +59,12 @@ class RouteListTile extends StatelessWidget {
                 ),
 
                 // Empty space for separation
-                SizedBox(width: 8),//5?
+                SizedBox(width: 8),//8
 
                 // Displaying the departure time of the first line
                 Text(
                   extractTime(route.departureTime ?? DateTime.now()),
-                  style: TextStyle(fontSize: 25),
+                  style: TextStyle(fontSize: 25, color: Colors.black),
                 ),
               ],
             ),
@@ -82,7 +82,7 @@ class RouteListTile extends StatelessWidget {
               SizedBox(width: 5),
               Text(
                 '${(route.walkingTimeMinutes == null ? 0 : route.walkingTimeMinutes!) ~/ 60} min',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 20, color: Colors.black),
               ),
             ],
           ),
