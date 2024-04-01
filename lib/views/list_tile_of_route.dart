@@ -13,7 +13,7 @@ class RouteListTile extends StatelessWidget {
   Widget build(BuildContext context) {
   return SizedBox(
     height: 60, // Adjust height as needed
-    width: 258,
+    width: 252,
     child: Padding(
       padding: const EdgeInsets.only(left: 10.0), //22.0
     child: Row(

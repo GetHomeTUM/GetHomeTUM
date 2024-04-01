@@ -20,18 +20,9 @@ Future<String> renderWidget(var globalKey, List<GetHomeRoute>? nextRoutes) async
   if (globalKey.currentContext != null) {
     var path = await HomeWidget.renderFlutterWidget(
       nextRoutes != null ?
-      SizedBox(
-        height: 180,
-        child: Column(
-          children: [
-            RouteListTile(route: nextRoutes[0]),
-            RouteListTile(route: nextRoutes[1]),
-            RouteListTile(route: nextRoutes[2]),
-          ],
-        )
-      )
+      RouteWidget(nextRoutes: nextRoutes)
       :
-      TestImage(),
+      const TestImage(),
 
       key: 'filename',
       logicalSize: globalKey.currentContext!.size!,
@@ -42,6 +33,35 @@ Future<String> renderWidget(var globalKey, List<GetHomeRoute>? nextRoutes) async
   }
   return 'Path not available';
 }
+
+class RouteWidget extends StatelessWidget {
+  final List<GetHomeRoute> nextRoutes;
+
+  const RouteWidget({super.key, required this.nextRoutes});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: 250,
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            Container(
+              width: 232,
+              child: const Text('HOME',
+              style: TextStyle(color: Colors.black,
+                fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center
+                ),),
+            RouteListTile(route: nextRoutes[0]),
+            const SizedBox(height: 10),
+            RouteListTile(route: nextRoutes[1]),
+            const SizedBox(height: 10),
+            RouteListTile(route: nextRoutes[2]),
+          ],
+        )
+      );
+  }}
 
 class TestImage extends StatelessWidget {
   const TestImage({
@@ -54,22 +74,6 @@ class TestImage extends StatelessWidget {
       height: 200,
       child: Text('hello world',
         style: TextStyle(fontSize: 20),),
-    );
-  }
-}
-
-class LineChart extends StatelessWidget {
-  const LineChart({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      child: const SizedBox(
-        height: 200,
-        width: 200,
-      ),
     );
   }
 }

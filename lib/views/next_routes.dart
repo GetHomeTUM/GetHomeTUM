@@ -162,18 +162,8 @@ class RoutesScreen extends State<RouteSample> {
           ),
           const Divider(),
           (_nextRoutes != null ? ListTile(
-            
-            title: SizedBox(
-              key: _globalKey,
-                height: 180,
-                child: Column(
-                  children: [
-                    RouteListTile(route: _nextRoutes![0]),
-                    RouteListTile(route: _nextRoutes![1]),
-                    RouteListTile(route: _nextRoutes![2]),
-                  ],
-                )
-              ))
+            title: RouteWidget(nextRoutes: _nextRoutes!, key: _globalKey)
+          )
               :
               const Divider())
         ],
