@@ -1,66 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:gethome/views/next_routes.dart';
+import 'second_screen.dart';
+import 'location_screen.dart';
 
-class GetHome extends StatelessWidget {
-  const GetHome({super.key});
+/// Class for the logic of the home screen. Provides the links for the other app pages.
+class GetHomeApp extends StatelessWidget {
+  final String _apiKey;
 
-  // This widget is the root of your application.
+  const GetHomeApp(this._apiKey);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'GetHome',
+      title: 'Home Screen',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'GetHome'),
+      home: HomeScreen(),
+
+      routes: {
+        '/firstScreen': (context) => const MapScreen(),
+        '/secondScreen': (context) => SecondScreen(),
+        '/thirdScreen': (context) => RoutesScreen(_apiKey),
+      },
+      
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+/// Class for the design of the home screen. Creates a scrollable list on the screen where you can tap on to 
+/// get to the desired page.
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: const Text('GetHome'),
+        automaticallyImplyLeading: false,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+
+      body: ListView(
+        // list of widgets that are displayed as a scrollable list in the given order
+        children: <Widget>[
+          // ListTile that represents one simple page. By tapping on it, you get directed to this page.
+          ListTile(
+            leading: const Icon(
+              Icons.home,
+              color: Color.fromARGB(255, 0, 76, 206),
+              size: 30
+              ),
+            title: const Text('Set Home Location'),
+            onTap: () {
+              Navigator.pushNamed(context, '/firstScreen');
+            },
+          ),
+          const Divider(), // Add a divider between settings
+          ListTile(
+            leading: const Icon(Icons.settings,
+            size: 30,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+            title: Text('More Settings'),
+            onTap: () {
+              Navigator.pushNamed(context, '/secondScreen');
+            },
+          ),
+          Divider(), // Add a divider between settings
+          ListTile(
+            leading: const Icon(
+              Icons.train,
+              color: Colors.grey,
+              size: 30
+              ),
+            title: const Text('Next connections'),
+            onTap: () {
+              Navigator.pushNamed(context, '/thirdScreen');
+            },
+          ),
+          Divider(),
+          // Add more ListTile widgets for additional pages
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+
     );
   }
 }
+
+
+
+
