@@ -7,9 +7,7 @@ import 'package:gethome/models/get_home_route.dart';
 /// list of the next GetHomeRoutes. The method renders the image of the widget first and then 
 /// updated it.
 void updateHomeWidget(var globalKey, List<GetHomeRoute>? nextRoutes) async {
-  var path = await renderWidget(globalKey, nextRoutes);
-  HomeWidget.saveWidgetData<String>('headline_title', 'hello');
-  HomeWidget.saveWidgetData<String>('headline_description', 'hello test');
+  await renderWidget(globalKey, nextRoutes);
   HomeWidget.updateWidget(
     iOSName: 'GetHomeIos',
     androidName: 'GetHomeAndroid',
@@ -24,11 +22,10 @@ Future<String> renderWidget(var globalKey, List<GetHomeRoute>? nextRoutes) async
   if (globalKey.currentContext != null) {
     // rendering
     var path = await HomeWidget.renderFlutterWidget(
-      nextRoutes != null ? // either the RouteWidget of a DefaultImage is rendered
+      nextRoutes != null && nextRoutes.isNotEmpty ? // either the RouteWidget of a DefaultImage is rendered
       RouteWidget(nextRoutes: nextRoutes)
       :
       const DefaultImage(),
-
       // data for storing and rendering the image
       key: 'filename',
       logicalSize: globalKey.currentContext!.size!,
@@ -82,10 +79,15 @@ class DefaultImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const SizedBox(
-      width: 200,
-      height: 200,
-      child: Text('Connections not available',
-        style: TextStyle(fontSize: 20, color: Colors.black)),
+      width: RouteListTile.width,
+      height: RouteListTile.width,
+      child: Center(
+        child: Text(
+          'Connections not available.',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15, color: Colors.black),
+        ),
+      ),
     );
   }
 }

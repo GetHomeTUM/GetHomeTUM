@@ -34,8 +34,6 @@ class RoutesScreen extends State<RouteSample> {
   final String _apiKey;
 
   final _globalKey = GlobalKey();
-  String? imagePath;
-  RouteListTile? testTile;
 
   // constructor that takes the API key
   RoutesScreen(this._apiKey);
