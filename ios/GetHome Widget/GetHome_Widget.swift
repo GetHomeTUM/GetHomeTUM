@@ -3,7 +3,9 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> GetHome_WidgetEntry {
-      GetHome_WidgetEntry(date: Date(), title: "GetHome", description: "Next connections.", filename: "No screenshot available",  displaySize: context.displaySize)
+      let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+      let filename = userDefaults?.string(forKey: "filename") ?? "No screenshot available"
+      return GetHome_WidgetEntry(date: Date(), title: "GetHome", description: "Next connections.", filename: filename,  displaySize: context.displaySize)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (GetHome_WidgetEntry) -> ()) {
@@ -87,8 +89,9 @@ struct GetHome_Widget: Widget {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
             GetHome_WidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("GetHome")
+        .supportedFamilies([.systemSmall])
+        .description("Check your next connections at a glance.")
     }
 }
 
