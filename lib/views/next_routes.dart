@@ -45,9 +45,10 @@ class RoutesScreen extends State<RouteSample> {
   void initState(){
     super.initState();
 
-    // could be unnecessary
+    // setting the group id of the widget -> necessary to send data to it (ios)
     HomeWidget.setAppGroupId('group.flutter_test_widget');
 
+    // first refresh of the GetHomeRoutes displayed
     _updateNextRoutes(_apiKey);
   }
 
@@ -105,7 +106,7 @@ class RoutesScreen extends State<RouteSample> {
       _errorMessage = 'Setup your home location to see connection.';
     }
 
-    
+    // call for updating the home_widget
     updateHomeWidget(_globalKey, _nextRoutes);
   }
     
@@ -138,7 +139,7 @@ class RoutesScreen extends State<RouteSample> {
               child: Text(_errorMessage),
             )
             :
-            RouteListTile(route: _nextRoutes![0])
+            RouteListTile(route: _nextRoutes![0], size: Size.large)
           ),
           const Divider(),
 
@@ -148,7 +149,7 @@ class RoutesScreen extends State<RouteSample> {
               child: Text(_errorMessage),
             )
             :
-            RouteListTile(route: _nextRoutes![1])
+            RouteListTile(route: _nextRoutes![1], size: Size.large)
           ),
           const Divider(),
 
@@ -158,14 +159,11 @@ class RoutesScreen extends State<RouteSample> {
               child: Text(_errorMessage),
             )
             :
-            RouteListTile(route: _nextRoutes![2])
+            RouteListTile(route: _nextRoutes![2], size: Size.large)
           ),
           const Divider(),
-          (_nextRoutes != null ? ListTile(
-            title: RouteWidget(nextRoutes: _nextRoutes!, key: _globalKey)
-          )
-              :
-              const Divider())
+          if (_nextRoutes != null) 
+            ListTile(title: RouteWidget(key: _globalKey, nextRoutes: _nextRoutes!))
         ],
       ),
 
@@ -173,7 +171,6 @@ class RoutesScreen extends State<RouteSample> {
       floatingActionButton: FloatingActionButton(
       onPressed: () async {
         _updateNextRoutes(_apiKey);
-       
       },
       child: const Icon(Icons.refresh),
     ),
