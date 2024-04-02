@@ -162,8 +162,14 @@ class RoutesScreen extends State<RouteSample> {
             RouteListTile(route: _nextRoutes![2], size: Size.large)
           ),
           const Divider(),
-          if (_nextRoutes != null) 
-            ListTile(title: RouteWidget(key: _globalKey, nextRoutes: _nextRoutes!))
+
+          // the following commented code is only for testing. it shows a preview of the widget.
+          // uncomment to view it:
+          // if (_nextRoutes != null)
+          //  ListTile(title: RouteWidget(key: _globalKey, nextRoutes: _nextRoutes!))
+
+          // create an empty Sized Box for getting the size for the global key (important for rendering the image of the widget)
+          SizedBox(key: _globalKey, height: RouteListTile.width, width: RouteListTile.width)
         ],
       ),
 

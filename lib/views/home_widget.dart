@@ -51,6 +51,7 @@ class RouteWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+        // using the width of the RouteListTile to be a perfect square (necessary for correct rendering)
         height: RouteListTile.width,
         child: Column(
           children: [
