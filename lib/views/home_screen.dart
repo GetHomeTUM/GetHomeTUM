@@ -19,9 +19,9 @@ class GetHomeApp extends StatelessWidget {
       home: HomeScreen(),
 
       routes: {
-        '/firstScreen': (context) => MapSample(),
+        '/firstScreen': (context) => const MapScreen(),
         '/secondScreen': (context) => SecondScreen(),
-        '/thirdScreen': (context) => RouteSample(_apiKey),
+        '/thirdScreen': (context) => RoutesScreen(_apiKey),
       },
       
     );

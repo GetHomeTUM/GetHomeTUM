@@ -5,15 +5,15 @@ import 'dart:async';
 import 'package:gethome/services/local_storage_service.dart';
 
 /// Creates a new App Page of the MapSampleState which displays the Google Map with its markers.
-class MapSample extends StatefulWidget {
-  const MapSample({super.key});
+class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapScreen> createState() => MapScreenState();
 }
 
 /// Class for displaying the Google Map with a marker to set the home location.
-class MapSampleState extends State<MapSample> {
+class MapScreenState extends State<MapScreen> {
   // Completer which is necessary for the Google Maps View
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
   // Set of Google Maps markers which are displayed on the Google Map

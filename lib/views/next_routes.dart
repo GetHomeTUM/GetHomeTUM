@@ -10,17 +10,17 @@ import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
 
 
-class RouteSample extends StatefulWidget {
+class RoutesScreen extends StatefulWidget {
   final String _apiKey;
 
-  const RouteSample(this._apiKey, {super.key});
+  const RoutesScreen(this._apiKey, {super.key});
 
   @override
-  State<RouteSample> createState() => RoutesScreen(_apiKey);
+  State<RoutesScreen> createState() => RoutesScreenState(_apiKey);
 }
 
 
-class RoutesScreen extends State<RouteSample> {
+class RoutesScreenState extends State<RoutesScreen> {
   // list where the next three GetHomeRoutes are saved in
   List<GetHomeRoute>? _nextRoutes;
   // LatLng object that stores the home location once it's available
@@ -31,7 +31,7 @@ class RoutesScreen extends State<RouteSample> {
   final String _apiKey;
 
   // constructor that takes the API key
-  RoutesScreen(this._apiKey);
+  RoutesScreenState(this._apiKey);
 
   /// Method that is called when the object is created. Makes the first API call.
   @override
