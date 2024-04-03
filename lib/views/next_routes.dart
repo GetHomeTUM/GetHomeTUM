@@ -3,11 +3,14 @@ import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/models/get_home_route.dart';
 import 'package:gethome/services/api_service.dart';
 import 'package:gethome/services/local_storage_service.dart';
+import 'package:gethome/views/home_widget.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
+
+import 'package:home_widget/home_widget.dart';
 
 
 class RoutesScreen extends StatefulWidget {
@@ -29,6 +32,8 @@ class RoutesScreenState extends State<RoutesScreen> {
   String _errorMessage = 'Unknown error';
   // API key
   final String _apiKey;
+  // global key that is necessary for the widget's image when rendering
+  final _globalKey = GlobalKey();
 
   // constructor that takes the API key
   RoutesScreenState(this._apiKey);
@@ -37,6 +42,11 @@ class RoutesScreenState extends State<RoutesScreen> {
   @override
   void initState(){
     super.initState();
+
+    // setting the group id of the widget -> necessary to send data to it (ios)
+    HomeWidget.setAppGroupId('group.flutter_test_widget');
+
+    // first refresh of the GetHomeRoutes displayed
     _updateNextRoutes(_apiKey);
   }
 
@@ -93,6 +103,9 @@ class RoutesScreenState extends State<RoutesScreen> {
     } else {
       _errorMessage = 'Setup your home location to see connection.';
     }
+
+    // call for updating the home_widget
+    updateHomeWidget(_globalKey, _nextRoutes);
   }
     
 
@@ -124,7 +137,7 @@ class RoutesScreenState extends State<RoutesScreen> {
               child: Text(_errorMessage),
             )
             :
-            RouteListTile(route: _nextRoutes![0])
+            RouteListTile(route: _nextRoutes![0], size: Size.large)
           ),
           const Divider(),
 
@@ -134,7 +147,7 @@ class RoutesScreenState extends State<RoutesScreen> {
               child: Text(_errorMessage),
             )
             :
-            RouteListTile(route: _nextRoutes![1])
+            RouteListTile(route: _nextRoutes![1], size: Size.large)
           ),
           const Divider(),
 
@@ -144,15 +157,23 @@ class RoutesScreenState extends State<RoutesScreen> {
               child: Text(_errorMessage),
             )
             :
-            RouteListTile(route: _nextRoutes![2])
+            RouteListTile(route: _nextRoutes![2], size: Size.large)
           ),
           const Divider(),
+
+          // the following commented code is only for testing. it shows a preview of the widget.
+          // uncomment to view it:
+          // if (_nextRoutes != null)
+          //  ListTile(title: RouteWidget(key: _globalKey, nextRoutes: _nextRoutes!))
+
+          // create an empty Sized Box for getting the size for the global key (important for rendering the image of the widget)
+          SizedBox(key: _globalKey, height: RouteListTile.width, width: RouteListTile.width)
         ],
       ),
 
       // refresh button
       floatingActionButton: FloatingActionButton(
-      onPressed: () {
+      onPressed: () async {
         _updateNextRoutes(_apiKey);
       },
       child: const Icon(Icons.refresh),
