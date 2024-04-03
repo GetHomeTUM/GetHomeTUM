@@ -1,3 +1,5 @@
+package com.example.gethome
+
 import android.content.Context
 import android.appwidget.AppWidgetManager
 import android.content.SharedPreferences
@@ -12,14 +14,13 @@ import java.io.File
 
 class GetHomeWidgetProvider : HomeWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray, widgetData: SharedPreferences) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
         // Perform any updates or data fetching here
         for (appWidgetId in appWidgetIds) {
            // Get reference to SharedPreferences
            val widgetData = HomeWidgetPlugin.getData(context)
            val views = RemoteViews(context.packageName, R.layout.widget_layout).apply {
                // Get chart image and put it in the widget, if it exists
-               val imagePath = widgetData.getString("routes", null)
+               val imagePath = widgetData.getString("filename", null)
                val imageFile = File(imagePath)
                val imageExists = imageFile.exists()
                if (imageExists) {
