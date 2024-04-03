@@ -4,21 +4,25 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'package:gethome/services/local_storage_service.dart';
 
-class MapSample extends StatefulWidget {
-  const MapSample({super.key});
+/// Creates a new App Page of the MapSampleState which displays the Google Map with its markers.
+class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapScreen> createState() => MapScreenState();
 }
 
-class MapSampleState extends State<MapSample> {
+/// Class for displaying the Google Map with a marker to set the home location.
+class MapScreenState extends State<MapScreen> {
+  // Completer which is necessary for the Google Maps View
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+  // Set of Google Maps markers which are displayed on the Google Map
   Set<Marker> _markers = {};
-  // Variable to check whether a marker has been set
+  // Variable to check whether changes have been made
   bool _markerChanged = false;
 
-  // default camera position
-  static CameraPosition _kGooglePlex = CameraPosition(
+  // Default camera position: Garching Forschungszentrum
+  static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(48.263042, 11.670198),
     zoom: 11,
   );
@@ -26,8 +30,9 @@ class MapSampleState extends State<MapSample> {
   /// Updates the set of markers by adding a new marker on the tappedPoint and deleting all the 
   /// other markers with the same label.
   void _updateMarker(LatLng tappedPoint, String label) {
+    _markerChangedToTrue();
+
     setState(() {
-      _markerChangedToTrue();
       // removing all markers with the given ID from the set
       _markers = _markers.where((Marker marker) => marker.infoWindow.title != label).toSet();
       _markers.add(
@@ -43,13 +48,14 @@ class MapSampleState extends State<MapSample> {
     });
   }
 
-  // saving a position with the new LocalStorageService class
+  /// Method to save the given location with the given label. It uses the LocalStorageService class.
   void _saveLocation(LatLng position, String label) {
     LocalStorageService.saveLocation(GetHomeLocation(name: label, lat: position.latitude, lng: position.longitude));
     _markerChanged = false;
   }
 
-  // method to Set the state of _markerChanged and update other instances that are using it
+  /// Method to set the state of _markerChanged and update other instances that are using it. This is important
+  /// for the programm to know where changes have been performed and need to be saved.
   void _markerChangedToTrue() {
     setState(() {
       _markerChanged = true;
@@ -57,15 +63,16 @@ class MapSampleState extends State<MapSample> {
   }
 
   /// Loads the location with the given ID into the set of markers. When the function has finished, the loaded
-  /// marker will be displayed on the map.
+  /// marker will be displayed on the map and it will be shown centered on the map.
   void _loadLocation(String label) async {
-    //GetHomeLocation location = GetHomeLocation(id: 'Home', lat: 48.263042, lng: 11.670198);
+    // load location
     GetHomeLocation? location = await LocalStorageService.loadLocation(label);
     if (location != null) {
+      // add marker of the loaded location
       _updateMarker(LatLng(location.getLatitude(), location.getLongitude()), label);
+      // 
       _markerChanged = false;
 
-      
       // set camera postion to loaded location
       final GoogleMapController controller = await _controller.future;
       await controller.animateCamera(CameraUpdate.newCameraPosition(
@@ -101,19 +108,27 @@ class MapSampleState extends State<MapSample> {
           )
         ],
       ),
+
+      // View of the Google Map
       body: GoogleMap(
         mapType: MapType.normal,
         myLocationButtonEnabled: false,
         initialCameraPosition: _kGooglePlex,
+
         // starting all the following actions when the map is opened
         onMapCreated: (GoogleMapController controller) {
+          // necessary controller setting
           _controller.complete(controller);
+          // loading the location from the local storage service
           _loadLocation('Home');
-          _markerChanged = false;
         },
+
+        // changing the marker to the tapped point
         onTap: (LatLng tappedPoint) {
           _updateMarker(tappedPoint, 'Home');
         },
+
+        // set of markers on the map
         markers: _markers,
       ),
     );
