@@ -79,7 +79,20 @@ struct GetHome_WidgetEntryView: View {
         //Text(entry.description).font(.system(size: 12)).padding(10)
         ChartImage
     }
+    .widgetBackground(Color.white)
   }
+}
+
+extension View {
+    func widgetBackground(_ backgroundView: some View) -> some View {
+        if #available(iOSApplicationExtension 17.0, *) {
+            return containerBackground(for: .widget) {
+                backgroundView
+            }
+        } else {
+            return background(backgroundView)
+        }
+    }
 }
 
 struct GetHome_Widget: Widget {
