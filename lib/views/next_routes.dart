@@ -32,7 +32,7 @@ class RoutesScreen extends State<RouteSample> {
   String _errorMessage = 'Unknown error';
   // API key
   final String _apiKey;
-
+  // global key that is necessary for the widget's image when rendering
   final _globalKey = GlobalKey();
 
   // constructor that takes the API key

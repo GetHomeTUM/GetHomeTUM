@@ -2,6 +2,7 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: TimelineProvider {
+    // placeholder displayed in the widget configuration menu
     func placeholder(in context: Context) -> GetHome_WidgetEntry {
       let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
       let filename = userDefaults?.string(forKey: "filename") ?? "No screenshot available"
@@ -60,7 +61,7 @@ struct GetHome_WidgetEntryView: View {
             }
             return bundle.bundleURL
         }
-   // New: create the ChartImage view
+   // creating a ChartImage View that shows the rendered image from flutter
    var ChartImage: some View {
         if let uiImage = UIImage(contentsOfFile: entry.filename) {
             let image = Image(uiImage: uiImage)
@@ -73,6 +74,7 @@ struct GetHome_WidgetEntryView: View {
     }
 
 
+// the actual body of the widget
   var body: some View {
     VStack {
         //Text(entry.title).font(Font.custom("Chewy", size: 13))
