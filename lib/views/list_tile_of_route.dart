@@ -35,11 +35,11 @@ class RouteListTile extends StatelessWidget {
                 height: 30,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: (route.color == null ? Colors.blue : Color(route.color!)), // color of the line in the rectangle
+                  color: route.firstLineColor ?? Colors.blue, // color of the line in the rectangle
                   borderRadius: BorderRadius.circular(5), // circular corners
                 ),
                 child: Text(
-                  route.firstLine.toString(),
+                  route.firstLineName.toString(),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
