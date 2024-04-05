@@ -1,0 +1,472 @@
+{
+   "geocoded_waypoints" : 
+   [
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJEYxtM2FynkcRnfFb3ERNoHk",
+         "types" : 
+         [
+            "establishment",
+            "point_of_interest",
+            "university"
+         ]
+      },
+      {
+         "geocoder_status" : "OK",
+         "place_id" : "ChIJHzKN5-xynkcRTMK3Dk-H0vg",
+         "types" : 
+         [
+            "establishment",
+            "point_of_interest",
+            "subway_station",
+            "transit_station"
+         ]
+      }
+   ],
+   "routes" : 
+   [
+      {
+         "bounds" : 
+         {
+            "northeast" : 
+            {
+               "lat" : 48.264682,
+               "lng" : 11.6713613
+            },
+            "southwest" : 
+            {
+               "lat" : 48.1461954,
+               "lng" : 11.5655242
+            }
+         },
+         "copyrights" : "Map data ©2024 GeoBasis-DE/BKG (©2009)",
+         "legs" : 
+         [
+            {
+               "arrival_time" : 
+               {
+                  "text" : "18:59",
+                  "time_zone" : "Europe/Berlin",
+                  "value" : 1712336340
+               },
+               "departure_time" : 
+               {
+                  "text" : "18:17",
+                  "time_zone" : "Europe/Berlin",
+                  "value" : 1712333836
+               },
+               "distance" : 
+               {
+                  "text" : "18.4 km",
+                  "value" : 18371
+               },
+               "duration" : 
+               {
+                  "text" : "42 mins",
+                  "value" : 2504
+               },
+               "end_address" : "Garching-Forschungszentrum, 85748 Garching bei München, Germany",
+               "end_location" : 
+               {
+                  "lat" : 48.264682,
+                  "lng" : 11.6713613
+               },
+               "start_address" : "Arcisstraße 21, 80333 München, Germany",
+               "start_location" : 
+               {
+                  "lat" : 48.1490101,
+                  "lng" : 11.5674074
+               },
+               "steps" : 
+               [
+                  {
+                     "distance" : 
+                     {
+                        "text" : "0.3 km",
+                        "value" : 304
+                     },
+                     "duration" : 
+                     {
+                        "text" : "4 mins",
+                        "value" : 253
+                     },
+                     "end_location" : 
+                     {
+                        "lat" : 48.1480998,
+                        "lng" : 11.566048
+                     },
+                     "html_instructions" : "Walk to Technische Universität",
+                     "polyline" : 
+                     {
+                        "points" : "ib{dHigreAFa@~@h@bAf@`@RDDFBNNKh@Q`AERg@hCVP\\iB"
+                     },
+                     "start_location" : 
+                     {
+                        "lat" : 48.1490101,
+                        "lng" : 11.5674074
+                     },
+                     "steps" : 
+                     [
+                        {
+                           "distance" : 
+                           {
+                              "text" : "13 m",
+                              "value" : 13
+                           },
+                           "duration" : 
+                           {
+                              "text" : "1 min",
+                              "value" : 10
+                           },
+                           "end_location" : 
+                           {
+                              "lat" : 48.1489659,
+                              "lng" : 11.567575
+                           },
+                           "html_instructions" : "Walk \u003cb\u003eeast\u003c/b\u003e towards \u003cb\u003eUniversity Library Of The Technische Universität München\u003c/b\u003e",
+                           "polyline" : 
+                           {
+                              "points" : "ib{dHigreAFa@"
+                           },
+                           "start_location" : 
+                           {
+                              "lat" : 48.1490101,
+                              "lng" : 11.5674074
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : 
+                           {
+                              "text" : "0.1 km",
+                              "value" : 126
+                           },
+                           "duration" : 
+                           {
+                              "text" : "2 mins",
+                              "value" : 100
+                           },
+                           "end_location" : 
+                           {
+                              "lat" : 48.1479881,
+                              "lng" : 11.5669402
+                           },
+                           "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eUniversity Library Of The Technische Universität München\u003c/b\u003e",
+                           "maneuver" : "turn-right",
+                           "polyline" : 
+                           {
+                              "points" : "ab{dHkhreA~@h@bAf@`@RDDFBNN"
+                           },
+                           "start_location" : 
+                           {
+                              "lat" : 48.1489659,
+                              "lng" : 11.567575
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : 
+                           {
+                              "text" : "0.1 km",
+                              "value" : 115
+                           },
+                           "duration" : 
+                           {
+                              "text" : "2 mins",
+                              "value" : 92
+                           },
+                           "end_location" : 
+                           {
+                              "lat" : 48.1482468,
+                              "lng" : 11.5655242
+                           },
+                           "html_instructions" : "Turn \u003cb\u003eright\u003c/b\u003e onto \u003cb\u003eGabelsbergerstraße\u003c/b\u003e",
+                           "maneuver" : "turn-right",
+                           "polyline" : 
+                           {
+                              "points" : "}{zdHkdreAKh@Q`AERg@hCVP"
+                           },
+                           "start_location" : 
+                           {
+                              "lat" : 48.1479881,
+                              "lng" : 11.5669402
+                           },
+                           "travel_mode" : "WALKING"
+                        },
+                        {
+                           "distance" : 
+                           {
+                              "text" : "50 m",
+                              "value" : 50
+                           },
+                           "duration" : 
+                           {
+                              "text" : "1 min",
+                              "value" : 51
+                           },
+                           "end_location" : 
+                           {
+                              "lat" : 48.1480998,
+                              "lng" : 11.566048
+                           },
+                           "html_instructions" : "Cross the road\u003cdiv style=\"font-size:0.9em\"\u003eDestination will be on the right\u003c/div\u003e",
+                           "polyline" : 
+                           {
+                              "points" : "q}zdHo{qeA\\iB"
+                           },
+                           "start_location" : 
+                           {
+                              "lat" : 48.1482468,
+                              "lng" : 11.5655242
+                           },
+                           "travel_mode" : "WALKING"
+                        }
+                     ],
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : 
+                     {
+                        "text" : "1.8 km",
+                        "value" : 1774
+                     },
+                     "duration" : 
+                     {
+                        "text" : "8 mins",
+                        "value" : 450
+                     },
+                     "end_location" : 
+                     {
+                        "lat" : 48.15142119999999,
+                        "lng" : 11.5818712
+                     },
+                     "html_instructions" : "Bus towards CityRing via Pinakotheken - Giselastraße",
+                     "polyline" : 
+                     {
+                        "points" : "w|zdHy~qeAGEJm@TmAJe@X_BHc@TkABULs@z@sEx@iEH]DQNu@n@gDDWd@eCLs@AM?A?C?C@GFW@E@G@E?G?C?A?UC@EACAGAAAUOGESKeAk@OKw@a@cBaAGEs@a@WQDYP_AfAaGRgAf@iCfAaGVuABMPgAICiAc@YKuDuAg@Qo@WYKYK{Ai@MG[KECMEIEIEw@YmAc@]MYKIKCECACCGCSI]OSGECSGBO"
+                     },
+                     "start_location" : 
+                     {
+                        "lat" : 48.1481165,
+                        "lng" : 11.5660523
+                     },
+                     "transit_details" : 
+                     {
+                        "arrival_stop" : 
+                        {
+                           "location" : 
+                           {
+                              "lat" : 48.15142119999999,
+                              "lng" : 11.5818712
+                           },
+                           "name" : "Siegestor"
+                        },
+                        "arrival_time" : 
+                        {
+                           "text" : "18:29",
+                           "time_zone" : "Europe/Berlin",
+                           "value" : 1712334540
+                        },
+                        "departure_stop" : 
+                        {
+                           "location" : 
+                           {
+                              "lat" : 48.1481165,
+                              "lng" : 11.5660523
+                           },
+                           "name" : "Technische Universität"
+                        },
+                        "departure_time" : 
+                        {
+                           "text" : "18:21",
+                           "time_zone" : "Europe/Berlin",
+                           "value" : 1712334090
+                        },
+                        "headsign" : "CityRing via Pinakotheken - Giselastraße",
+                        "line" : 
+                        {
+                           "agencies" : 
+                           [
+                              {
+                                 "name" : "Münchner Verkehrsgesellschaft",
+                                 "phone" : "011 49 800 344226600",
+                                 "url" : "http://www.mvg-mobil.de/"
+                              }
+                           ],
+                           "color" : "#e66432",
+                           "name" : "CityRing Hauptbahnhof Nord - Universität - Ostbahnhof - Silberhornstr. - Hauptbahnhof Nord",
+                           "short_name" : "58",
+                           "text_color" : "#ffffff",
+                           "vehicle" : 
+                           {
+                              "icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/bus2.png",
+                              "name" : "Bus",
+                              "type" : "BUS"
+                           }
+                        },
+                        "num_stops" : 5
+                     },
+                     "travel_mode" : "TRANSIT"
+                  },
+                  {
+                     "distance" : 
+                     {
+                        "text" : "32 m",
+                        "value" : 32
+                     },
+                     "duration" : 
+                     {
+                        "text" : "1 min",
+                        "value" : 32
+                     },
+                     "end_location" : 
+                     {
+                        "lat" : 48.1511425,
+                        "lng" : 11.5817217
+                     },
+                     "html_instructions" : "Walk to Universität",
+                     "polyline" : 
+                     {
+                        "points" : "kq{dHwaueAv@^"
+                     },
+                     "start_location" : 
+                     {
+                        "lat" : 48.15141879999999,
+                        "lng" : 11.5818836
+                     },
+                     "steps" : 
+                     [
+                        {
+                           "distance" : 
+                           {
+                              "text" : "32 m",
+                              "value" : 32
+                           },
+                           "duration" : 
+                           {
+                              "text" : "1 min",
+                              "value" : 32
+                           },
+                           "end_location" : 
+                           {
+                              "lat" : 48.1511425,
+                              "lng" : 11.5817217
+                           },
+                           "polyline" : 
+                           {
+                              "points" : "kq{dHwaueAv@^"
+                           },
+                           "start_location" : 
+                           {
+                              "lat" : 48.15141879999999,
+                              "lng" : 11.5818836
+                           },
+                           "travel_mode" : "WALKING"
+                        }
+                     ],
+                     "travel_mode" : "WALKING"
+                  },
+                  {
+                     "distance" : 
+                     {
+                        "text" : "16.3 km",
+                        "value" : 16261
+                     },
+                     "duration" : 
+                     {
+                        "text" : "22 mins",
+                        "value" : 1320
+                     },
+                     "end_location" : 
+                     {
+                        "lat" : 48.264682,
+                        "lng" : 11.6713613
+                     },
+                     "html_instructions" : "Underground towards Garching, Forschungszentrum",
+                     "polyline" : 
+                     {
+                        "points" : "uc{dHizteAAFWIa@OsBu@kAe@mBw@YKYKi@S]KCCa@Ou@W_Bm@UIeA_@WKICa@OWKmAg@i@Ss@Wk@SSIMEa@MeC}@OEoBw@aA_@kCcAcBm@a@Oy@[sCeAu@YsAe@a@OIEi@Ss@OeBa@C?aCScAKSE_@KWIs@Wm@U_@Sa@S_@SeBuAw@q@][GGq@u@y@_AwAcBy@y@s@s@mDsDA?KMMOsA}A[_@]_@EEg@i@KMsC{CCEYYwAyA]]]]AAeBiBKKMMo@q@y@{@]]IKiCoC]][]cBiBMM{Bu@k@o@m@q@MOMMwA}AsB_Cg@k@uFiGe@o@e@m@eFmFEGIIg@g@w@y@cAeAiBkBKKq@q@g@g@a@c@CAmCoCsA}AOQgAkA_@a@EGs@s@k@o@e@g@aAcAq@m@i@c@MIm@i@QSu@s@QUg@k@SUW[W]EGW[a@i@Y_@u@y@k@m@cAiAo@w@_@g@]g@GIGKYa@g@u@OSU[_@c@KKk@o@AA{@_AIKYWo@m@OOGISSIIKKQQCCSKGE_@QAAYM_@KMCUEIAQC[AA?IAC?I?]Am@?m@CO?a@GWESE]Ko@WMEMEcAa@SIMGoBeAWK_@QwBcAgAk@a@SOGOIuGcCuAg@{@[YIQE[Eu@Ge@Ai@B]@M@_@DcATg@PYNQJQL_@V_@ZMJURQRY\\SVSZ[f@CDq@fAEHa@j@g@l@cBvACBMFKFe@VUHUHu@T]FKBYFk@F[BeCBu@Cu@EWCuASiFsAYIo@_@sAe@wBk@YCWCcGaBgEmAOGkBe@wBu@kAa@[Mo@WSIy@_@mAi@GCy@_@WMk@WgCgAe@S]QMI_@Si@[_@W_@WII_@Ui@[e@SSM_@Qs@Yi@Us@]{@_@w@]k@Ws@[i@WcAc@iAg@kAg@cAe@mAk@oAi@k@Y_A]]Mm@Ou@QgAMG?KAWAG?S?]@}@BgBH}@DQ?c@Ba@?S?O?c@Ac@C]Cc@GYEQESC_AMe@IMCMCGAC?_@Gc@Io@K_Cg@oAW}@QKCEAsD{@{@UeEeA]KiIsBcFuAi@OcA]k@Sc@Q{@[}@_@AA]Ok@Uc@S]Oi@YkBcAsEeCcFsCeAk@{A{@w@a@iAg@aAc@oAe@IC[Ka@My@UICo@Og@KwA[QEQESEYGKAYG}HeBmCm@kAUuH_BcAUc@Ma@Kw@Y_@OOKCCIEQKCC_@U}@i@IGWMuAy@KIGEo@g@ECKIKGGGQKMMWWUYEGc@i@]a@MOo@kAS]w@gBQ_@Qm@Og@Sq@Ke@_@aBAMk@yCSaBIo@CSAKSaCAKQyCAWI_C?AAQBoAJkC`@aFFq@BOPsAJ{@ZmB\\_CBQBQPcABW@IZuBNeA^kDJcANaBBa@V}FZ}H@QP}EF}ABYLeD@o@?ABu@HmDJwG?aAAiA?aCE}@MiDYsEKaA_@eDk@aEIk@}@mEe@yAQm@[aAc@iAeAoBqA}AQUEC]_@QOa@]IGWSg@[g@YYMYMg@Se@MgBi@y@UoEgAmCs@uCcAw@WcCkAgAk@kAo@cCuAECc@S}EgBGCWKQEECEAqBk@{C{@y@WmGkB}@Y_Be@qAa@?A"
+                     },
+                     "start_location" : 
+                     {
+                        "lat" : 48.1492291,
+                        "lng" : 11.5806856
+                     },
+                     "transit_details" : 
+                     {
+                        "arrival_stop" : 
+                        {
+                           "location" : 
+                           {
+                              "lat" : 48.264682,
+                              "lng" : 11.6713613
+                           },
+                           "name" : "Garching-Forschungszentrum"
+                        },
+                        "arrival_time" : 
+                        {
+                           "text" : "18:59",
+                           "time_zone" : "Europe/Berlin",
+                           "value" : 1712336340
+                        },
+                        "departure_stop" : 
+                        {
+                           "location" : 
+                           {
+                              "lat" : 48.1492291,
+                              "lng" : 11.5806856
+                           },
+                           "name" : "Universität"
+                        },
+                        "departure_time" : 
+                        {
+                           "text" : "18:37",
+                           "time_zone" : "Europe/Berlin",
+                           "value" : 1712335020
+                        },
+                        "headsign" : "Garching, Forschungszentrum",
+                        "line" : 
+                        {
+                           "agencies" : 
+                           [
+                              {
+                                 "name" : "Münchner Verkehrsgesellschaft",
+                                 "phone" : "011 49 800 344226600",
+                                 "url" : "http://www.mvg-mobil.de/"
+                              }
+                           ],
+                           "color" : "#0065ae",
+                           "name" : "Garching-Forschungszentrum - Fröttmaning - Münchner Freiheit - Odeonsplatz - Sendlinger Tor - Harras - Klinikum Großhadern",
+                           "short_name" : "U6",
+                           "text_color" : "#ffffff",
+                           "vehicle" : 
+                           {
+                              "icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/subway2.png",
+                              "local_icon" : "//maps.gstatic.com/mapfiles/transit/iw2/6/de-metro.png",
+                              "name" : "Underground",
+                              "type" : "SUBWAY"
+                           }
+                        },
+                        "num_stops" : 12
+                     },
+                     "travel_mode" : "TRANSIT"
+                  }
+               ],
+               "traffic_speed_entry" : [],
+               "via_waypoint" : []
+            }
+         ],
+         "overview_polyline" : 
+         {
+            "points" : "ib{dHigreAFa@~@h@dBz@LHNNKh@WtAg@hCVP\\iBC?GEJm@`@sBb@cCbBiJxAoHhByJAWLm@@S?UC@ICg@YaDeBwD{BrBcLjCoNPgAICcBo@gHkC_DiAeFmBUWmAe@YKBQtLlFAFWIuCeAyD}A{Bw@yHsCsHsCgHiCsIaDwIaDk@Ui@Ss@OiBa@eE_@_Cs@mAi@aAg@cEkDkBuBqC}CoFuFiJgKeHmHcJqJqBwB{Bu@k@o@m@q@[]iNsOkA}AkFuFmDqDoEqEe@e@mCoCsA}AwA}Ae@i@gEoEwCeCaCiCiAwAiC_DoBwBoA_BgA_Bw@iAu@_AuB}BcBaBq@s@UU[Qa@Sy@Y_AOk@CcCEq@Gk@KiBo@wAk@}BmAwFmCq@[eHmCqCcAk@OqAMoA@k@B_@DcATaA`@c@X_@Vm@f@g@f@m@t@eBpCg@t@g@l@cBvAQJq@^k@RsA\\mBVeCBu@CmAIuASiFsAYIo@_@sAe@wBk@q@GgQ}EoG}BcDwAeGmCqBcAsBuAiAq@y@a@qD_BsEqBqOaH}Ak@cBa@sBQwBD{ERiBAaAG}@MkCa@c@IwB]yGuA{LyCgJ_CmGeBoE_BiCgAaAc@uC}AyQaKaCiAqCiAaCs@kGuAqN}CaKuBgBc@yAe@o@[c@Y_CuAaBcAw@m@e@]_@Ym@q@uAcBcAiBiAgCaAmDa@oBk@yCSaBMcAUmCSeDKwCASN{Eh@sGTcBhA{HZwBj@{Dj@oFRcCr@{P^gJRmGTeMAkCE_EMiDYsEk@gFu@mF}@mEe@yAm@oBc@iAeAoBcBsBwAqAa@[oAu@s@[mAa@aD_A}I{BmE{AkEwByF}CoG}ByGmBeNcEqAc@"
+         },
+         "summary" : "",
+         "warnings" : 
+         [
+            "Walking directions are in beta. Use caution – This route may be missing pavements or pedestrian paths."
+         ],
+         "waypoint_order" : []
+      }
+   ],
+   "status" : "OK"
+}
