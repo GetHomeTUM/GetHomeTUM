@@ -79,10 +79,11 @@ class RoutesScreenState extends State<RoutesScreen> {
       return Future.value(position);
     });
 
-    // check wether the position an the homePosition are aproximately the same
+    // check wether the position and the homePosition are approximately the same
+    // the accuracy of 0.002 is approximately 1-2 minutes away from the home_location
     if (position != null && _homePosition != null) {
-      if ((position!.latitude-_homePosition!.latitude).abs() < 0.001
-        && (position!.longitude-_homePosition!.longitude).abs() < 0.001) {
+      if ((position!.latitude-_homePosition!.latitude).abs() < 0.002
+        && (position!.longitude-_homePosition!.longitude).abs() < 0.002) {
         atHome = true;
         setState(() {
           _errorMessage = 'No connections available. You are at home.';
