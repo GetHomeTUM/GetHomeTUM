@@ -81,8 +81,8 @@ class RoutesScreenState extends State<RoutesScreen> {
 
     // check wether the position an the homePosition are aproximately the same
     if (position != null && _homePosition != null) {
-      if ((position!.latitude-_homePosition!.latitude).abs() < 0.00001
-        && (position!.longitude-_homePosition!.longitude).abs() < 0.00001) {
+      if ((position!.latitude-_homePosition!.latitude).abs() < 0.001
+        && (position!.longitude-_homePosition!.longitude).abs() < 0.001) {
         atHome = true;
         setState(() {
           _errorMessage = 'No connections available. You are at home.';
