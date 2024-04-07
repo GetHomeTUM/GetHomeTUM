@@ -40,7 +40,7 @@ class LocalStorageService{
 
     /// Use _preferences to save the location as the JSON String
     try {
-      return await _preferences!.setString(key, locationJson).then((value) => value);
+      return await _preferences!.setString(key.trim().toLowerCase(), locationJson).then((value) => value);
     } catch (e) {
       debugPrint("Error at _preferences!.setString(key, locationJson): $e");
       return false;
