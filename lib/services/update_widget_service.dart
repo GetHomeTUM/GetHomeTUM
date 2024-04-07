@@ -8,8 +8,8 @@ class UpdateWidgetService {
   /// list of the next GetHomeRoutes. The method renders the image of the widget first and then
   /// updated it.
   static void updateHomeWidget(
-      var globalKey, List<GetHomeRoute>? nextRoutes) async {
-    await renderWidget(globalKey, nextRoutes);
+      var globalKey, List<GetHomeRoute>? nextRoutes, bool atHome) async {
+    await renderWidget(globalKey, nextRoutes, atHome);
     HomeWidget.updateWidget(
         iOSName: 'GetHomeIos', androidName: 'GetHomeWidgetProvider');
   }
@@ -19,14 +19,16 @@ class UpdateWidgetService {
   /// screen will be rendered. Parameters are a global key for the size and an optional list of the
   /// next GetHomeRoutes
   static Future<String> renderWidget(
-      var globalKey, List<GetHomeRoute>? nextRoutes) async {
+      var globalKey, List<GetHomeRoute>? nextRoutes, bool atHome) async {
     if (globalKey.currentContext != null) {
       // rendering
       var path = await HomeWidget.renderFlutterWidget(
-        nextRoutes != null && nextRoutes.isNotEmpty
-            ? // either the RouteWidget of a DefaultImage is rendered
-            RouteWidget(nextRoutes: nextRoutes)
-            : const DefaultImage(),
+        atHome
+          ? const AtHomeImage()
+          : (nextRoutes != null && nextRoutes.isNotEmpty
+            ? RouteWidget(nextRoutes: nextRoutes)
+            : const DefaultImage()
+            ),
         // data for storing and rendering the image
         key: 'filename',
         logicalSize: globalKey.currentContext!.size!,
