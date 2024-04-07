@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
-
+import 'package:gethome/services/maps_app_service.dart';
 import 'package:home_widget/home_widget.dart';
 
 class RoutesScreen extends StatefulWidget {
@@ -138,7 +138,10 @@ class RoutesScreenState extends State<RoutesScreen> {
               ? Center(
                   child: Text(_errorMessage),
                 )
-              : RouteListTile(route: _nextRoutes![0], size: Size.large)),
+              : GestureDetector(
+                onTap: () => MapsAppService.openRouteInGoogleMaps(_nextRoutes![0]),
+                child: RouteListTile(route: _nextRoutes![0], size: Size.large))
+              ),
           const Divider(),
 
           // displaying the second route (in the same way as the first route of the list)
@@ -146,7 +149,10 @@ class RoutesScreenState extends State<RoutesScreen> {
               ? Center(
                   child: Text(_errorMessage),
                 )
-              : RouteListTile(route: _nextRoutes![1], size: Size.large)),
+              : GestureDetector(
+                onTap: () => MapsAppService.openRouteInGoogleMaps(_nextRoutes![1]),
+                child: RouteListTile(route: _nextRoutes![1], size: Size.large))
+              ),
           const Divider(),
 
           // displaying the third route (in the same way as the first route of the list)
@@ -154,7 +160,10 @@ class RoutesScreenState extends State<RoutesScreen> {
               ? Center(
                   child: Text(_errorMessage),
                 )
-              : RouteListTile(route: _nextRoutes![2], size: Size.large)),
+              : GestureDetector(
+                onTap: () => MapsAppService.openRouteInGoogleMaps(_nextRoutes![2]),
+                child: RouteListTile(route: _nextRoutes![2], size: Size.large))
+              ),
           const Divider(),
 
           // the following commented code is only for testing. it shows a preview of the widget.
