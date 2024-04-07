@@ -30,6 +30,8 @@ class RoutesScreenState extends State<RoutesScreen> {
   String _errorMessage = 'Unknown error';
   // API key
   final String _apiKey;
+  // bool the check wether at home or not. necessary for the widget and to save power resources with api calls.
+  bool atHome = false;
   // global key that is necessary for the widget's image when rendering
   final _globalKey = GlobalKey();
 
@@ -77,8 +79,23 @@ class RoutesScreenState extends State<RoutesScreen> {
       return Future.value(position);
     });
 
-    // making the API call using both the device's location and the home location
+    // check wether the position and the homePosition are approximately the same
+    // the accuracy of 0.002 is approximately 1-2 minutes away from the home_location
     if (position != null && _homePosition != null) {
+      if ((position!.latitude-_homePosition!.latitude).abs() < 0.002
+        && (position!.longitude-_homePosition!.longitude).abs() < 0.002) {
+        atHome = true;
+        setState(() {
+          _errorMessage = 'No connections available. You are at home.';
+        });
+      } else {
+        atHome = false;
+      }
+    }
+    
+    
+    // making the API call using both the device's location and the home location
+    if (position != null && _homePosition != null && !atHome) {
       // list of coordinates
       List<String> cords = [
         position!.latitude.toString(),
@@ -94,20 +111,26 @@ class RoutesScreenState extends State<RoutesScreen> {
         // API call
         list = await GoogleAPI.getRoutes(apiKey, cords);
       } catch (error) {
-        _errorMessage = 'No connection found.';
+        setState(() {
+          _errorMessage = 'No connection found.';
+        });
       }
       // setting the value of the _nextRoutes list
       setState(() {
         _nextRoutes = list;
       });
     } else if (position == null) {
-      _errorMessage = 'Error getting device\'s location.';
-    } else {
-      _errorMessage = 'Setup your home location to see connection.';
+      setState(() {
+        _errorMessage = 'Error getting device\'s location.';
+      });
+    } else if (_homePosition == null) {
+      setState(() {
+        _errorMessage = 'Setup your home location to see connection.';
+      });
     }
 
     // call for updating the home_widget
-    UpdateWidgetService.updateHomeWidget(_globalKey, _nextRoutes);
+    UpdateWidgetService.updateHomeWidget(_globalKey, _nextRoutes, atHome);
   }
 
   @override
@@ -158,7 +181,7 @@ class RoutesScreenState extends State<RoutesScreen> {
           const Divider(),
 
           // the following commented code is only for testing. it shows a preview of the widget.
-          // uncomment to view it:
+          // uncomment to view it (also don't forget to import the class):
           // if (_nextRoutes != null)
           //  ListTile(title: RouteWidget(key: _globalKey, nextRoutes: _nextRoutes!))
 
@@ -175,6 +198,7 @@ class RoutesScreenState extends State<RoutesScreen> {
         onPressed: () async {
           _updateNextRoutes(_apiKey);
         },
+        backgroundColor: const Color.fromARGB(255, 202, 229, 249),
         child: const Icon(Icons.refresh),
       ),
     );

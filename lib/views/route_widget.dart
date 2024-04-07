@@ -33,7 +33,7 @@ class RouteWidget extends StatelessWidget {
   }
 }
 
-/// Class of the default image the is displayed if the routes are not available. Returns a
+/// Class of the default image that is displayed if the routes are not available. Returns a
 /// SizedBox that simply says 'Connections not available'.
 class DefaultImage extends StatelessWidget {
   const DefaultImage({
@@ -52,5 +52,32 @@ class DefaultImage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+/// Class of an Image that is displayed if the user is currently at his home location.
+class AtHomeImage extends StatelessWidget {
+  const AtHomeImage({
+    super.key,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: RouteListTile.width,
+      height: RouteListTile.width,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('You are at home.',
+              style: TextStyle(fontSize: 20, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 10.0),
+            Text('😴',
+              style: TextStyle(fontSize: 30.0)
+            ),
+          ],
+        ),
+      );
   }
 }
