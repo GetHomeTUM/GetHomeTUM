@@ -69,12 +69,12 @@ class AtHomeImage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('You are at home.',
-              style: TextStyle(fontSize: 15, color: Colors.black),
+              style: TextStyle(fontSize: 20, color: Colors.black),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10.0),
             Text('😴',
-              style: TextStyle(fontSize: 25.0)
+              style: TextStyle(fontSize: 30.0)
             ),
           ],
         ),
