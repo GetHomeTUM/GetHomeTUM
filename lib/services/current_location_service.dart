@@ -1,11 +1,12 @@
 import 'package:geolocator/geolocator.dart';
+import 'package:gethome/models/get_home_location.dart';
 
 class LocationService {
 
   ///The getCurrentLocation() method is a static asynchronous function in the LocationService class.
   ///It first checks if location services are enabled and if the necessary permissions are granted.
   ///If all checks pass, it retrieves and returns the current geographical location as a Position object using the Geolocator.getCurrentPosition() method.
-  static Future<Position> getCurrentLocation() async {
+  static Future<GetHomeLocation> getCurrentLocation() async {
     // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -26,7 +27,8 @@ class LocationService {
     }
     // If permissions are granted, return the current location
     try {
-      return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+      // return GetHomeLocation.fromPosition(await Geolocator.getCurrentPosition());
+      return Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best).then((value) => GetHomeLocation.fromPosition(value));
     }
     //If facing a problem while fetching location data due to several reasons including poor GPS signal, or the device is in airplane mode.
     catch(error) {
