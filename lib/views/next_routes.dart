@@ -23,8 +23,6 @@ class RoutesScreenState extends State<RoutesScreen> {
   
   // GetHomeLocation object of the home location
   GetHomeLocation? _homeLocation;
-  // GetHomeLocation object of the current location
-  GetHomeLocation? _currentLocation;
 
   // String that is displayed in case of an error
   String _errorMessage = 'Unknown error';
@@ -71,11 +69,11 @@ class RoutesScreenState extends State<RoutesScreen> {
     setState(() {
       _errorMessage = 'Waiting for the device\'s location...';
     });
-    GetHomeLocation updatedCurrentLocation = await LocationService.getCurrentLocation().catchError((error){
+    GetHomeLocation currentLocation = await LocationService.getCurrentLocation().catchError((error){
       debugPrint("Error at jsonEncode(location): $error");
       return GetHomeLocation.empty();
     });
-    if(updatedCurrentLocation.isEmpty()){
+    if(currentLocation.isEmpty()){
       setState(() {
         _errorMessage = 'Failed to get the current device\'s location.';
       });
@@ -84,7 +82,7 @@ class RoutesScreenState extends State<RoutesScreen> {
 
     // check wether the position and the homePosition are approximately the same
     // a distance less than 0.25 km is considered as being at home
-    if(_currentLocation!.getDistanceTo(_homeLocation!) < 0.25){
+    if(currentLocation.getDistanceTo(_homeLocation!) < 0.25){
       atHome = true;
       setState(() {
         _errorMessage = 'No connections available. You are at home.';
@@ -98,8 +96,8 @@ class RoutesScreenState extends State<RoutesScreen> {
     if (!atHome) {
       // list of coordinates
       List<String> cords = [
-        _currentLocation!.getLatitude().toString(),
-        _currentLocation!.getLatitude().toString(),
+        currentLocation.getLatitude().toString(),
+        currentLocation.getLatitude().toString(),
         _homeLocation!.getLongitude().toString(),
         _homeLocation!.getLatitude().toString()
       ];
