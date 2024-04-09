@@ -1,21 +1,24 @@
-/// Documentation: GetHomeLocation
-/// 
-/// 2 Variables:
-/// - _lat: double    latitude
-/// - _lng: double    longitude
-/// 
-/// 1 factory:
-/// - GetHomeLocation.fromJson(Map<String, dynamic> json) - Converts a JSON object to a GetHomeLocation
-/// 
-/// 2 Methods:
-/// - toJson() - Converts a GetHomeLocation to a JSON-encodable map (default call by dart:convert.jsonEncode())
-/// - toString() - Returns a string representation of the object
+import 'package:geolocator/geolocator.dart';
+
+/// GetHomeLocation is a class that represents a location with latitude and longitude.
+/// It's goal is to provide a generic way to handle locations in the app and standardize datatypes
 class GetHomeLocation {
   final double _lat;
   final double _lng;
 
-  /// Creates a GetHomeLocation with the given latitude and longitude.
+  /// Constructor:Creates a GetHomeLocation with the given latitude and longitude.
   GetHomeLocation({required double lat, required double lng}) : _lat = lat, _lng = lng;
+
+  /// Creates a GetHomeLocation from a Position object (from package:geolocator_platform_interface)
+  factory GetHomeLocation.fromPosition(Position position) {
+    return GetHomeLocation(lat: position.latitude, lng: position.longitude);
+  }
+
+  /// Creates an empty GetHomeLocation with lat and lng set to 0.
+  factory GetHomeLocation.empty() {
+    return GetHomeLocation(lat: 0, lng: 0);
+  }
+
 
   /// Converts a JSON object to a GetHomeLocation
   factory GetHomeLocation.fromJson(Map<String, dynamic> json) {
@@ -31,6 +34,16 @@ class GetHomeLocation {
       'lat': _lat,
       'lng': _lng,
     };
+  }
+
+  // Returns the distance in m
+  double getDistanceTo(GetHomeLocation location) {
+    return Geolocator.distanceBetween(_lat, _lng, location._lat, location._lng);
+  }
+
+  // Returns true if the location is empty (lat and lng are 0)
+  bool isEmpty() {
+    return _lat == 0 && _lng == 0;
   }
 
   // Getters

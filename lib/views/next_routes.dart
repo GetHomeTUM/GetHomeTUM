@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/models/get_home_route.dart';
 import 'package:gethome/services/api_service.dart';
+import 'package:gethome/services/current_location_service.dart';
 import 'package:gethome/services/local_storage_service.dart';
 import 'package:gethome/services/update_widget_service.dart';
-import 'dart:async';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gethome/services/current_location_service.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
-
 import 'package:home_widget/home_widget.dart';
 
 class RoutesScreen extends StatefulWidget {
@@ -24,14 +20,19 @@ class RoutesScreen extends StatefulWidget {
 class RoutesScreenState extends State<RoutesScreen> {
   // list where the next three GetHomeRoutes are saved in
   List<GetHomeRoute>? _nextRoutes;
-  // LatLng object that stores the home location once it's available
-  LatLng? _homePosition;
+  
+  // GetHomeLocation object of the home location
+  GetHomeLocation? _homeLocation;
+
   // String that is displayed in case of an error
   String _errorMessage = 'Unknown error';
+  
   // API key
   final String _apiKey;
+  
   // bool the check wether at home or not. necessary for the widget and to save power resources with api calls.
   bool atHome = false;
+  
   // global key that is necessary for the widget's image when rendering
   final _globalKey = GlobalKey();
 
@@ -50,58 +51,55 @@ class RoutesScreenState extends State<RoutesScreen> {
     _updateNextRoutes(_apiKey);
   }
 
-  /// Future that loads the home location and stores it in the attribute _homePosition.
-  Future<void> _updateHomePostion() async {
-    GetHomeLocation? location = await LocalStorageService.loadLocation('Home');
-    if (location != null) {
-      setState(() {
-        _homePosition = LatLng(location.getLatitude(), location.getLongitude());
-        _errorMessage = 'Waiting for the device\'s location...';
-      });
-    }
-  }
-
   /// Method that updates the home location first uses the device's location to update the attribute of the list
   /// of the GetHomeRoutes. If an error occurs while performing one of the actions, the specific error message
   /// will be stored in '_errorMessage'.
   void _updateNextRoutes(String apiKey) async {
     // updating the home position if it's not yet present
-    if (_homePosition == null) {
-      await _updateHomePostion();
+    _homeLocation ??= await LocalStorageService.loadLocation('Home');
+    if(_homeLocation == null){
+      setState(() {
+        _errorMessage = 'Home location not set.';
+      });
+      return;
     }
+
 
     // obtaining the device's location
-    Position? position;
-    await LocationService.getCurrentLocation()
-        .then((value) => position = value)
-        .catchError((error) {
-      position = null;
-      return Future.value(position);
+    setState(() {
+      _errorMessage = 'Waiting for the device\'s location...';
     });
+    GetHomeLocation currentLocation = await LocationService.getCurrentLocation().catchError((error){
+      debugPrint("Error at jsonEncode(location): $error");
+      return GetHomeLocation.empty();
+    });
+    if(currentLocation.isEmpty()){
+      setState(() {
+        _errorMessage = 'Failed to get the current device\'s location.';
+      });
+      return;
+    }
 
     // check wether the position and the homePosition are approximately the same
-    // the accuracy of 0.002 is approximately 1-2 minutes away from the home_location
-    if (position != null && _homePosition != null) {
-      if ((position!.latitude-_homePosition!.latitude).abs() < 0.002
-        && (position!.longitude-_homePosition!.longitude).abs() < 0.002) {
-        atHome = true;
-        setState(() {
-          _errorMessage = 'No connections available. You are at home.';
-        });
-      } else {
-        atHome = false;
-      }
+    // a distance less than 250m is considered as being at home
+    if(currentLocation.getDistanceTo(_homeLocation!) < 250){
+      atHome = true;
+      setState(() {
+        _errorMessage = 'No connections available. You are at home.';
+      });
+    } else {
+      atHome = false;
     }
     
     
-    // making the API call using both the device's location and the home location
-    if (position != null && _homePosition != null && !atHome) {
+    // if not at home, making the API call using both the device's location and the home location
+    if (!atHome) {
       // list of coordinates
       List<String> cords = [
-        position!.latitude.toString(),
-        position!.longitude.toString(),
-        _homePosition!.latitude.toString(),
-        _homePosition!.longitude.toString()
+        currentLocation.getLatitude().toString(),
+        currentLocation.getLongitude().toString(),
+        _homeLocation!.getLatitude().toString(),
+        _homeLocation!.getLongitude().toString()
       ];
       List<GetHomeRoute> list = List.empty();
       setState(() {
@@ -118,14 +116,6 @@ class RoutesScreenState extends State<RoutesScreen> {
       // setting the value of the _nextRoutes list
       setState(() {
         _nextRoutes = list;
-      });
-    } else if (position == null) {
-      setState(() {
-        _errorMessage = 'Error getting device\'s location.';
-      });
-    } else if (_homePosition == null) {
-      setState(() {
-        _errorMessage = 'Setup your home location to see connection.';
       });
     }
 
@@ -148,7 +138,7 @@ class RoutesScreenState extends State<RoutesScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
-                'Home Location:\n${_homePosition == null ? 'Not available' : _homePosition!.latitude}, ${_homePosition == null ? 'Not available' : _homePosition!.longitude}',
+                'Home Location:\n${_homeLocation == null ? 'Not available' : _homeLocation!.getLatitude()}, ${_homeLocation == null ? 'Not available' : _homeLocation!.getLongitude()}',
                 textAlign: TextAlign.center,
               ),
             ),
