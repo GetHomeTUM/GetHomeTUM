@@ -81,8 +81,8 @@ class RoutesScreenState extends State<RoutesScreen> {
     }
 
     // check wether the position and the homePosition are approximately the same
-    // a distance less than 0.25 km is considered as being at home
-    if(currentLocation.getDistanceTo(_homeLocation!) < 0.25){
+    // a distance less than 250m is considered as being at home
+    if(currentLocation.getDistanceTo(_homeLocation!) < 250){
       atHome = true;
       setState(() {
         _errorMessage = 'No connections available. You are at home.';

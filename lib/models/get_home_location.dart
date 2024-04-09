@@ -36,7 +36,7 @@ class GetHomeLocation {
     };
   }
 
-  // Returns the distance in km
+  // Returns the distance in m
   double getDistanceTo(GetHomeLocation location) {
     return Geolocator.distanceBetween(_lat, _lng, location._lat, location._lng);
   }
