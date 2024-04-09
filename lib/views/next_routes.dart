@@ -7,6 +7,7 @@ import 'package:gethome/services/local_storage_service.dart';
 import 'package:gethome/services/update_widget_service.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
 import 'package:home_widget/home_widget.dart';
+import 'package:gethome/services/maps_app_service.dart';
 
 class RoutesScreen extends StatefulWidget {
   final String _apiKey;
@@ -169,6 +170,20 @@ class RoutesScreenState extends State<RoutesScreen> {
                 )
               : RouteListTile(route: _nextRoutes![2], size: Size.large)),
           const Divider(),
+          if (_nextRoutes != null)
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Open Maps  ', textAlign: TextAlign.center),
+                  Icon(Icons.directions),
+                ],
+              ),
+              onTap: () => MapsAppService.openPreferredMaps(_nextRoutes![0]),
+            ),
+          if (_nextRoutes != null)
+            const Divider(),
 
           // the following commented code is only for testing. it shows a preview of the widget.
           // uncomment to view it (also don't forget to import the class):

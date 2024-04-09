@@ -81,4 +81,24 @@ class LocalStorageService{
     // Delete the location with given key
     await _preferences!.remove(key.trim().toLowerCase());
   }
+
+
+
+  static Future<void> setBoolean(String key, bool value) async {
+    await _checkPreferencesInitialization();
+
+    await _preferences!.setBool(key, value);
+  }
+
+  static Future<bool?> getBoolean(String key) async {
+    await _checkPreferencesInitialization();
+
+    return _preferences!.getBool(key);
+  }
+
+  static Future<void> removeBoolean(String key) async {
+    await _checkPreferencesInitialization();
+
+    await _preferences!.remove(key);
+  }
 }

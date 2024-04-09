@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:gethome/models/get_home_route.dart';
+import 'package:gethome/services/local_storage_service.dart';
 
 /// Documentation: MapsAppService
 ///
@@ -9,6 +11,21 @@ import 'package:url_launcher/url_launcher.dart';
 /// - openRouteInGoogleMaps({GetHomeLocation? start, required GetHomeLocation end}) - Opens Google Maps Directions for the given route
 /// - openRouteInAppleMaps({GetHomeLocation? start, required GetHomeLocation end}) - Opens Apple Maps Directions for the given route
 class MapsAppService{
+
+  static void openPreferredMaps(GetHomeRoute route) async {
+    if (route.endLocation == null) {
+      return;
+    }
+
+    bool? appleMaps = await LocalStorageService.getBoolean('map_setting');
+
+    if (appleMaps ?? false) {
+      openDirectionsInAppleMaps(start: route.startLocation, end: route.endLocation!);
+    } else {
+      openDirectionsInGoogleMaps(start: route.startLocation, end: route.endLocation!);
+    }
+  }
+
   /// Opens Google Maps Directions for the given route with variables:
   ///   - start: optional GetHomeLocation, default is the current location.
   ///   - end: required GetHomeLocation
