@@ -12,7 +12,7 @@ class MapsAppService{
   /// Opens Google Maps Directions for the given route with variables:
   ///   - start: optional GetHomeLocation, default is the current location.
   ///   - end: required GetHomeLocation
-  static void openRouteInGoogleMaps({GetHomeLocation? start, required GetHomeLocation end}){
+  static void openDirectionsInGoogleMaps({GetHomeLocation? start, required GetHomeLocation end}){
     // Check if the start location is passed, if not, use the current location
     if(start == null){
       LocationService.getCurrentLocation().then((value) => start = value);
@@ -44,7 +44,7 @@ class MapsAppService{
   /// Opens Apple Maps Directions for the given route with variables:
   ///  - start: optional GetHomeLocation, default is the current location.
   ///  - end: required GetHomeLocation
-  static void openRouteInAppleMaps({GetHomeLocation? start, required GetHomeLocation end}){
+  static void openDirectionsInAppleMaps({GetHomeLocation? start, required GetHomeLocation end}){
     // Check if the start location is passed, if not, use the current location
     if(start == null){
       LocationService.getCurrentLocation().then((value) => start = value);
