@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,29 +11,27 @@ import 'package:gethome/services/local_storage_service.dart';
 import 'package:gethome/services/api_service.dart';
 
 class UpdateWidgetService {
-  
   // test method to simply update widget without any parameters (nicht getestet aber sollte funktionieren)
   static void updateBackgroundWidget() async {
-      // list where the next three GetHomeRoutes are saved in
-  List<GetHomeRoute>? _nextRoutes;
-  // LatLng object that stores the home location once it's available
-  LatLng? _homePosition;
-  // API key
-  const String _apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
+    // list where the next three GetHomeRoutes are saved in
+    List<GetHomeRoute>? _nextRoutes;
+    // LatLng object that stores the home location once it's available
+    LatLng? _homePosition;
+    // API key
+    const String _apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
 
+    print('started');
+    // update home position
+    GetHomeLocation? location = await LocalStorageService.loadLocation('Home');
+    if (location != null) {
+      _homePosition = LatLng(location.getLatitude(), location.getLongitude());
+    }
+    //_homePosition = LatLng(48.26388, 11.6688246);
 
-  print('started');
-  // update home position
-  GetHomeLocation? location = await LocalStorageService.loadLocation('Home');
-  if (location != null) {
-    _homePosition = LatLng(location.getLatitude(), location.getLongitude());
-  }
-  //_homePosition = LatLng(48.26388, 11.6688246);
+    print('getting home location finished');
 
-  print('getting home location finished');
-
-  // update current location
-  /*Position? position;
+    // update current location
+    /*Position? position;
     await LocationService.getCurrentLocation()
         .then((value) => position = value)
         .catchError((error) {
@@ -67,17 +64,16 @@ class UpdateWidgetService {
     }
     print('getting routes finished');
 
-
     // render image
     var path = await HomeWidget.renderFlutterWidget(
-        _nextRoutes != null && _nextRoutes!.isNotEmpty
-            ? // either the RouteWidget of a DefaultImage is rendered
-            RouteWidget(nextRoutes: _nextRoutes!)
-            : const DefaultImage(),
-        // data for storing and rendering the image
-        key: 'filename',
-        logicalSize: Size(430.0, 230.0),
-      ) as String;
+      _nextRoutes != null && _nextRoutes!.isNotEmpty
+          ? // either the RouteWidget of a DefaultImage is rendered
+          RouteWidget(nextRoutes: _nextRoutes!)
+          : const DefaultImage(),
+      // data for storing and rendering the image
+      key: 'filename',
+      logicalSize: Size(430.0, 230.0),
+    ) as String;
 
     HomeWidget.updateWidget(
         iOSName: 'GetHomeIos', androidName: 'GetHomeWidgetProvider');
@@ -88,25 +84,27 @@ class UpdateWidgetService {
   /// list of the next GetHomeRoutes. The method renders the image of the widget first and then
   /// updated it.
   static void updateHomeWidget(
-      var globalKey, List<GetHomeRoute>? nextRoutes) async {
-    await renderWidget(globalKey, nextRoutes);
+      var globalKey, List<GetHomeRoute>? nextRoutes, bool atHome) async {
+    await renderWidget(globalKey, nextRoutes, atHome);
     HomeWidget.updateWidget(
         iOSName: 'GetHomeIos', androidName: 'GetHomeWidgetProvider');
   }
 
-  /// Method for rendering the image of the widget. If the nextRoutes are present, the data will be
-  /// rendered to an image that fits on the widget. If the nextRoutes are not present, a default
-  /// screen will be rendered. Parameters are a global key for the size and an optional list of the
-  /// next GetHomeRoutes
+  /// Method for rendering the image of the widget. If the user is at his home location, an
+  /// image for this case is displayed. Else, if the nextRoutes are present, they are rendered
+  /// to an image but if not, a default image is rendered. Parameters are a global key for the
+  /// size, an optional list of the next GetHomeRoutes and a boolean wether or not the user is
+  /// currently at his home location.
   static Future<String> renderWidget(
-      var globalKey, List<GetHomeRoute>? nextRoutes) async {
+      var globalKey, List<GetHomeRoute>? nextRoutes, bool atHome) async {
     if (globalKey.currentContext != null) {
       // rendering
       var path = await HomeWidget.renderFlutterWidget(
-        nextRoutes != null && nextRoutes.isNotEmpty
-            ? // either the RouteWidget of a DefaultImage is rendered
-            RouteWidget(nextRoutes: nextRoutes)
-            : const DefaultImage(),
+        atHome
+            ? const AtHomeImage()
+            : (nextRoutes != null && nextRoutes.isNotEmpty
+                ? RouteWidget(nextRoutes: nextRoutes)
+                : const DefaultImage()),
         // data for storing and rendering the image
         key: 'filename',
         logicalSize: globalKey.currentContext!.size!,
