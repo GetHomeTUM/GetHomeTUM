@@ -71,10 +71,13 @@ class RoutesScreenState extends State<RoutesScreen> {
     setState(() {
       _errorMessage = 'Waiting for the device\'s location...';
     });
-    _currentLocation = await LocationService.getCurrentLocation();
-    if(_currentLocation == null){
+    GetHomeLocation updatedCurrentLocation = await LocationService.getCurrentLocation().catchError((error){
+      debugPrint("Error at jsonEncode(location): $error");
+      return GetHomeLocation.empty();
+    });
+    if(updatedCurrentLocation.isEmpty()){
       setState(() {
-        _errorMessage = 'Failed to get the device\'s location.';
+        _errorMessage = 'Failed to get the current device\'s location.';
       });
       return;
     }
