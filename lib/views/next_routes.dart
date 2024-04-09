@@ -97,9 +97,9 @@ class RoutesScreenState extends State<RoutesScreen> {
       // list of coordinates
       List<String> cords = [
         currentLocation.getLatitude().toString(),
-        currentLocation.getLatitude().toString(),
-        _homeLocation!.getLongitude().toString(),
-        _homeLocation!.getLatitude().toString()
+        currentLocation.getLongitude().toString(),
+        _homeLocation!.getLatitude().toString(),
+        _homeLocation!.getLongitude().toString()
       ];
       List<GetHomeRoute> list = List.empty();
       setState(() {
