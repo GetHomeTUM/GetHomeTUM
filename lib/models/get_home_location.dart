@@ -36,10 +36,12 @@ class GetHomeLocation {
     };
   }
 
+  // Returns the distance in km
   double getDistanceTo(GetHomeLocation location) {
     return Geolocator.distanceBetween(_lat, _lng, location._lat, location._lng);
   }
 
+  // Returns true if the location is empty (lat and lng are 0)
   bool isEmpty() {
     return _lat == 0 && _lng == 0;
   }
