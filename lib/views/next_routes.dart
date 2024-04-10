@@ -170,20 +170,22 @@ class RoutesScreenState extends State<RoutesScreen> {
                 )
               : RouteListTile(route: _nextRoutes![2], size: Size.large)),
           const Divider(),
-          if (_nextRoutes != null)
+
+          // ListTile that opens the preferred maps app when being tapped on
+          // using only one button because the result only depends on start and end location which is identical for all three routes
+          if (_nextRoutes != null && _nextRoutes!.isNotEmpty)
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
               title: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Open Maps  ', textAlign: TextAlign.center),
+                  Text('Open in Maps  ', style: TextStyle(decoration: TextDecoration.underline), textAlign: TextAlign.center),
                   Icon(Icons.directions),
                 ],
               ),
               onTap: () => MapsAppService.openPreferredMaps(_nextRoutes![0]),
             ),
-          if (_nextRoutes != null)
-            const Divider(),
+          
 
           // the following commented code is only for testing. it shows a preview of the widget.
           // uncomment to view it (also don't forget to import the class):
