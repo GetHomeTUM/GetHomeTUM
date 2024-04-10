@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gethome/views/next_routes.dart';
-import 'second_screen.dart';
+import 'settings_screen.dart';
 import 'location_screen.dart';
 
 /// Class for the logic of the home screen. Provides the links for the other app pages.
@@ -20,7 +20,7 @@ class GetHomeApp extends StatelessWidget {
 
       routes: {
         '/firstScreen': (context) => const MapScreen(),
-        '/secondScreen': (context) => SecondScreen(),
+        '/secondScreen': (context) => SettingsScreen(),
         '/thirdScreen': (context) => RoutesScreen(_apiKey),
       },
       
@@ -60,7 +60,7 @@ class HomeScreen extends StatelessWidget {
             leading: const Icon(Icons.settings,
             size: 30,
             ),
-            title: Text('More Settings'),
+            title: const Text('Settings'),
             onTap: () {
               Navigator.pushNamed(context, '/secondScreen');
             },

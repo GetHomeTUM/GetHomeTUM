@@ -2,13 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:gethome/models/get_home_route.dart';
+import 'package:gethome/services/local_storage_service.dart';
 
 /// Documentation: MapsAppService
 ///
-/// 1 Method for the Maps App Service:
+/// 3 methods for the Maps App Service:
+/// - openPreferredMaps(GetHomeRoute route) - Opens the preferred Maps App based on the app settings for the given route
 /// - openRouteInGoogleMaps({GetHomeLocation? start, required GetHomeLocation end}) - Opens Google Maps Directions for the given route
 /// - openRouteInAppleMaps({GetHomeLocation? start, required GetHomeLocation end}) - Opens Apple Maps Directions for the given route
 class MapsAppService{
+
+  /// Opens the directions in the preferred maps app based on the app's settings.
+  /// Parameter:
+  /// - route: GetHomeRoute, that should be opened in the maps app.
+  /// Notice that only start and end location will be considered for the maps app launch.
+  static void openPreferredMaps(GetHomeRoute route) async {
+    // only open route if the end location is present
+    if (route.endLocation == null) {
+      return;
+    }
+
+    // check app settings
+    bool? appleMaps = await LocalStorageService.getBoolean('map_setting');
+
+    // call method for preferred maps app
+    if (appleMaps ?? false) {
+      openDirectionsInAppleMaps(start: route.startLocation, end: route.endLocation!);
+    } else {
+      openDirectionsInGoogleMaps(start: route.startLocation, end: route.endLocation!);
+    }
+  }
+
   /// Opens Google Maps Directions for the given route with variables:
   ///   - start: optional GetHomeLocation, default is the current location.
   ///   - end: required GetHomeLocation

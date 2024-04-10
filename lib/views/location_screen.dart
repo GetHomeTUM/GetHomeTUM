@@ -50,7 +50,7 @@ class MapScreenState extends State<MapScreen> {
 
   /// Method to save the given location with the given label. It uses the LocalStorageService class.
   void _saveLocation(LatLng position, String label) {
-    LocalStorageService.saveLocation(label, GetHomeLocation(lat: position.latitude, lng: position.longitude));
+    LocalStorageService.setLocation(label, GetHomeLocation(lat: position.latitude, lng: position.longitude));
     _markerChanged = false;
   }
 
@@ -66,7 +66,7 @@ class MapScreenState extends State<MapScreen> {
   /// marker will be displayed on the map and it will be shown centered on the map.
   void _loadLocation(String label) async {
     // load location
-    GetHomeLocation? location = await LocalStorageService.loadLocation(label);
+    GetHomeLocation? location = await LocalStorageService.getLocation(label);
     if (location != null) {
       // add marker of the loaded location
       _updateMarker(LatLng(location.getLatitude(), location.getLongitude()), label);
