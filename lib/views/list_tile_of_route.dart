@@ -40,11 +40,12 @@ class RouteListTile extends StatelessWidget {
                 ),
                 child: Text(
                   route.firstLineName.toString(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: (route.firstLineName??'').length >= 4 ? 14 : 18,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
