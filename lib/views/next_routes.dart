@@ -57,7 +57,7 @@ class RoutesScreenState extends State<RoutesScreen> {
   /// will be stored in '_errorMessage'.
   void _updateNextRoutes(String apiKey) async {
     // updating the home position if it's not yet present
-    _homeLocation ??= await LocalStorageService.loadLocation('Home');
+    _homeLocation ??= await LocalStorageService.getLocation('Home');
     if(_homeLocation == null){
       setState(() {
         _errorMessage = 'Home location not set.';
