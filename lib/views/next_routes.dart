@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
 
 import 'package:home_widget/home_widget.dart';
+import 'package:workmanager/workmanager.dart';
 
 class RoutesScreen extends StatefulWidget {
   final String _apiKey;
@@ -82,8 +83,8 @@ class RoutesScreenState extends State<RoutesScreen> {
     // check wether the position and the homePosition are approximately the same
     // the accuracy of 0.002 is approximately 1-2 minutes away from the home_location
     if (position != null && _homePosition != null) {
-      if ((position!.latitude-_homePosition!.latitude).abs() < 0.002
-        && (position!.longitude-_homePosition!.longitude).abs() < 0.002) {
+      if ((position!.latitude - _homePosition!.latitude).abs() < 0.002 &&
+          (position!.longitude - _homePosition!.longitude).abs() < 0.002) {
         atHome = true;
         setState(() {
           _errorMessage = 'No connections available. You are at home.';
@@ -92,8 +93,7 @@ class RoutesScreenState extends State<RoutesScreen> {
         atHome = false;
       }
     }
-    
-    
+
     // making the API call using both the device's location and the home location
     if (position != null && _homePosition != null && !atHome) {
       // list of coordinates
@@ -196,6 +196,10 @@ class RoutesScreenState extends State<RoutesScreen> {
       // refresh button
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
+          Workmanager().registerOneOffTask(
+            'update_widget',
+            'simpletask',
+          );
           _updateNextRoutes(_apiKey);
         },
         backgroundColor: const Color.fromARGB(255, 202, 229, 249),

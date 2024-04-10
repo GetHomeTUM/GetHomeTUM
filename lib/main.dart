@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gethome/services/local_storage_service.dart';
 import 'package:gethome/views/home_screen.dart';
+import 'package:gethome/services/update_widget_service.dart';
 
 import 'package:workmanager/workmanager.dart';
 //import 'package:gethome/services/update_widget_service.dart';
@@ -8,14 +9,14 @@ import 'package:workmanager/workmanager.dart';
 // ANMERKUNG: Simulation in Xcode starten, danach Debug > Simulate Background Fetch
 // um background fetch zu simulieren und die callbackDispatcher Methode auszuführen
 
-
-@pragma('vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
+@pragma(
+    'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void callbackDispatcher() async {
   Workmanager().executeTask((task, inputData) async {
     print("fetching...");
     print(await LocalStorageService.loadLocation('Home')); // throws error
     //use following *test* method for a simple widget update without parameters
-    //UpdateWidgetService.updateBackgroundWidget();
+    await UpdateWidgetService.updateBackgroundWidget();
     return Future.value(true);
   });
 }
@@ -24,12 +25,14 @@ void callbackDispatcher() async {
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Workmanager().initialize(
-    callbackDispatcher, // The top level function, aka callbackDispatcher
-    isInDebugMode: true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-  );
-  
-  
+      callbackDispatcher, // The top level function, aka callbackDispatcher
+      isInDebugMode:
+          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
+      );
+  Workmanager().registerPeriodicTask("update_widget", "simpletask",
+      frequency: Duration(minutes: 15));
   // starting application
-  const String apiKey = '';
+  print("registered");
+  const String apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
   runApp(const GetHomeApp(apiKey));
 }

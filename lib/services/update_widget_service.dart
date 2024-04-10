@@ -12,7 +12,8 @@ import 'package:gethome/services/api_service.dart';
 
 class UpdateWidgetService {
   // test method to simply update widget without any parameters (nicht getestet aber sollte funktionieren)
-  static void updateBackgroundWidget() async {
+  static Future<void> updateBackgroundWidget() async {
+    print(DateTime.now().toIso8601String());
     // list where the next three GetHomeRoutes are saved in
     List<GetHomeRoute>? _nextRoutes;
     // LatLng object that stores the home location once it's available
@@ -28,7 +29,8 @@ class UpdateWidgetService {
     }
     //_homePosition = LatLng(48.26388, 11.6688246);
 
-    print('getting home location finished');
+    print(
+        'getting home location finished $_homePosition.latitude $_homePosition.longitude');
 
     // update current location
     /*Position? position;
@@ -47,22 +49,28 @@ class UpdateWidgetService {
     if (position != null && _homePosition != null) {
       // list of coordinates
       List<String> cords = [
-        position!.latitude.toString(),
-        position!.longitude.toString(),
-        _homePosition!.latitude.toString(),
-        _homePosition!.longitude.toString()
+        position.latitude.toString(),
+        position.longitude.toString(),
+        _homePosition.latitude.toString(),
+        _homePosition.longitude.toString()
       ];
       List<GetHomeRoute> list = List.empty();
+      print('inside if ');
       try {
         // API call
         list = await GoogleAPI.getRoutes(_apiKey, cords);
       } catch (error) {
+        print(error);
         print('no connection found (background error)');
       }
       // setting the value of the _nextRoutes list
       _nextRoutes = list;
     }
     print('getting routes finished');
+    print("db${_nextRoutes!.length} routes found");
+    _nextRoutes!.forEach((element) {
+      print(element.firstLineDepartureLocationName);
+    });
 
     // render image
     var path = await HomeWidget.renderFlutterWidget(
