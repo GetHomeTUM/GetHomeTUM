@@ -1,5 +1,5 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:gethome/services/local_storage_service.dart';
 import 'package:gethome/views/home_screen.dart';
 import 'package:gethome/services/update_widget_service.dart';
 
@@ -13,10 +13,9 @@ import 'package:workmanager/workmanager.dart';
     'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
 void callbackDispatcher() async {
   Workmanager().executeTask((task, inputData) async {
-    print("fetching...");
-    print(await LocalStorageService.loadLocation('Home')); // throws error
-    //use following *test* method for a simple widget update without parameters
-    await UpdateWidgetService.updateBackgroundWidget();
+    const String apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
+    //use following method for a simple widget update without parameters
+    await UpdateWidgetService.updateBackgroundWidget(apiKey);
     return Future.value(true);
   });
 }
@@ -29,10 +28,13 @@ void main() {
       isInDebugMode:
           true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
       );
-  Workmanager().registerPeriodicTask("update_widget", "simpletask",
+
+  if (Platform.isAndroid) {
+    Workmanager().registerPeriodicTask("update_widget", "simpletask",
       frequency: Duration(minutes: 15));
+  }
+
   // starting application
-  print("registered");
   const String apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
   runApp(const GetHomeApp(apiKey));
 }

@@ -130,7 +130,8 @@ class RoutesScreenState extends State<RoutesScreen> {
     }
 
     // call for updating the home_widget
-    UpdateWidgetService.updateHomeWidget(_globalKey, _nextRoutes, atHome);
+    //UpdateWidgetService.updateHomeWidget(_globalKey, _nextRoutes, atHome);
+    UpdateWidgetService.updateBackgroundWidget(_apiKey);
   }
 
   @override
