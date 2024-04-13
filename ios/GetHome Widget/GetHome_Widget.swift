@@ -5,8 +5,9 @@ struct Provider: TimelineProvider {
     // placeholder displayed in the widget configuration menu
     func placeholder(in context: Context) -> GetHome_WidgetEntry {
       let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+      let title = userDefaults?.string(forKey: "time") ?? "Didn't get data"
       let filename = userDefaults?.string(forKey: "filename") ?? "No screenshot available"
-      return GetHome_WidgetEntry(date: Date(), title: "GetHome", description: "Next connections.", filename: filename,  displaySize: context.displaySize)
+      return GetHome_WidgetEntry(date: Date(), title: title, description: "Next connections.", filename: filename,  displaySize: context.displaySize)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (GetHome_WidgetEntry) -> ()) {
@@ -16,9 +17,11 @@ struct Provider: TimelineProvider {
       }
       else{
         let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
-        let title = userDefaults?.string(forKey: "headline_title") ?? "No Title Set"
-        let description = userDefaults?.string(forKey: "headline_description") ?? "No Description Set"
-        // New: get fileName from key/value store 
+        let title = userDefaults?.string(forKey: "time") ?? "Didn't get data"
+        let currLoc = userDefaults?.string(forKey: "current_location") ?? "no current location"
+        let homeLoc = userDefaults?.string(forKey: "home_location") ?? "no home location"
+        let description = currLoc + "\n" + homeLoc
+        // New: get fileName from key/value store
         let filename = userDefaults?.string(forKey: "filename") ?? "No screenshot available"
         print(filename)
         entry = GetHome_WidgetEntry(date: Date(), title: title, description: description, filename: filename,  displaySize: context.displaySize)
@@ -37,7 +40,7 @@ struct Provider: TimelineProvider {
 struct GetHome_WidgetEntry: TimelineEntry {
     let date: Date
     let title: String
-    let description:String
+    let description: String
     // New: add the filename and displaySize.
     let filename: String
     let displaySize: CGSize
@@ -66,7 +69,7 @@ struct GetHome_WidgetEntryView: View {
         if let uiImage = UIImage(contentsOfFile: entry.filename) {
             let image = Image(uiImage: uiImage)
                 .resizable()
-                .frame(width: entry.displaySize.width*1, height: entry.displaySize.height*1, alignment: .center)
+                .frame(width: entry.displaySize.width*0.7, height: entry.displaySize.height*0.7, alignment: .center)
             return AnyView(image)
         }
         print("The image file could not be loaded")
@@ -77,9 +80,9 @@ struct GetHome_WidgetEntryView: View {
 // the actual body of the widget
   var body: some View {
     VStack {
-        //Text(entry.title).font(Font.custom("Chewy", size: 13))
-        //Text(entry.description).font(.system(size: 12)).padding(10)
-        ChartImage
+        Text(entry.title).font(Font.custom("Chewy", size: 13))
+        Text(entry.description).font(.system(size: 12)).padding(10)
+        //ChartImage
     }
     .widgetBackground(Color.white)
   }
