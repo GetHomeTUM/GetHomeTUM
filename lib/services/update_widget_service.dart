@@ -25,7 +25,7 @@ class UpdateWidgetService {
 
     // getting current location
     if (Platform.isIOS) {
-      //_currentPosition = const LatLng(48.15003, 11.54555);
+      //currentPosition = GetHomeLocation(lat: 48.15003, lng: 11.54555);
       currentPosition = await LocalStorageService.loadLocation('Current');
     } else {
       await LocationService.getCurrentLocation()
@@ -65,23 +65,23 @@ class UpdateWidgetService {
     if (nextRoutes!.isNotEmpty) {
       // first route data
       await HomeWidget.saveWidgetData('first_line_name_0', nextRoutes[0].firstLineName);
-      await HomeWidget.saveWidgetData('first_line_color_0', nextRoutes[0].firstLineColor);
-      await HomeWidget.saveWidgetData('walking_time_minutes_0', nextRoutes[0].walkingTimeMinutes.toString());
-      await HomeWidget.saveWidgetData('changes_0', nextRoutes[0].changes.toString());
+      await HomeWidget.saveWidgetData('first_line_color_0', nextRoutes[0].firstLineColor!.value);
+      await HomeWidget.saveWidgetData('walking_time_minutes_0', ((nextRoutes[0].walkingTimeMinutes ?? 0) ~/ 60).toString());
+      await HomeWidget.saveWidgetData('changes_0', (nextRoutes[0].changes ?? 1 -1).toString());
       await HomeWidget.saveWidgetData('departure_time_0', extractTime(nextRoutes[0].departureTime ?? DateTime.now()));
 
       // second route data
       await HomeWidget.saveWidgetData('first_line_name_1', nextRoutes[1].firstLineName);
-      await HomeWidget.saveWidgetData('first_line_color_1', nextRoutes[1].firstLineColor);
-      await HomeWidget.saveWidgetData('walking_time_minutes_1', nextRoutes[1].walkingTimeMinutes.toString());  
-      await HomeWidget.saveWidgetData('changes_1', nextRoutes[1].changes.toString());
+      await HomeWidget.saveWidgetData('first_line_color_1', nextRoutes[1].firstLineColor!.value);
+      await HomeWidget.saveWidgetData('walking_time_minutes_1', ((nextRoutes[1].walkingTimeMinutes ?? 0) ~/ 60).toString());  
+      await HomeWidget.saveWidgetData('changes_1', (nextRoutes[1].changes ?? 1 -1).toString());
       await HomeWidget.saveWidgetData('departure_time_1', extractTime(nextRoutes[1].departureTime ?? DateTime.now()));
 
       // third route data
       await HomeWidget.saveWidgetData('first_line_name_2', nextRoutes[2].firstLineName);
-      await HomeWidget.saveWidgetData('first_line_color_2', nextRoutes[2].firstLineColor);
-      await HomeWidget.saveWidgetData('walking_time_minutes_2', nextRoutes[2].walkingTimeMinutes.toString());
-      await HomeWidget.saveWidgetData('changes_2', nextRoutes[2].changes.toString());
+      await HomeWidget.saveWidgetData('first_line_color_2', nextRoutes[2].firstLineColor!.value);
+      await HomeWidget.saveWidgetData('walking_time_minutes_2', ((nextRoutes[2].walkingTimeMinutes ?? 0) ~/ 60).toString());
+      await HomeWidget.saveWidgetData('changes_2', (nextRoutes[2].changes ?? 1 -1).toString());
       await HomeWidget.saveWidgetData('departure_time_2', extractTime(nextRoutes[2].departureTime ?? DateTime.now()));
     }
 
