@@ -74,7 +74,11 @@ class RoutesScreenState extends State<RoutesScreen> {
     // obtaining the device's location
     Position? position;
     await LocationService.getCurrentLocation()
-        .then((value) => position = value)
+        .then((value) {
+          position = value;
+          // saving last know device location
+          LocalStorageService.saveLocation('Current', GetHomeLocation(lat: position!.latitude, lng: position!.longitude));
+        })
         .catchError((error) {
       position = null;
       return Future.value(position);
