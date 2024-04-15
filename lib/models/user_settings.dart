@@ -9,7 +9,7 @@ enum MapsApp {
 /// UserSetting: unit in which the walk to the first line is displayed on the widget
 enum WalkingMeasure {
   minutes,
-  kilometres,
+  meters,
 }
 
 // --- UserSettings List end ---

@@ -4,7 +4,7 @@ import 'package:gethome/models/get_home_location.dart';
 class GetHomeRoute {
   DateTime? _departureTime;
   num? _walkingTimeMinutes;
-  num? _walkingDistanceKm;
+  num? _walkingDistanceMeters;
   num? _changes;
   String? _firstLineName;
   String? _firstLineType;
@@ -16,10 +16,10 @@ class GetHomeRoute {
 
   /// Creates a GetHomeRoute.
   /// The GetHomeRoute contains the departure time, the walking time to the first transit, the number of changes, the first line name, the type of the first line, the color of the first line, the name of the first lines departure location, the start location of the route and the end location of the route
-  GetHomeRoute({DateTime? departureTime, num? walkingTimeMinutes, num? walkingDistanceKm, num? changes, String? firstLineName, String? firstLineType, Color? firstLineColor, String? firstLineDepartureLocationName, GetHomeLocation? startLocation, GetHomeLocation? endLocation, num? durationMinutes}) {
+  GetHomeRoute({DateTime? departureTime, num? walkingTimeMinutes, num? walkingDistanceMeters, num? changes, String? firstLineName, String? firstLineType, Color? firstLineColor, String? firstLineDepartureLocationName, GetHomeLocation? startLocation, GetHomeLocation? endLocation, num? durationMinutes}) {
     _departureTime = departureTime;
     _walkingTimeMinutes = walkingTimeMinutes;
-    _walkingDistanceKm = walkingDistanceKm;
+    _walkingDistanceMeters = walkingDistanceMeters;
     _changes = changes;
     _firstLineName = firstLineName;
     _firstLineType = firstLineType;
@@ -36,7 +36,7 @@ class GetHomeRoute {
     return GetHomeRoute(
       departureTime: computeDepartureTime(data),
       walkingTimeMinutes: computeWalkingTime(data),
-      walkingDistanceKm: computeWalkingDistance(data),
+      walkingDistanceMeters: computeWalkingDistance(data),
       changes: computeTransitSteps(data),
       firstLineName: computeFirstLine(data)!.values.first,
       firstLineType: computeFirstLine(data)!.values.elementAt(1),
@@ -185,7 +185,7 @@ class GetHomeRoute {
   /// Returns the walking time to the first transit.
   num? get walkingTimeMinutes => _walkingTimeMinutes;
   /// Returns the walking distance to the first transit.
-  num? get walkingDistanceKm => _walkingDistanceKm;
+  num? get walkingDistanceMeters => _walkingDistanceMeters;
   /// Returns the number of changes in the route.
   num? get changes => _changes;
   /// Returns the name of the first line of the route.
@@ -211,8 +211,8 @@ class GetHomeRoute {
         '\n startLocation = $_startLocation '
         '\n endLocation = $_endLocation '
         '\n departure_time = $_departureTime '
-        '\n walking_time = $_walkingTimeMinutes '
-        '\n walking_distance = $_walkingDistanceKm '
+        '\n walking_time = $_walkingTimeMinutes min'
+        '\n walking_distance = $_walkingDistanceMeters m'
         '\n changes = $_changes '
         '\n firstLine = $_firstLineName '
         '\n firstLineType = $_firstLineType '
