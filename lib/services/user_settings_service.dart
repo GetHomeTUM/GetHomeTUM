@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:gethome/models/get_home_location.dart';
+import 'package:gethome/models/user_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Enum to diffrentiate between the different types of stored valuess
@@ -16,12 +17,11 @@ enum StorageKeyTypes{
 /// - getLocation(String key) - Future<GetHomeLocation?>: Loads a location with the given key
 /// - checkLocation(String key) - Future<bool>: Checks if a location with the given key exists
 /// - removeLocation(String key) - Future<void>: Removes the location with given key
-///
-/// 3 Methods for the boolean storage:
-/// - setBoolean(String key, bool value) - Future<void>: Saves a boolean (overwrites if it already exists)
-/// - getBoolean(String key) - Future<bool?>: Returns an optional boolean.
-/// - removeBoolean(String key) - Future<void>: Removes a boolean for the given key.
-class LocalStorageService{
+/// 
+/// 2 Methods for the UserSetting storage:
+/// - setUserSetting(String key, Enum value) - Future<bool>: Saves a userSetting (overwrites if it already exists)
+/// - getUserSetting(String key) - Future<Enum>: Loads a userSetting with the given key
+class UserSettingsService{
   /// Instance of shared preferences
   static SharedPreferences? _storageInstance;
   
@@ -97,24 +97,36 @@ class LocalStorageService{
 
 
 
-  /// Method for setting a boolean for the given key. -> overwrites the boolean if the key already exists and returns true if successful
-  static Future<bool> setBoolean(String key, bool value) async {
-    await _checkPreferencesInitialization();
-
-    return await _preferences!.setBool(key, value);
+  /// Method for saving a userSetting by the given key -> overwrites the setting if the key already exists and returns true if successful
+  static Future<bool> setUserSetting(String key, Enum value) async {
+    await _checkStorageInstance();
+    
+    try {
+      return await _storageInstance!.setString(_computeKey(key, StorageKeyTypes.userSetting), value.toString());
+    } catch (e) {
+      debugPrint("Error at _storageInstance!.setString(key, value): $e");
+      return false;
+    }
   }
 
-  /// Method for getting a boolean for the given key. If not present, null is returned.
-  static Future<bool?> getBoolean(String key) async {
-    await _checkPreferencesInitialization();
+  /// Method for getting a userSetting by the given key -> if not stored, returns the default value from models/user_settings.dart
+  static Future<Enum> getUserSetting(String key) async {
+    await _checkStorageInstance();
 
-    return _preferences!.getBool(key);
-  }
-
-  /// Method for removing a boolean for the given key.
-  static Future<void> removeBoolean(String key) async {
-    await _checkPreferencesInitialization();
-
-    await _preferences!.remove(key);
+    // filter for the userSetting (e.g. "MapsApp.apple" -> "MapsApp")
+    String userSetting = key.split('.')[0];
+    
+    // If the userSetting has not been stored, return the default value
+    if(!_storageInstance!.containsKey(_computeKey(key, StorageKeyTypes.userSetting))){
+      Enum? defaultValue = UserSettings.getDefaultUserSettings()[userSetting];
+      
+      if(defaultValue == null) {
+        throw Exception("Invalid userSetting: $key");
+      } else {
+        return defaultValue;
+      }
+    }
+    
+    return UserSettings.parseStringToEnum(_storageInstance!.getString(_computeKey(key, StorageKeyTypes.userSetting))!);
   }
 }

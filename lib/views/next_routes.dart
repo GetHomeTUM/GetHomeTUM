@@ -3,7 +3,7 @@ import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/models/get_home_route.dart';
 import 'package:gethome/services/api_service.dart';
 import 'package:gethome/services/current_location_service.dart';
-import 'package:gethome/services/local_storage_service.dart';
+import 'package:gethome/services/user_settings_service.dart';
 import 'package:gethome/services/update_widget_service.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
 import 'package:home_widget/home_widget.dart';
@@ -57,7 +57,7 @@ class RoutesScreenState extends State<RoutesScreen> {
   /// will be stored in '_errorMessage'.
   void _updateNextRoutes(String apiKey) async {
     // updating the home position if it's not yet present
-    _homeLocation ??= await LocalStorageService.getLocation('Home');
+    _homeLocation ??= await UserSettingsService.getLocation('Home');
     if(_homeLocation == null){
       setState(() {
         _errorMessage = 'Home location not set.';
