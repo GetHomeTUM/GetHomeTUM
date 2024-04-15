@@ -56,7 +56,25 @@ class SettingsScreenState extends State<SettingsScreen> {
                 UserSettingsService.setUserSetting('MapsApp', _settingsCache['MapsApp']!);
               },
             ),
-          )
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Display walking distance in minutes instead of meters'),
+            trailing: Switch(
+              activeColor: Colors.blue,
+              value: _settingsCache['WalkingMeasure'] == WalkingMeasure.minutes,
+              onChanged: (newValue) {
+                // Update the chache
+                setState(() {
+                  _settingsCache['WalkingMeasure'] = newValue ? WalkingMeasure.minutes : WalkingMeasure.meters;
+                });
+
+                // Update the storage
+                UserSettingsService.setUserSetting('WalkingMeasure', newValue ? WalkingMeasure.minutes : WalkingMeasure.meters);
+              },
+            ),
+          ),
+          const Divider(),
         ],
       )
     );
