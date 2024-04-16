@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum StorageKeyTypes{
   location,
   userSetting,
+  apiKey,
 }
 
 /// Documentation: LocalStorageService
@@ -21,6 +22,9 @@ enum StorageKeyTypes{
 /// 2 Methods for the UserSetting storage:
 /// - setUserSetting(String key, Enum value) - Future<bool>: Saves a userSetting (overwrites if it already exists)
 /// - getUserSetting(String key) - Future<Enum>: Loads a userSetting with the given key
+/// 
+/// 2 Methods for the API Key Storage:
+/// 
 class UserSettingsService{
   /// Instance of shared preferences
   static SharedPreferences? _storageInstance;
@@ -36,11 +40,15 @@ class UserSettingsService{
     String prefix = switch(type){
       StorageKeyTypes.location => "location",
       StorageKeyTypes.userSetting => "userSetting",
+      StorageKeyTypes.apiKey => "apiKey",
     };
 
     return "KeyType-${prefix}_${key.trim().toLowerCase()}";
   }
   
+  
+  // --- Region: Location Storage ---
+
   /// Method for saving a location by the given key -> overwrites the location if the key already exists and returns true if successful
   static Future<bool> setLocation(String key, GetHomeLocation location) async {
     await _checkStorageInstance();
@@ -95,7 +103,10 @@ class UserSettingsService{
     await _storageInstance!.remove(_computeKey(key, StorageKeyTypes.location));
   }
 
+  // --- End: Location Storage ---
 
+
+  // --- Region: UserSettings Storage ---
 
   /// Method for saving a userSetting by the given key -> overwrites the setting if the key already exists and returns true if successful
   static Future<bool> setUserSetting(String key, Enum value) async {
@@ -128,5 +139,34 @@ class UserSettingsService{
     }
     
     return UserSettings.parseStringToEnum(_storageInstance!.getString(_computeKey(key, StorageKeyTypes.userSetting))!);
+  }
+
+  // --- End: UserSettings Storage ---
+
+
+  // --- Region: API Key Storage ---
+
+  /// Method for storing the API Key -> overwrites the key if it already exists and returns true if successful
+  static Future<bool> setAPIKey(String apiKey) async {
+    await _checkStorageInstance();
+    
+    try {
+      return await _storageInstance!.setString(_computeKey("apiKey", StorageKeyTypes.apiKey), apiKey);
+    } catch (e) {
+      debugPrint("Error at _storageInstance!.setString(key, value): $e");
+      return false;
+    }
+  }
+
+  /// Method for getting the API Key -> returns an empty string if the apiKey has not been stored
+  static Future<String> getAPIKey() async {
+    await _checkStorageInstance();
+
+    if(!_storageInstance!.containsKey(_computeKey("apiKey", StorageKeyTypes.apiKey))){
+      debugPrint("API Key not stored");
+      return "";
+    }
+
+    return _storageInstance!.getString(_computeKey("apiKey", StorageKeyTypes.apiKey))!;
   }
 }

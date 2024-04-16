@@ -5,9 +5,8 @@ import 'location_screen.dart';
 
 /// Class for the logic of the home screen. Provides the links for the other app pages.
 class GetHomeApp extends StatelessWidget {
-  final String _apiKey;
 
-  const GetHomeApp(this._apiKey);
+  const GetHomeApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +15,12 @@ class GetHomeApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
 
       routes: {
         '/firstScreen': (context) => const MapScreen(),
-        '/secondScreen': (context) => SettingsScreen(),
-        '/thirdScreen': (context) => RoutesScreen(_apiKey),
+        '/secondScreen': (context) => const SettingsScreen(),
+        '/thirdScreen': (context) => const RoutesScreen(),
       },
       
     );
@@ -31,6 +30,8 @@ class GetHomeApp extends StatelessWidget {
 /// Class for the design of the home screen. Creates a scrollable list on the screen where you can tap on to 
 /// get to the desired page.
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +66,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/secondScreen');
             },
           ),
-          Divider(), // Add a divider between settings
+          const Divider(), // Add a divider between settings
           ListTile(
             leading: const Icon(
               Icons.train,
@@ -77,7 +78,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, '/thirdScreen');
             },
           ),
-          Divider(),
+          const Divider(),
           // Add more ListTile widgets for additional pages
         ],
       ),

@@ -7,8 +7,7 @@ class UpdateWidgetService {
   /// Method for updating the home_widget. It needs a global key for the size, an optional
   /// list of the next GetHomeRoutes and a boolean wether or not the user is currently at his
   /// home location. The method renders the image of the widget first and then updates it.
-  static void updateHomeWidget(
-      var globalKey, List<GetHomeRoute>? nextRoutes, bool atHome) async {
+  static void updateHomeWidget(var globalKey, List<GetHomeRoute>? nextRoutes, bool atHome) async {
     await renderWidget(globalKey, nextRoutes, atHome);
     HomeWidget.updateWidget(
         iOSName: 'GetHomeIos', androidName: 'GetHomeWidgetProvider');
@@ -35,7 +34,7 @@ class UpdateWidgetService {
         logicalSize: globalKey.currentContext!.size!,
         pixelRatio: MediaQuery.of(globalKey.currentContext!).devicePixelRatio,
       ) as String;
-      print('Updating Widget...');
+      debugPrint('Updating Widget...');
       return path;
     }
     return 'Path not available';

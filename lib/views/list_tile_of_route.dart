@@ -34,7 +34,7 @@ class _RouteListTileState extends State<RouteListTile> {
   Future<void> _computeWalkingDisplay() async {
     String updatedWalkingDisplay = switch (await UserSettingsService.getUserSetting("WalkingMeasure")) {
       WalkingMeasure.minutes => '${(widget.route.walkingTimeMinutes ?? 0) ~/ 60} min',
-      WalkingMeasure.meters => '${((widget.route.walkingDistanceMeters ?? 0) / 1000).toStringAsFixed(2)} km'
+      WalkingMeasure.meters => '${((widget.route.walkingDistanceMeters ?? 0) / 1000).toStringAsFixed(1)} km'
       ,
       _ => throw "Invalid userSetting",
     };
