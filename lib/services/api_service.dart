@@ -6,6 +6,8 @@ import 'dart:convert';
 
 class GoogleAPIService {
 
+  static String _apiKey = "";
+
   /// getRoutes(String, List<String>) gibt ein Future zurück, dass eine Liste aus den drei nächsten Verbindungen ausgibt
   /// Um das Output des Futures benutzen zu können, muss "await getRoutes()" benutzt werden!!
   /// Falls eine Route fehlerhaft vorhanden ist, so wird diese auch aufgenommen
@@ -17,8 +19,10 @@ class GoogleAPIService {
 
     //calls der nächsten drei Routen
     for (int i = 0; i < 3; i++) {
-      // Fetch the API key from the storage
-      String apiKey = await UserSettingsService.getAPIKey();
+      // Fetch the API key from the storage if not done yet
+      if(_apiKey == "") {
+        _apiKey = await UserSettingsService.getAPIKey();
+      }
 
       //URL für den API call
       Uri url = Uri(
@@ -30,7 +34,7 @@ class GoogleAPIService {
           'destination': '${end.getLatitude()},${end.getLongitude()}',
           'mode': 'transit',
           'departure_time': (time.add(const Duration(seconds: 60)).millisecondsSinceEpoch ~/ 1000).toString(),
-          'key': apiKey
+          'key': _apiKey
         }
       );
 
