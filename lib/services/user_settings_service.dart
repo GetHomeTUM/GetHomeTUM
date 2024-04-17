@@ -4,7 +4,7 @@ import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/models/user_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Enum to diffrentiate between the different types of stored valuess
+/// Enum to differentiate between the different types of stored values
 enum StorageKeyTypes{
   location,
   userSetting,
@@ -24,7 +24,8 @@ enum StorageKeyTypes{
 /// - getUserSetting(String key) - Future<Enum>: Loads a userSetting with the given key
 /// 
 /// 2 Methods for the API Key Storage:
-/// 
+/// - setAPIKey(String apiKey) - Future<bool>: Saves the API Key (overwrites if it already exists) and returns true if successful
+/// - getAPIKey() - Future<String>: Loads the API Key
 class UserSettingsService{
   /// Instance of shared preferences
   static SharedPreferences? _storageInstance;
@@ -169,4 +170,6 @@ class UserSettingsService{
 
     return _storageInstance!.getString(_computeKey("apiKey", StorageKeyTypes.apiKey))!;
   }
+
+  // --- End: API Key Storage ---
 }

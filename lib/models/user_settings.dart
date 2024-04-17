@@ -36,7 +36,7 @@ class UserSettings {
     };
   }
 
-  // THe default value for each UserSettings is definded here
+  // The default value for each UserSettings is definded here
   /// Method for getting the default userSettings
   static Map<String, Enum> getDefaultUserSettings(){
     return {
