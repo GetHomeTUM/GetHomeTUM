@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gethome/models/get_home_location.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
-import 'package:gethome/services/local_storage_service.dart';
+import 'package:gethome/services/user_settings_service.dart';
 
 /// Creates a new App Page of the MapSampleState which displays the Google Map with its markers.
 class MapScreen extends StatefulWidget {
@@ -50,7 +50,7 @@ class MapScreenState extends State<MapScreen> {
 
   /// Method to save the given location with the given label. It uses the LocalStorageService class.
   void _saveLocation(LatLng position, String label) {
-    LocalStorageService.setLocation(label, GetHomeLocation(lat: position.latitude, lng: position.longitude));
+    UserSettingsService.setLocation(label, GetHomeLocation(lat: position.latitude, lng: position.longitude));
     _markerChanged = false;
   }
 
@@ -66,7 +66,7 @@ class MapScreenState extends State<MapScreen> {
   /// marker will be displayed on the map and it will be shown centered on the map.
   void _loadLocation(String label) async {
     // load location
-    GetHomeLocation? location = await LocalStorageService.getLocation(label);
+    GetHomeLocation? location = await UserSettingsService.getLocation(label);
     if (location != null) {
       // add marker of the loaded location
       _updateMarker(LatLng(location.getLatitude(), location.getLongitude()), label);

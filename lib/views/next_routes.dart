@@ -3,19 +3,17 @@ import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/models/get_home_route.dart';
 import 'package:gethome/services/api_service.dart';
 import 'package:gethome/services/current_location_service.dart';
-import 'package:gethome/services/local_storage_service.dart';
+import 'package:gethome/services/user_settings_service.dart';
 import 'package:gethome/services/update_widget_service.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:gethome/services/maps_app_service.dart';
 
 class RoutesScreen extends StatefulWidget {
-  final String _apiKey;
-
-  const RoutesScreen(this._apiKey, {super.key});
+  const RoutesScreen({super.key});
 
   @override
-  State<RoutesScreen> createState() => RoutesScreenState(_apiKey);
+  State<RoutesScreen> createState() => RoutesScreenState();
 }
 
 class RoutesScreenState extends State<RoutesScreen> {
@@ -28,9 +26,6 @@ class RoutesScreenState extends State<RoutesScreen> {
   // String that is displayed in case of an error
   String _errorMessage = 'Unknown error';
   
-  // API key
-  final String _apiKey;
-  
   // bool the check wether at home or not. necessary for the widget and to save power resources with api calls.
   bool atHome = false;
   
@@ -38,7 +33,7 @@ class RoutesScreenState extends State<RoutesScreen> {
   final _globalKey = GlobalKey();
 
   // constructor that takes the API key
-  RoutesScreenState(this._apiKey);
+  RoutesScreenState();
 
   /// Method that is called when the object is created. Makes the first API call.
   @override
@@ -49,15 +44,15 @@ class RoutesScreenState extends State<RoutesScreen> {
     HomeWidget.setAppGroupId('group.flutter_test_widget');
 
     // first refresh of the GetHomeRoutes displayed
-    _updateNextRoutes(_apiKey);
+    _updateNextRoutes();
   }
 
   /// Method that updates the home location first uses the device's location to update the attribute of the list
   /// of the GetHomeRoutes. If an error occurs while performing one of the actions, the specific error message
   /// will be stored in '_errorMessage'.
-  void _updateNextRoutes(String apiKey) async {
+  void _updateNextRoutes() async {
     // updating the home position if it's not yet present
-    _homeLocation ??= await LocalStorageService.getLocation('Home');
+    _homeLocation ??= await UserSettingsService.getLocation('Home');
     if(_homeLocation == null){
       setState(() {
         _errorMessage = 'Home location not set.';
@@ -95,20 +90,13 @@ class RoutesScreenState extends State<RoutesScreen> {
     
     // if not at home, making the API call using both the device's location and the home location
     if (!atHome) {
-      // list of coordinates
-      List<String> cords = [
-        currentLocation.getLatitude().toString(),
-        currentLocation.getLongitude().toString(),
-        _homeLocation!.getLatitude().toString(),
-        _homeLocation!.getLongitude().toString()
-      ];
       List<GetHomeRoute> list = List.empty();
       setState(() {
         _errorMessage = 'Searching for connections...';
       });
       try {
         // API call
-        list = await GoogleAPI.getRoutes(apiKey, cords);
+        list = await GoogleAPIService.getRoutes(start: currentLocation, end: _homeLocation!);
       } catch (error) {
         setState(() {
           _errorMessage = 'No connection found.';
@@ -203,7 +191,7 @@ class RoutesScreenState extends State<RoutesScreen> {
       // refresh button
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          _updateNextRoutes(_apiKey);
+          _updateNextRoutes();
         },
         backgroundColor: const Color.fromARGB(255, 202, 229, 249),
         child: const Icon(Icons.refresh),

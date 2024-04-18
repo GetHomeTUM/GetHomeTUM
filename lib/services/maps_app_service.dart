@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gethome/models/get_home_location.dart';
+import 'package:gethome/models/user_settings.dart';
 import 'package:gethome/services/current_location_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:gethome/models/get_home_route.dart';
-import 'package:gethome/services/local_storage_service.dart';
+import 'package:gethome/services/user_settings_service.dart';
 
 /// Documentation: MapsAppService
 ///
@@ -23,21 +24,17 @@ class MapsAppService{
       return;
     }
 
-    // check app settings
-    bool? appleMaps = await LocalStorageService.getBoolean('map_setting');
-
-    // call method for preferred maps app
-    if (appleMaps ?? false) {
-      openDirectionsInAppleMaps(start: route.startLocation, end: route.endLocation!);
-    } else {
-      openDirectionsInGoogleMaps(start: route.startLocation, end: route.endLocation!);
+    // get the preferred maps app from the user settings and open the route
+    switch (await UserSettingsService.getUserSetting("MapsApp")){
+      case MapsApp.apple: _openDirectionsInAppleMaps(start: route.startLocation, end: route.endLocation!);
+      case MapsApp.google: _openDirectionsInGoogleMaps(start: route.startLocation, end: route.endLocation!);
     }
   }
 
   /// Opens Google Maps Directions for the given route with variables:
   ///   - start: optional GetHomeLocation, default is the current location.
   ///   - end: required GetHomeLocation
-  static void openDirectionsInGoogleMaps({GetHomeLocation? start, required GetHomeLocation end}){
+  static void _openDirectionsInGoogleMaps({GetHomeLocation? start, required GetHomeLocation end}){
     // Check if the start location is passed, if not, use the current location
     if(start == null){
       LocationService.getCurrentLocation().then((value) => start = value);
@@ -69,7 +66,7 @@ class MapsAppService{
   /// Opens Apple Maps Directions for the given route with variables:
   ///  - start: optional GetHomeLocation, default is the current location.
   ///  - end: required GetHomeLocation
-  static void openDirectionsInAppleMaps({GetHomeLocation? start, required GetHomeLocation end}){
+  static void _openDirectionsInAppleMaps({GetHomeLocation? start, required GetHomeLocation end}){
     // Check if the start location is passed, if not, use the current location
     if(start == null){
       LocationService.getCurrentLocation().then((value) => start = value);
