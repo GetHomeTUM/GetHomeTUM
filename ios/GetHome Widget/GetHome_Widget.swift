@@ -8,20 +8,22 @@ struct Provider: TimelineProvider {
       
         return GetHome_WidgetEntry(
             date: Date.now,
+            api_check: userDefaults?.string(forKey: "api_check") ?? "null",
+            storageDate: userDefaults?.string(forKey: "time") ?? "null",
             first_line_name_0 : userDefaults?.string(forKey: "first_line_name_0") ?? "null",
-            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "null",
+            first_line_color_0 : "235733",
             walking_time_minutes_0 : userDefaults?.string(forKey: "walking_time_minutes_0") ?? "null",
             changes_0 : userDefaults?.string(forKey: "changes_0") ?? "null",
             departure_time_0 : userDefaults?.string(forKey: "departure_time_0") ?? "null",
             
             first_line_name_1 : userDefaults?.string(forKey: "first_line_name_1") ?? "null",
-            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "null",
+            first_line_color_1 : "235733",
             walking_time_minutes_1 : userDefaults?.string(forKey: "walking_time_minutes_1") ?? "null",
             changes_1 : userDefaults?.string(forKey: "changes_1") ?? "null",
             departure_time_1 : userDefaults?.string(forKey: "departure_time_1") ?? "null",
             
             first_line_name_2 : userDefaults?.string(forKey: "first_line_name_2") ?? "null",
-            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "null",
+            first_line_color_2: "235733",
             walking_time_minutes_2: userDefaults?.string(forKey: "walking_time_minutes_2") ?? "null",
             changes_2: userDefaults?.string(forKey: "changes_2") ?? "null",
             departure_time_2: userDefaults?.string(forKey: "departure_time_2") ?? "null"
@@ -38,20 +40,22 @@ struct Provider: TimelineProvider {
           
           entry = GetHome_WidgetEntry(
             date: Date.now,
+            api_check: userDefaults?.string(forKey: "api_check") ?? "null",
+            storageDate: userDefaults?.string(forKey: "time") ?? "null",
             first_line_name_0 : userDefaults?.string(forKey: "first_line_name_0") ?? "null",
-            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "null",
+            first_line_color_0 : "235733",
             walking_time_minutes_0 : userDefaults?.string(forKey: "walking_time_minutes_0") ?? "null",
             changes_0 : userDefaults?.string(forKey: "changes_0") ?? "null",
             departure_time_0 : userDefaults?.string(forKey: "departure_time_0") ?? "null",
             
             first_line_name_1 : userDefaults?.string(forKey: "first_line_name_1") ?? "null",
-            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "null",
+            first_line_color_1 : "235733",
             walking_time_minutes_1 : userDefaults?.string(forKey: "walking_time_minutes_1") ?? "null",
             changes_1 : userDefaults?.string(forKey: "changes_1") ?? "null",
             departure_time_1 : userDefaults?.string(forKey: "departure_time_1") ?? "null",
             
             first_line_name_2 : userDefaults?.string(forKey: "first_line_name_2") ?? "null",
-            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "null",
+            first_line_color_2: "235733",
             walking_time_minutes_2: userDefaults?.string(forKey: "walking_time_minutes_2") ?? "null",
             changes_2: userDefaults?.string(forKey: "changes_2") ?? "null",
             departure_time_2: userDefaults?.string(forKey: "departure_time_2") ?? "null"
@@ -61,8 +65,10 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+        main()
+        //let refreshDate = Date().addingTimeInterval(60)
       getSnapshot(in: context) { (entry) in
-        let timeline = Timeline(entries: [entry], policy: .atEnd)
+          let timeline = Timeline(entries: [entry], policy: .atEnd)
                   completion(timeline)
               }
     }
@@ -70,6 +76,8 @@ struct Provider: TimelineProvider {
 
 struct GetHome_WidgetEntry: TimelineEntry {
     var date: Date
+    var api_check: String
+    var storageDate: String
     
     let first_line_name_0 : String
     let first_line_color_0 : String
@@ -95,23 +103,17 @@ struct GetHome_WidgetEntryView: View {
     
     init(entry: Provider.Entry){
             self.entry = entry
-            CTFontManagerRegisterFontsForURL(bundle.appending(path: "/fonts/Chewy-Regular.ttf") as CFURL, CTFontManagerScope.process, nil)
-        }
-    
-    var bundle: URL {
-            let bundle = Bundle.main
-            if bundle.bundleURL.pathExtension == "appex" {
-                // Peel off two directory levels - MY_APP.app/PlugIns/MY_APP_EXTENSION.appex
-                var url = bundle.bundleURL.deletingLastPathComponent().deletingLastPathComponent()
-                url.append(component: "Frameworks/App.framework/flutter_assets")
-                return url
-            }
-            return bundle.bundleURL
         }
 
 // the actual body of the widget
   var body: some View {
       VStack {
+          Text("\(extractTime(from: entry.date))")
+              .font(.system(size: 8))
+          Text("\(entry.api_check)")
+              .font(.system(size: 7))
+          Text("userDefaults: \(entry.storageDate)")
+              .font(.system(size: 8))
         HStack {
             ColoredRectangle(color: entry.first_line_color_0, text: entry.first_line_name_0, changes: entry.changes_0, departureTime: entry.departure_time_0, walkingTime: entry.walking_time_minutes_0)
             Spacer()
@@ -204,6 +206,7 @@ struct GetHome_Widget: Widget {
         .configurationDisplayName("GetHome")
         .supportedFamilies([.systemSmall])
         .description("Check your next connections at a glance.")
+        
     }
 }
 
@@ -214,20 +217,22 @@ struct Widget_Previews: PreviewProvider {
         Group {
             GetHome_WidgetEntryView(entry:GetHome_WidgetEntry(
                 date: Date.now,
+                api_check: "success",
+                storageDate: "15:15",
                 first_line_name_0 : "U1",
-                first_line_color_0 : "#FF5733",
+                first_line_color_0 : "235733",
                 walking_time_minutes_0 : "1",
                 changes_0 : "9",
                 departure_time_0 : "22:22",
                 
                 first_line_name_1 : "U1",
-                first_line_color_1 : "#FF5733",
+                first_line_color_1 : "235733",
                 walking_time_minutes_1 : "9",
                 changes_1 : "1",
                 departure_time_1 : "15:10",
                 
                 first_line_name_2 : "U1",
-                first_line_color_2 : "#FF5733",
+                first_line_color_2 : "235733",
                 walking_time_minutes_2 : "5",
                 changes_2 : "1",
                 departure_time_2 : "15:10"
