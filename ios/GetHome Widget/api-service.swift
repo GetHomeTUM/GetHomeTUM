@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 func getDirections(apiKey: String, originLat: String, originLng: String, destLat: String, destLng: String, date: Date, completion: @escaping (Result<String, Error>) -> Void) {
     let unixTimeStamp = Int(round(date.timeIntervalSince1970))
@@ -65,8 +66,8 @@ func extractTime(from date: Date) -> String {
 }
 
 
-func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: String, destLng: String, completion: @escaping (Result<String, APIError>) -> Void) {
-    var msg: String = ""
+func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: String, destLng: String, completion: @escaping (Result<[GetHomeRoute], APIError>) -> Void) {
+    var routes: [GetHomeRoute] = []
     var time: Date = Date()
     let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
 
@@ -74,7 +75,8 @@ func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: St
     func getNextRoute(index: Int) {
         // Überprüfe, ob alle Routen abgerufen wurden
         guard index < 3 else {
-            completion(.success(String(time.timeIntervalSince1970)))
+            userDefaults?.set(extractTime(from: Date()), forKey: "time")
+            completion(.success(routes))
             return
         }
 
@@ -89,21 +91,17 @@ func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: St
                 
                 // Zeit auf den Zeitpunkt nach der ermittelten Route setzen
                 // Abfrage, ob Verbindung zulässig ist
-                if let routes = map["routes"] as? [[String: Any]],
-                   !routes.isEmpty,
-                   let legs = routes[0]["legs"] as? [[String: Any]],
-                   !legs.isEmpty,
-                   let departureTime = legs[0]["departure_time"] as? [String: Any],
-                   let startTime = departureTime["value"] as? TimeInterval {
-                    print(extractTime(from: Date.init(timeIntervalSince1970: startTime)))
-                    userDefaults?.set(extractTime(from: Date.init(timeIntervalSince1970: startTime)), forKey: "departure_time_\(index)")
-                    userDefaults?.set(extractTime(from: Date()), forKey: "time")
-                    userDefaults?.set("success", forKey: "api_check")
-                    
-                    // Tatsächliche Startzeit der Verbindung ermitteln (wurde nicht in GetHomeRoute ermittelt)
-                    time = Date(timeIntervalSince1970: (startTime + 1))
-                    msg += String(startTime)
-                    
+                if let routesData = map["routes"] as? [[String: Any]], !routesData.isEmpty {
+                    if let legs = routesData[0]["legs"] as? [[String: Any]], !legs.isEmpty,
+                       let departureTime = legs[0]["departure_time"] as? [String: Any],
+                       let startTime = departureTime["value"] as? TimeInterval {
+                        userDefaults?.set(Date(), forKey: "time")
+                        userDefaults?.set("success", forKey: "api_check")
+                        let route = GetHomeRoute.fromJson(data: map)
+                        routes.append(route!)
+                        // Tatsächliche Startzeit der Verbindung ermitteln (wurde nicht in GetHomeRoute ermittelt)
+                        time = Date(timeIntervalSince1970: (startTime + 1))
+                    }
                 }
 
                 // Rufe den nächsten API-Aufruf rekursiv auf
@@ -122,6 +120,7 @@ func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: St
 }
 
 
+
 func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
     guard let data = jsonString.data(using: .utf8) else {
         return nil
@@ -138,19 +137,23 @@ func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
     return nil
 }
 
-
-
 func main() {
+    let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
     let apiKey = "AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw"
-    let originLat = "48.15003"
-    let originLng = "11.54555"
-    let destLat = "48.265755"
-    let destLng = "11.666527"
+    let homeLocation = GetHomeLocation.fromJson(json: stringToJsonMap(userDefaults?.string(forKey: "home_location") ?? "null") ?? ["null":"null"])
+    let lastCurrentLocation = GetHomeLocation.fromJson(json: stringToJsonMap(userDefaults?.string(forKey: "current_location") ?? "null") ?? ["null":"null"])
+    let originLat = lastCurrentLocation != nil ? String(describing: lastCurrentLocation?.lat) : "48.15003"
+    let originLng = lastCurrentLocation != nil ? String(describing: lastCurrentLocation?.lat) : "11.54555"
+    let destLat = homeLocation != nil ? String(describing: homeLocation?.lat) : "48.265755"
+    let destLng = homeLocation != nil ? String(describing: homeLocation?.lat) : "11.666527"
 
     getRoutes(apiKey: apiKey, originLat: originLat, originLng: originLng, destLat: destLat, destLng: destLng) { result in
         switch result {
         case .success(let responseString):
-            print("Response String: \(responseString)")
+            responseString[0].saveToUserDefaults(index: 0)
+            responseString[1].saveToUserDefaults(index: 1)
+            responseString[2].saveToUserDefaults(index: 2)
+            print("Route1: \(responseString[0].toString())\nRoute2: \(responseString[1].toString())\nRoute3: \(responseString[2].toString())")
         case .failure(let error):
             print("Error: \(error.localizedDescription)")
         }
