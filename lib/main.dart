@@ -1,39 +1,13 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:gethome/models/get_home_location.dart';
 import 'package:gethome/views/home_screen.dart';
-import 'package:gethome/services/update_widget_service.dart';
 
-import 'package:workmanager/workmanager.dart';
-//import 'package:gethome/services/update_widget_service.dart';
-
-// ANMERKUNG: Simulation in Xcode starten, danach Debug > Simulate Background Fetch
-// um background fetch zu simulieren und die callbackDispatcher Methode auszuführen
-
-@pragma(
-    'vm:entry-point') // Mandatory if the App is obfuscated or using Flutter 3.1+
-void callbackDispatcher() async {
-  Workmanager().executeTask((task, inputData) async {
-    const String apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
-    //use following method for a simple widget update without parameters
-    await UpdateWidgetService.updateBackgroundWidget(apiKey);
-    return Future.value(true);
-  });
-}
+import 'dart:convert';
 
 /// Main for testing the application. Insert your own key for the directions API here.
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Workmanager().initialize(
-      callbackDispatcher, // The top level function, aka callbackDispatcher
-      isInDebugMode:
-          true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-      );
-
-  if (Platform.isAndroid) {
-    Workmanager().registerPeriodicTask("update_widget", "simpletask",
-      frequency: Duration(minutes: 15));
-  }
-
+  
+  print(jsonEncode(GetHomeLocation(lat: 0.01, lng: 1.01).toJson()));
   // starting application
   const String apiKey = 'AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw';
   runApp(const GetHomeApp(apiKey));
