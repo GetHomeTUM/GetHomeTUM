@@ -11,19 +11,19 @@ struct Provider: TimelineProvider {
             api_check: userDefaults?.string(forKey: "api_check") ?? "null",
             storageDate: userDefaults?.string(forKey: "time") ?? "null",
             first_line_name_0 : userDefaults?.string(forKey: "first_line_name_0") ?? "null",
-            first_line_color_0 : "235733",
+            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "null",
             walking_time_minutes_0 : userDefaults?.string(forKey: "walking_time_minutes_0") ?? "null",
             changes_0 : userDefaults?.string(forKey: "changes_0") ?? "null",
             departure_time_0 : userDefaults?.string(forKey: "departure_time_0") ?? "null",
             
             first_line_name_1 : userDefaults?.string(forKey: "first_line_name_1") ?? "null",
-            first_line_color_1 : "235733",
+            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "null",
             walking_time_minutes_1 : userDefaults?.string(forKey: "walking_time_minutes_1") ?? "null",
             changes_1 : userDefaults?.string(forKey: "changes_1") ?? "null",
             departure_time_1 : userDefaults?.string(forKey: "departure_time_1") ?? "null",
             
             first_line_name_2 : userDefaults?.string(forKey: "first_line_name_2") ?? "null",
-            first_line_color_2: "235733",
+            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "null",
             walking_time_minutes_2: userDefaults?.string(forKey: "walking_time_minutes_2") ?? "null",
             changes_2: userDefaults?.string(forKey: "changes_2") ?? "null",
             departure_time_2: userDefaults?.string(forKey: "departure_time_2") ?? "null"

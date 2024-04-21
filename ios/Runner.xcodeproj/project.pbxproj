@@ -114,7 +114,6 @@
 		EB703FD22BB7151400F0FEA2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB703FDC2BB71C1A00F0FEA2 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		EB703FDD2BB71C2600F0FEA2 /* GetHome WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "GetHome WidgetExtension.entitlements"; sourceTree = "<group>"; };
-		EBAC56192BD25C61009F820C /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = MyPlayground.playground; path = ../../../../Studium/Programming/MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FC30CB9FB3ED3475D06F2E3B /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -244,7 +243,6 @@
 		EB703FC72BB7151200F0FEA2 /* GetHome Widget */ = {
 			isa = PBXGroup;
 			children = (
-				EBAC56192BD25C61009F820C /* MyPlayground.playground */,
 				EB703FC82BB7151200F0FEA2 /* GetHome_WidgetBundle.swift */,
 				EB703FCA2BB7151200F0FEA2 /* GetHome_WidgetLiveActivity.swift */,
 				EB703FCC2BB7151200F0FEA2 /* GetHome_Widget.swift */,
