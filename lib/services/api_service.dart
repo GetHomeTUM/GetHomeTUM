@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class GoogleAPIService {
-
   static String _apiKey = "";
 
   /// getRoutes(String, List<String>) gibt ein Future zurück, dass eine Liste aus den drei nächsten Verbindungen ausgibt
@@ -13,30 +12,31 @@ class GoogleAPIService {
   /// Falls eine Route fehlerhaft vorhanden ist, so wird diese auch aufgenommen
   /// Falls für eine fehlerhafte Route keine Startzeit existiert, so wird der nächste Call für die gleiche Zeit durchgeführt
   /// Parameter: start und end location der Route als GetHomeLocation
-  static Future<List<GetHomeRoute>> getRoutes({required GetHomeLocation start, required GetHomeLocation end}) async {
+  static Future<List<GetHomeRoute>> getRoutes(
+      {required GetHomeLocation start, required GetHomeLocation end}) async {
     List<GetHomeRoute> routes = [];
     DateTime time = DateTime.now();
 
+    // Fetching API Key
+    _apiKey = await UserSettingsService.getAPIKey();
+
     //calls der nächsten drei Routen
     for (int i = 0; i < 3; i++) {
-      // Fetch the API key from the storage if not done yet
-      if(_apiKey == "") {
-        _apiKey = await UserSettingsService.getAPIKey();
-      }
-
       //URL für den API call
       Uri url = Uri(
-        scheme: 'https',
-        host: 'maps.googleapis.com',
-        path: '/maps/api/directions/json',
-        queryParameters: {
-          'origin': '${start.getLatitude()},${start.getLongitude()}',
-          'destination': '${end.getLatitude()},${end.getLongitude()}',
-          'mode': 'transit',
-          'departure_time': (time.add(const Duration(seconds: 60)).millisecondsSinceEpoch ~/ 1000).toString(),
-          'key': _apiKey
-        }
-      );
+          scheme: 'https',
+          host: 'maps.googleapis.com',
+          path: '/maps/api/directions/json',
+          queryParameters: {
+            'origin': '${start.getLatitude()},${start.getLongitude()}',
+            'destination': '${end.getLatitude()},${end.getLongitude()}',
+            'mode': 'transit',
+            'departure_time':
+                (time.add(const Duration(seconds: 60)).millisecondsSinceEpoch ~/
+                        1000)
+                    .toString(),
+            'key': _apiKey
+          });
 
       // execute the API call
       http.Response response = await http.get(url);
@@ -63,7 +63,7 @@ class GoogleAPIService {
         var startTime = map['routes'][0]['legs'][0]['departure_time']['value'];
         //früheste Startzeit der nächsten Verbindung setzen
         int timeDiff = startTime - (time.millisecondsSinceEpoch ~/ 1000);
-        time = time.add(Duration(seconds: timeDiff+1));
+        time = time.add(Duration(seconds: timeDiff + 1));
       }
     }
 
