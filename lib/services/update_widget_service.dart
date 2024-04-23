@@ -57,12 +57,14 @@ class UpdateWidgetService {
     
     // updating widget's general data
     await HomeWidget.setAppGroupId('group.flutter_test_widget');
-    await HomeWidget.saveWidgetData('time', extractTime(DateTime.now())); // for testing purposes
-    await HomeWidget.saveWidgetData('home_location', homePosition.toString());
-    await HomeWidget.saveWidgetData('current_loation', currentPosition.toString());
+    await HomeWidget.saveWidgetData('time', extractTime(DateTime.now())); // for debug purposes
+    await HomeWidget.saveWidgetData('home_lat', homePosition?.getLatitude().toString());
+    await HomeWidget.saveWidgetData('home_lng', homePosition?.getLongitude().toString());
+    await HomeWidget.saveWidgetData('current_lat', currentPosition?.getLatitude().toString());
+    await HomeWidget.saveWidgetData('current_lng', currentPosition?.getLongitude().toString());
 
     // updating widget's route data
-    if (nextRoutes!.isNotEmpty) {
+    if (nextRoutes!.isNotEmpty && !Platform.isIOS) {
       // first route data
       await HomeWidget.saveWidgetData('first_line_name_0', nextRoutes[0].firstLineName);
       await HomeWidget.saveWidgetData('first_line_color_0', nextRoutes[0].firstLineColor!.value);

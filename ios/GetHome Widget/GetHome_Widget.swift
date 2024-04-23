@@ -11,19 +11,19 @@ struct Provider: TimelineProvider {
             api_check: userDefaults?.string(forKey: "api_check") ?? "null",
             storageDate: userDefaults?.string(forKey: "time") ?? "null",
             first_line_name_0 : userDefaults?.string(forKey: "first_line_name_0") ?? "null",
-            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "null",
+            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "0",
             walking_time_minutes_0 : userDefaults?.string(forKey: "walking_time_minutes_0") ?? "null",
             changes_0 : userDefaults?.string(forKey: "changes_0") ?? "null",
             departure_time_0 : userDefaults?.string(forKey: "departure_time_0") ?? "null",
             
             first_line_name_1 : userDefaults?.string(forKey: "first_line_name_1") ?? "null",
-            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "null",
+            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "0",
             walking_time_minutes_1 : userDefaults?.string(forKey: "walking_time_minutes_1") ?? "null",
             changes_1 : userDefaults?.string(forKey: "changes_1") ?? "null",
             departure_time_1 : userDefaults?.string(forKey: "departure_time_1") ?? "null",
             
             first_line_name_2 : userDefaults?.string(forKey: "first_line_name_2") ?? "null",
-            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "null",
+            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "0",
             walking_time_minutes_2: userDefaults?.string(forKey: "walking_time_minutes_2") ?? "null",
             changes_2: userDefaults?.string(forKey: "changes_2") ?? "null",
             departure_time_2: userDefaults?.string(forKey: "departure_time_2") ?? "null"
@@ -43,19 +43,19 @@ struct Provider: TimelineProvider {
             api_check: userDefaults?.string(forKey: "api_check") ?? "null",
             storageDate: userDefaults?.string(forKey: "time") ?? "null",
             first_line_name_0 : userDefaults?.string(forKey: "first_line_name_0") ?? "null",
-            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "null",
+            first_line_color_0 : userDefaults?.string(forKey: "first_line_color_0") ?? "0",
             walking_time_minutes_0 : userDefaults?.string(forKey: "walking_time_minutes_0") ?? "null",
             changes_0 : userDefaults?.string(forKey: "changes_0") ?? "null",
             departure_time_0 : userDefaults?.string(forKey: "departure_time_0") ?? "null",
             
             first_line_name_1 : userDefaults?.string(forKey: "first_line_name_1") ?? "null",
-            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "null",
+            first_line_color_1 : userDefaults?.string(forKey: "first_line_color_1") ?? "0",
             walking_time_minutes_1 : userDefaults?.string(forKey: "walking_time_minutes_1") ?? "null",
             changes_1 : userDefaults?.string(forKey: "changes_1") ?? "null",
             departure_time_1 : userDefaults?.string(forKey: "departure_time_1") ?? "null",
             
             first_line_name_2 : userDefaults?.string(forKey: "first_line_name_2") ?? "null",
-            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "null",
+            first_line_color_2: userDefaults?.string(forKey: "first_line_color_2") ?? "0",
             walking_time_minutes_2: userDefaults?.string(forKey: "walking_time_minutes_2") ?? "null",
             changes_2: userDefaults?.string(forKey: "changes_2") ?? "null",
             departure_time_2: userDefaults?.string(forKey: "departure_time_2") ?? "null"
@@ -154,7 +154,7 @@ struct ColoredRectangle: View {
                     .font(.system(size: 9))
                     .padding(.trailing, 3)
                 Text(departureTime)
-                    .font(.system(size: 14))
+                    .font(.system(size: 14.5))
             }
             Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
             VStack {
@@ -162,7 +162,7 @@ struct ColoredRectangle: View {
                     .foregroundColor(.blue) // Farbe des Icons
                     .font(.system(size: 15)) // Schriftgröße des Symbols
                 Text(walkingTime.count <= 2 ? "\(walkingTime) min" : walkingTime)
-                    .font(walkingTime.count == 2 ? .system(size: 8.5) : .system(size: 11)) // Schriftgröße der walking time
+                    .font(walkingTime.count == 2 ? .system(size: 8.5) : .system(size: 10)) // Schriftgröße der walking time
             }
         }
     }
@@ -217,7 +217,7 @@ struct Widget_Previews: PreviewProvider {
         Group {
             GetHome_WidgetEntryView(entry:GetHome_WidgetEntry(
                 date: Date.now,
-                api_check: "success",
+                api_check: "successsaldöfhqlwkjebflalksdjbfblakjbfelqjbadjbflakjsbdalsdhfkljaehflkjabelkjfblakjnbelkjnflakjealkjebflaubclaurhlawkuhr",
                 storageDate: "15:15",
                 first_line_name_0 : "U1",
                 first_line_color_0 : "235733",

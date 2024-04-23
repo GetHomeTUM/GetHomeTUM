@@ -47,20 +47,20 @@ struct GetHomeRoute {
         let firstLine = computeFirstLine(data: data)
         let firstLineColor = computeFirstLineColor(data: data)
         let firstLineDepartureLocationName = firstLine?["LocationOfFirstDeparture"]
-        let startLocation = GetHomeLocation.fromJson(data: legs.first?["start_location"] as? [String: Any])
-        let endLocation = GetHomeLocation.fromJson(data: legs.first?["end_location"] as? [String: Any])
+        let startLocation = GetHomeLocation.fromJson(json: legs.first?["start_location"] as? [String: Any] ?? ["null":"null"])
+        let endLocation = GetHomeLocation.fromJson(json: legs.first?["end_location"] as? [String: Any] ?? ["null":"null"])
         let durationMinutes = computeDuration(data: data)
 
         return GetHomeRoute(departureTime: departureTime, walkingTimeMinutes: walkingTimeMinutes, walkingDistanceKm: walkingDistanceKm, changes: changes, firstLineName: firstLine?["NameOfFirstLine"], firstLineType: firstLine?["TypeOfFirstLine"], firstLineColor: firstLineColor, firstLineDepartureLocationName: firstLineDepartureLocationName, startLocation: startLocation, endLocation: endLocation, durationMinutes: durationMinutes)
     }
     
-    static func saveToUserDefaults(index: String) {
+    func saveToUserDefaults(index: Int) {
         let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
-        userDefaults?.set(firstLineName, forKey: "first_line_name_\(index)")
-        userDefaults?.string(firstLineColor, forKey: "first_line_color_\(index)")
-        serDefaults?.string(walkingTimeMinutes, forKey: "walking_time_minutes_\(index)")
-        userDefaults?.string("\(changes-1)", forKey: "changes_0")
-        userDefaults?.string("\( extractTime(from: departureTime))", forKey: "departure_time_0")
+        userDefaults?.set(firstLineName ?? "null", forKey: "first_line_name_\(index)")
+        userDefaults?.set("\(firstLineColor!.toInt() ?? 235733)", forKey: "first_line_color_\(index)")
+        userDefaults?.set("\((walkingTimeMinutes ?? 0))", forKey: "walking_time_minutes_\(index)")
+        userDefaults?.set("\(changes as! Int-1)", forKey: "changes_\(index)")
+        userDefaults?.set("\(extractTime(from: departureTime ?? Date()))", forKey: "departure_time_\(index)")
     }
 
     static func computeDepartureTime(data: [String: Any]) -> Date? {
@@ -83,7 +83,7 @@ struct GetHomeRoute {
 
         for step in legs.first?["steps"] as? [[String: Any]] ?? [] {
             if let travelMode = step["travel_mode"] as? String, travelMode == "WALKING", let duration = step["duration"] as? [String: Any], let durationValue = duration["value"] as? NSNumber {
-                return durationValue
+                return NSNumber(value: round(durationValue.doubleValue / 60))
             }
         }
         return nil
@@ -155,8 +155,25 @@ struct GetHomeRoute {
         }
         return nil
     }
+    
+    func toString() -> String {
+        return "startLocation = \(startLocation ?? GetHomeLocation(lat: 0.0, lng: 0.0))\nendLocation = \(endLocation ?? GetHomeLocation(lat: 0.0, lng: 0.0))\ndeparture_time = \(departureTime ?? Date())/nwalking_time = \(walkingTimeMinutes ?? NSNumber())\nwalking_distance = \(walkingDistanceKm ?? NSNumber())\nchanges = \(changes ?? NSNumber())\nfirstLine = \(firstLineName ?? "N/A")\nfirstLineType = \(firstLineType ?? "N/A")\nfirstLineColor = \(firstLineColor != nil ? String(describing: firstLineColor!) : "N/A")\nfirstLineDepartureLocation = \(firstLineDepartureLocationName ?? "N/A")\nduration = \(durationMinutes ?? NSNumber())"
+            
+        }
 }
 
-struct GetHomeLocation {
-    // Implement GetHomeLocation structure here if needed
+
+extension UIColor {
+    func toInt() -> Int? {
+        guard let components = self.cgColor.components, components.count >= 3 else {
+            return nil
+        }
+
+        let r = Int(components[0] * 255.0)
+        let g = Int(components[1] * 255.0)
+        let b = Int(components[2] * 255.0)
+
+        // Combine RGB components into a single integer
+        return (r << 16) + (g << 8) + b
+    }
 }

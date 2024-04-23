@@ -48,11 +48,16 @@ struct GetHomeRoute {
     
     func saveToUserDefaults(index: Int) {
         let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
-        userDefaults?.set(firstLineName, forKey: "first_line_name_\(index)")
-        userDefaults?.set("\(firstLineColor!.toInt())", forKey: "first_line_color_\(index)")
+        userDefaults?.set(firstLineName ?? "null", forKey: "first_line_name_\(index)")
+        print("first_line_name_\(index): \(firstLineName ?? "U22")")
+        userDefaults?.set("\(firstLineColor!.toInt() ?? 235733)", forKey: "first_line_color_\(index)")
+        print("first_line_color_\(index): \(firstLineColor!.toInt() ?? 235733)")
         userDefaults?.set("\((walkingTimeMinutes ?? 0))", forKey: "walking_time_minutes_\(index)")
+        print("walking_time_minutes_\(index): \((walkingTimeMinutes ?? 0))")
         userDefaults?.set("\(changes as! Int-1)", forKey: "changes_\(index)")
+        print("changes_\(index): \(changes as! Int-1)")
         userDefaults?.set("\(extractTime(from: departureTime ?? Date()))", forKey: "departure_time_\(index)")
+        print("departure_time_\(index): \(extractTime(from: departureTime ?? Date()))")
     }
 
     static func computeDepartureTime(data: [String: Any]) -> Date? {
@@ -149,7 +154,7 @@ struct GetHomeRoute {
     }
     
     func toString() -> String {
-        return "startLocation = \(startLocation ?? GetHomeLocation(lat: 0.0, lng: 0.0))\nendLocation = \(endLocation ?? GetHomeLocation(lat: 0.0, lng: 0.0))\ndeparture_time = \(departureTime ?? Date())/nwalking_time = \(walkingTimeMinutes ?? NSNumber())\nwalking_distance = \(walkingDistanceKm ?? NSNumber())\nchanges = \(changes ?? NSNumber())\nfirstLine = \(firstLineName ?? "N/A")\nfirstLineType = \(firstLineType ?? "N/A")\nfirstLineColor = \(firstLineColor != nil ? String(describing: firstLineColor!.toInt()) : "N/A")\nfirstLineDepartureLocation = \(firstLineDepartureLocationName ?? "N/A")\nduration = \(durationMinutes ?? NSNumber())"
+        return "startLocation = \(startLocation ?? GetHomeLocation(lat: 0.0, lng: 0.0))\nendLocation = \(endLocation ?? GetHomeLocation(lat: 0.0, lng: 0.0))\ndeparture_time = \(departureTime ?? Date())\nwalking_time = \(walkingTimeMinutes ?? NSNumber())\nwalking_distance = \(walkingDistanceKm ?? NSNumber())\nchanges = \(changes ?? NSNumber())\nfirstLine = \(firstLineName ?? "N/A")\nfirstLineType = \(firstLineType ?? "N/A")\nfirstLineColor = \(firstLineColor != nil ? String(describing: firstLineColor!.toInt()) : "N/A")\nfirstLineDepartureLocation = \(firstLineDepartureLocationName ?? "N/A")\nduration = \(durationMinutes ?? NSNumber())"
             
         }
 }
@@ -336,11 +341,16 @@ func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
 
 
 func main() {
+    let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
     let apiKey = "AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw"
-    let originLat = "48.15003"
-    let originLng = "11.54555"
-    let destLat = "48.265755"
-    let destLng = "11.666527"
+    userDefaults?.set("48.16873234456", forKey: "current_lat")
+    userDefaults?.set("11.56530037522", forKey: "current_lng")
+    let originLat = userDefaults?.string(forKey: "current_lat") ?? "48.15003"
+    let originLng = userDefaults?.string(forKey: "current_lng") ?? "11.54555"
+    print("\(originLat),\(originLng)")
+    let destLat = userDefaults?.string(forKey: "home_lat") ?? "48.265755"
+    let destLng = userDefaults?.string(forKey: "home_lng") ?? "11.666527"
+    print("\(destLat),\(destLng)")
 
     getRoutes(apiKey: apiKey, originLat: originLat, originLng: originLng, destLat: destLat, destLng: destLng) { result in
         switch result {

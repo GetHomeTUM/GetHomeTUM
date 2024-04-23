@@ -140,12 +140,12 @@ func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
 func main() {
     let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
     let apiKey = "AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw"
-    let homeLocation = GetHomeLocation.fromJson(json: stringToJsonMap(userDefaults?.string(forKey: "home_location") ?? "null") ?? ["null":"null"])
-    let lastCurrentLocation = GetHomeLocation.fromJson(json: stringToJsonMap(userDefaults?.string(forKey: "current_location") ?? "null") ?? ["null":"null"])
-    let originLat = lastCurrentLocation != nil ? String(describing: lastCurrentLocation?.lat) : "48.15003"
-    let originLng = lastCurrentLocation != nil ? String(describing: lastCurrentLocation?.lat) : "11.54555"
-    let destLat = homeLocation != nil ? String(describing: homeLocation?.lat) : "48.265755"
-    let destLng = homeLocation != nil ? String(describing: homeLocation?.lat) : "11.666527"
+    let originLat = userDefaults?.string(forKey: "current_lat") ?? "48.15003"
+    let originLng = userDefaults?.string(forKey: "current_lng") ?? "11.54555"
+    //print("\(originLat),\(originLng)")
+    let destLat = userDefaults?.string(forKey: "home_lat") ?? "48.265755"
+    let destLng = userDefaults?.string(forKey: "home_lng") ?? "11.666527"
+    //print("\(destLat),\(destLng)")
 
     getRoutes(apiKey: apiKey, originLat: originLat, originLng: originLng, destLat: destLat, destLng: destLng) { result in
         switch result {
