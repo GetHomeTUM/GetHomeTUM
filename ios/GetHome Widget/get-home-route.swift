@@ -55,7 +55,7 @@ struct GetHomeRoute {
     }
     
     func saveToUserDefaults(index: Int) {
-        let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+        let userDefaults = UserDefaults(suiteName: userDefaultsSuiteName)
         userDefaults?.set(firstLineName ?? "null", forKey: "first_line_name_\(index)")
         userDefaults?.set("\(firstLineColor!.toInt() ?? 235733)", forKey: "first_line_color_\(index)")
         userDefaults?.set("\((walkingTimeMinutes ?? 0))", forKey: "walking_time_minutes_\(index)")

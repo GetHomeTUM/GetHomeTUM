@@ -8,6 +8,11 @@
 import Foundation
 import UIKit
 
+// global variable of suite name for userDefaults
+let userDefaultsSuiteName = "group.flutter_test_widget"
+
+
+// function for making an api call for the given input
 func getDirections(apiKey: String, originLat: String, originLng: String, destLat: String, destLng: String, date: Date, completion: @escaping (Result<String, Error>) -> Void) {
     let unixTimeStamp = Int(round(date.timeIntervalSince1970))
     // Konstruieren der URL mit den gegebenen Parametern
@@ -23,7 +28,7 @@ func getDirections(apiKey: String, originLat: String, originLng: String, destLat
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     
-    // Erstellen einer URLSession
+    // Erstellen einer session
     let session = URLSession.shared
     
     // Erstellen einer Datenaufgabe für die Anforderung
@@ -58,6 +63,7 @@ enum APIError: Error {
     case invalidData // Neuer Fall für ungültige Daten
 }
 
+// formats to time to a readable string in hh:mm format
 func extractTime(from date: Date) -> String {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "HH:mm" // Setze das gewünschte Format für die Uhrzeit
@@ -65,7 +71,7 @@ func extractTime(from date: Date) -> String {
     return dateFormatter.string(from: date) // Extrahiere die Uhrzeit im gewünschten Format
 }
 
-
+// needs to be a recursive function because otherwise the function would not wait for the api call's result to be there but just make the three same api calls at the same time
 func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: String, destLng: String, completion: @escaping (Result<[GetHomeRoute], APIError>) -> Void) {
     var routes: [GetHomeRoute] = []
     var time: Date = Date()
@@ -125,7 +131,6 @@ func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
     guard let data = jsonString.data(using: .utf8) else {
         return nil
     }
-
     do {
         if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
             return json
@@ -133,26 +138,29 @@ func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
     } catch {
         print("Error parsing JSON: \(error)")
     }
-
     return nil
 }
 
-func main() {
-    let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+func updateAPIData() {
+    let userDefaults = UserDefaults(suiteName: userDefaultsSuiteName)
+    // TODO: getting key from userDefaults (bitte erst nach main mergen machen, habe Angst)
     let apiKey = "AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw"
+    // getting the last known current and home location from userDefaults
+    // TODO: what happens if not available?
     let originLat = userDefaults?.string(forKey: "current_lat") ?? "48.15003"
     let originLng = userDefaults?.string(forKey: "current_lng") ?? "11.54555"
-    //print("\(originLat),\(originLng)")
     let destLat = userDefaults?.string(forKey: "home_lat") ?? "48.265755"
     let destLng = userDefaults?.string(forKey: "home_lng") ?? "11.666527"
-    //print("\(destLat),\(destLng)")
 
+    // making api call
     getRoutes(apiKey: apiKey, originLat: originLat, originLng: originLng, destLat: destLat, destLng: destLng) { result in
         switch result {
         case .success(let responseString):
+            // storing all three routes to userDefaults
             responseString[0].saveToUserDefaults(index: 0)
             responseString[1].saveToUserDefaults(index: 1)
             responseString[2].saveToUserDefaults(index: 2)
+            // debug prints
             print("Route1: \(responseString[0].toString())\nRoute2: \(responseString[1].toString())\nRoute3: \(responseString[2].toString())")
         case .failure(let error):
             print("Error: \(error.localizedDescription)")

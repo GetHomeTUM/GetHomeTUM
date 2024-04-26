@@ -4,8 +4,10 @@ import SwiftUI
 struct Provider: TimelineProvider {
     // placeholder displayed in the widget configuration menu
     func placeholder(in context: Context) -> GetHome_WidgetEntry {
-      let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+        // initializing userDefaults (suite name is a global variable in api-service.swift)
+        let userDefaults = UserDefaults(suiteName: userDefaultsSuiteName)
       
+        // creating a new entry with the userDefaults data
         return GetHome_WidgetEntry(
             date: Date.now,
             api_check: userDefaults?.string(forKey: "api_check") ?? "null",
@@ -30,14 +32,17 @@ struct Provider: TimelineProvider {
           )
     }
 
+    // snapshot for the widget view on the home screen
     func getSnapshot(in context: Context, completion: @escaping (GetHome_WidgetEntry) -> ()) {
         let entry: GetHome_WidgetEntry
       if context.isPreview{
         entry = placeholder(in: context)
       }
       else{
-        let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+          // initializing userDefaults (suite name is a global variable in api-service.swift)
+        let userDefaults = UserDefaults(suiteName: userDefaultsSuiteName)
           
+          // creating a new entry with the userDefaults data
           entry = GetHome_WidgetEntry(
             date: Date.now,
             api_check: userDefaults?.string(forKey: "api_check") ?? "null",
@@ -64,9 +69,11 @@ struct Provider: TimelineProvider {
         completion(entry)
     }
 
+    // timeline for the widget that gets called at every refresh
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        main()
-        //let refreshDate = Date().addingTimeInterval(60)
+        // updating the widget data by making an api call + storing it to userDefaults
+        updateAPIData()
+        // adding a new entry to the queue and planning the next one for the next possible refresh
       getSnapshot(in: context) { (entry) in
           let timeline = Timeline(entries: [entry], policy: .atEnd)
                   completion(timeline)
@@ -108,12 +115,17 @@ struct GetHome_WidgetEntryView: View {
 // the actual body of the widget
   var body: some View {
       VStack {
-          Text("\(extractTime(from: entry.date))")
+          // debug text:
+          // time of last ui refresh
+          //Text("\(extractTime(from: entry.date))")
+              //.font(.system(size: 8))
+          // displaying api error for debug purposes
+          //Text("\(entry.api_check)")
+              //.font(.system(size: 7))
+          // time of last successful api call
+          Text("last API-call: \(entry.storageDate)")
               .font(.system(size: 8))
-          Text("\(entry.api_check)")
-              .font(.system(size: 7))
-          Text("userDefaults: \(entry.storageDate)")
-              .font(.system(size: 8))
+          // three rows of data
         HStack {
             ColoredRectangle(color: entry.first_line_color_0, text: entry.first_line_name_0, changes: entry.changes_0, departureTime: entry.departure_time_0, walkingTime: entry.walking_time_minutes_0)
             Spacer()
@@ -127,20 +139,24 @@ struct GetHome_WidgetEntryView: View {
             Spacer()
         }
     }
+      // widget background
     .widgetBackground(Color.white)
   }
 }
 
+// the view of exactly one row in the widget
 struct ColoredRectangle: View {
+    // needs the data of color, first line, number of additional changes, departure time of first line and walking time as attributes
     var color: String
     var text: String
     var changes: String
     var departureTime: String
-    var walkingTime: String
+    var walkingTime: String // in minutes!!!
     
     var body: some View {
         HStack(spacing: 0) {
             HStack(spacing: 0) {
+                // Rectangle with first line String in it
                 Rectangle()
                     .foregroundColor(Color(intString: color))
                     .frame(width: 28, height: 20)
@@ -150,13 +166,16 @@ struct ColoredRectangle: View {
                             .foregroundColor(.white) // Textfarbe
                             .font(text.count > 3 ? .system(size: 10) : .system(size: 15))
                     )
+                // displaying number of changes with variable size
                 Text(changes.count > 1 ? "++" : "+\(changes)")
                     .font(.system(size: 9))
                     .padding(.trailing, 3)
+                // displaying departure time
                 Text(departureTime)
                     .font(.system(size: 14.5))
             }
             Spacer(minLength: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/)
+            // displaying walking icon and the walking time in minutes
             VStack {
                 Image(systemName: "figure.walk")
                     .foregroundColor(.blue) // Farbe des Icons
@@ -168,7 +187,7 @@ struct ColoredRectangle: View {
     }
 }
 
-
+// converting an int String to the corresponding color
 extension Color {
     init(intString: String) {
         guard let intValue = Int(intString) else {
@@ -184,6 +203,7 @@ extension Color {
 }
 
 // iOS 17 bug fix
+// adding a background color to the widget
 extension View {
     func widgetBackground(_ backgroundView: some View) -> some View {
         if #available(iOSApplicationExtension 17.0, *) {
@@ -196,6 +216,7 @@ extension View {
     }
 }
 
+// configuring the widget
 struct GetHome_Widget: Widget {
     let kind: String = "NewsWidgets"
 
@@ -211,7 +232,7 @@ struct GetHome_Widget: Widget {
 }
 
 
-
+// test data for the preview
 struct Widget_Previews: PreviewProvider {
     static var previews: some View {
         Group {

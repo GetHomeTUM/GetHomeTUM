@@ -64,7 +64,7 @@ class UpdateWidgetService {
     await HomeWidget.saveWidgetData('current_lng', currentPosition?.getLongitude().toString());
 
     // updating widget's route data
-    if (nextRoutes!.isNotEmpty && !Platform.isIOS) {
+    if (nextRoutes!.isNotEmpty) {
       // first route data
       await HomeWidget.saveWidgetData('first_line_name_0', nextRoutes[0].firstLineName);
       await HomeWidget.saveWidgetData('first_line_color_0', nextRoutes[0].firstLineColor!.value);
