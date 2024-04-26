@@ -75,7 +75,7 @@ func extractTime(from date: Date) -> String {
 func getRoutes(apiKey: String, originLat: String, originLng: String, destLat: String, destLng: String, completion: @escaping (Result<[GetHomeRoute], APIError>) -> Void) {
     var routes: [GetHomeRoute] = []
     var time: Date = Date()
-    let userDefaults = UserDefaults(suiteName: "group.flutter_test_widget")
+    let userDefaults = UserDefaults(suiteName: userDefaultsSuiteName)
 
     // Hilfsfunktion, um die API-Aufrufe rekursiv nacheinander auszuführen
     func getNextRoute(index: Int) {
@@ -143,7 +143,7 @@ func stringToJsonMap(_ jsonString: String) -> [String: Any]? {
 
 func updateAPIData() {
     let userDefaults = UserDefaults(suiteName: userDefaultsSuiteName)
-    // TODO: getting key from userDefaults (bitte erst nach main mergen machen, habe Angst)
+    // TODO: getting key from userDefaults (bitte erst nach main merge machen, habe Angst)
     let apiKey = "AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw"
     // getting the last known current and home location from userDefaults
     // TODO: what happens if not available?
