@@ -146,12 +146,17 @@ func updateAPIData() {
     // TODO: getting key from userDefaults (bitte erst nach main merge machen, habe Angst)
     let apiKey = "AIzaSyAUz_PlZ-wSsnAqEHhOwRX19Q2O-gMEVZw"
     // getting the last known current and home location from userDefaults
-    // TODO: what happens if not available?
-    let originLat = userDefaults?.string(forKey: "current_lat") ?? "48.15003"
-    let originLng = userDefaults?.string(forKey: "current_lng") ?? "11.54555"
-    let destLat = userDefaults?.string(forKey: "home_lat") ?? "48.265755"
-    let destLng = userDefaults?.string(forKey: "home_lng") ?? "11.666527"
+    // if not available, null is saved as a location -> the api call will not be made
+    let originLat = userDefaults?.string(forKey: "current_lat") ?? "null"
+    let originLng = userDefaults?.string(forKey: "current_lng") ?? "null"
+    let destLat = userDefaults?.string(forKey: "home_lat") ?? "null"
+    let destLng = userDefaults?.string(forKey: "home_lng") ?? "null"
 
+    // stops if one of the location parameters is null
+    if (originLat == "null" || originLng == "null" || destLat == "null" || destLng == "null") {
+        return
+    }
+    
     // making api call
     getRoutes(apiKey: apiKey, originLat: originLat, originLng: originLng, destLat: destLat, destLng: destLng) { result in
         switch result {
@@ -160,10 +165,7 @@ func updateAPIData() {
             responseString[0].saveToUserDefaults(index: 0)
             responseString[1].saveToUserDefaults(index: 1)
             responseString[2].saveToUserDefaults(index: 2)
-            // debug prints
-            print("Route1: \(responseString[0].toString())\nRoute2: \(responseString[1].toString())\nRoute3: \(responseString[2].toString())")
-        case .failure(let error):
-            print("Error: \(error.localizedDescription)")
+        case .failure(let error): break
         }
     }
 }
