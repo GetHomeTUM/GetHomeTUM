@@ -57,9 +57,11 @@ class UpdateWidgetService {
     
     // updating widget's general data
     await HomeWidget.setAppGroupId('group.flutter_test_widget');
-    await HomeWidget.saveWidgetData('time', extractTime(DateTime.now())); // for testing purposes
-    await HomeWidget.saveWidgetData('home_location', homePosition.toString());
-    await HomeWidget.saveWidgetData('current_loation', currentPosition.toString());
+    await HomeWidget.saveWidgetData('time', extractTime(DateTime.now())); // for debug purposes
+    await HomeWidget.saveWidgetData('home_lat', homePosition?.getLatitude().toString());
+    await HomeWidget.saveWidgetData('home_lng', homePosition?.getLongitude().toString());
+    await HomeWidget.saveWidgetData('current_lat', currentPosition?.getLatitude().toString());
+    await HomeWidget.saveWidgetData('current_lng', currentPosition?.getLongitude().toString());
 
     // updating widget's route data
     if (nextRoutes!.isNotEmpty) {

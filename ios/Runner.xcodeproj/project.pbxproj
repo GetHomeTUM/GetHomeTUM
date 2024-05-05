@@ -16,6 +16,12 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		EB18DC352BD583CE006000A0 /* api-service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18DC342BD583CE006000A0 /* api-service.swift */; };
+		EB18DC362BD583CE006000A0 /* api-service.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18DC342BD583CE006000A0 /* api-service.swift */; };
+		EB18DC382BD583F9006000A0 /* get-home-location.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18DC372BD583F9006000A0 /* get-home-location.swift */; };
+		EB18DC392BD583F9006000A0 /* get-home-location.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18DC372BD583F9006000A0 /* get-home-location.swift */; };
+		EB18DC3B2BD58408006000A0 /* get-home-route.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18DC3A2BD58408006000A0 /* get-home-route.swift */; };
+		EB18DC3C2BD58408006000A0 /* get-home-route.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB18DC3A2BD58408006000A0 /* get-home-route.swift */; };
 		EB703FC42BB7151200F0FEA2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB703FC32BB7151200F0FEA2 /* WidgetKit.framework */; };
 		EB703FC62BB7151200F0FEA2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB703FC52BB7151200F0FEA2 /* SwiftUI.framework */; };
 		EB703FC92BB7151200F0FEA2 /* GetHome_WidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB703FC82BB7151200F0FEA2 /* GetHome_WidgetBundle.swift */; };
@@ -93,6 +99,10 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E424CD5D2909FF52B64EDAD /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		C14ACBC9828FE1FE23C295BA /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
+		EB0BC9F92BD5523300CACE85 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		EB18DC342BD583CE006000A0 /* api-service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "api-service.swift"; sourceTree = "<group>"; };
+		EB18DC372BD583F9006000A0 /* get-home-location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "get-home-location.swift"; sourceTree = "<group>"; };
+		EB18DC3A2BD58408006000A0 /* get-home-route.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "get-home-route.swift"; sourceTree = "<group>"; };
 		EB703FC22BB7151200F0FEA2 /* GetHome WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "GetHome WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB703FC32BB7151200F0FEA2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		EB703FC52BB7151200F0FEA2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -239,6 +249,10 @@
 				EB703FCE2BB7151200F0FEA2 /* AppIntent.swift */,
 				EB703FD02BB7151400F0FEA2 /* Assets.xcassets */,
 				EB703FD22BB7151400F0FEA2 /* Info.plist */,
+				EB18DC342BD583CE006000A0 /* api-service.swift */,
+				EB18DC372BD583F9006000A0 /* get-home-location.swift */,
+				EB18DC3A2BD58408006000A0 /* get-home-route.swift */,
+				EB0BC9F92BD5523300CACE85 /* MyPlayground.playground */,
 			);
 			path = "GetHome Widget";
 			sourceTree = "<group>";
@@ -505,8 +519,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB18DC382BD583F9006000A0 /* get-home-location.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
+				EB18DC3B2BD58408006000A0 /* get-home-route.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				EB18DC352BD583CE006000A0 /* api-service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +534,9 @@
 				EB703FCD2BB7151200F0FEA2 /* GetHome_Widget.swift in Sources */,
 				EB703FCF2BB7151200F0FEA2 /* AppIntent.swift in Sources */,
 				EB703FCB2BB7151200F0FEA2 /* GetHome_WidgetLiveActivity.swift in Sources */,
+				EB18DC3C2BD58408006000A0 /* get-home-route.swift in Sources */,
+				EB18DC392BD583F9006000A0 /* get-home-location.swift in Sources */,
+				EB18DC362BD583CE006000A0 /* api-service.swift in Sources */,
 				EB703FC92BB7151200F0FEA2 /* GetHome_WidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -793,7 +813,7 @@
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

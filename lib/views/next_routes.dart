@@ -11,7 +11,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:gethome/views/list_tile_of_route.dart';
 
 import 'package:home_widget/home_widget.dart';
-import 'package:workmanager/workmanager.dart';
 
 class RoutesScreen extends StatefulWidget {
   final String _apiKey;
@@ -74,7 +73,11 @@ class RoutesScreenState extends State<RoutesScreen> {
     // obtaining the device's location
     Position? position;
     await LocationService.getCurrentLocation()
-        .then((value) => position = value)
+        .then((value) {
+          position = value;
+          // saving last know device location
+          LocalStorageService.saveLocation('Current', GetHomeLocation(lat: position!.latitude, lng: position!.longitude));
+        })
         .catchError((error) {
       position = null;
       return Future.value(position);
@@ -197,10 +200,6 @@ class RoutesScreenState extends State<RoutesScreen> {
       // refresh button
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          Workmanager().registerOneOffTask(
-            'update_widget',
-            'simpletask',
-          );
           _updateNextRoutes(_apiKey);
         },
         backgroundColor: const Color.fromARGB(255, 202, 229, 249),
