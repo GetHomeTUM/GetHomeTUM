@@ -1,43 +1,60 @@
-# gethome
-<br/><br/>
+# GetHome
 
-> [!IMPORTANT]
-> Jira Tickets aktuell halten  (siehe Coding Workflow) -> Transparenz, Übersicht
+Ein Projekt von Informatikstudenten der TUM, um praktische Erfahrung im Bereich Softwareentwicklung zu sammeln und eine nützliche Anwendung zu erstellen. GetHome ist eine App, die Nutzern hilft, bequem und einfach die nächstmöglichen Routen nach Hause zu erkennen, indem sie verschiedene Transportmöglichkeiten und Echtzeit-Informationen bietet.
 
-<br/><br/>
-## Coding Workflow
-Aufgabenübersicht -> Jira Board: [https://gethome.atlassian.net/jira/software/projects/GH/boards/1](https://gethome.atlassian.net/jira/software/projects/GH/boards/1)
+## Inhalt
 
-Folgender Workflow, nachdem man sich entschieden hat oder besprochen wurde, eine **Aufgabe zu übernehmen**:
+- [Über das Projekt](#über-das-projekt)
+- [Features](#features)
+- [Verwendung](#verwendung)
+- [Technologien](#technologien)
+- [Beitragende](#beitragende)
+- [Lizenz](#lizenz)
+- [Kontakt](#kontakt)
 
-1) **An Ticket arbeiten:**
-     - Sich selber assignen und Ticket in _In Progress_ verschieben
-     - Git Branch erstellen: **GH-XX_NameDerAufgabe**
-     - Passende Commit messages: **GH-XX: Model X überarbeitet, neue Methode getX**
+## Über das Projekt
 
-2) **Aufgabe abgeschlossen:**
-     -  Check: Schnittstellen, Sicherheit(Exceptions, Error Handling, edge cases etc.), Coventions einhalten
-     -  **Pull Request** erstellen, main <- AufgabenBranch (Kurze Beschreibung, Link zu Jira Ticket)
-     - Jira Ticket auf _Waiting for Review_
-     -  in _#review_ auf Slack kurze Nachricht:
-          - GH-XX:
-          - Link zur GitHub Pull Request
-          - Link zum Jira Ticket
-          - Reviewer markieren
+**GetHome** wurde als studentisches Projekt ins Leben gerufen, um die Herausforderungen der täglichen Mobilität zu adressieren. Die App bietet eine intuitive Benutzeroberfläche und intelligente Funktionen, um den Nutzern den bestmöglichen Weg nach Hause zu zeigen.
 
-3) **Review:**
-     - Falls alles passt:
-          - PR auf GitHub mergen
-          - Jira Ticket in _Done_ verschieben
-          - Feedback auf Slack in _#review_ (zB. reacten, in Thread schreiben 'ist gemerged')
-     
-     - Falls Überarbeitung nötig:
-          - Inhaltlichen Kommentar in die Conversation der Pull Request auf GitHub schreiben, Betroffenen markieren
-          - Jira Ticket in _In Progress_ verschieben
-          - Feedback auf Slack in _#review_ (zB. 'Kommentar in PR geschrieben', 'bitte nochmal drüberschauen')
+## Features
 
-<br/><br/>
-## Conventions
-- **Documentations:** /// Methode um X zu berechnen -> mit **drei ///** wird erkannt, dass es eine Dokumentation ist und kein Comment, diese wird global als tooltip bei hover angezeigt
-- **Dateinamen:** snake_case_nicht_camel_case
-- **Im Code**(Methoden, Variablen, etc.)**:** camelCase
+- **Öffentliche Verkehrsmittel**: Integration der Google Maps API und Verspätungsinformationen.
+- **Favoriten**: Speichern von bevorzugten Orten für schnellen Zugriff.
+- **Fine Tuning**: Präzise Darstellung von vielen Daten nach Nutzervorstellungen, basierend auf mehreren Einstellungen
+
+## Verwendung
+
+Diese SChritte ausführen, um GetHome selber zu nutzen:
+1
+2
+3
+
+## Technologien
+
+- **Flutter**: Fundamentals der App
+- **XCode / Swift**: Natives App Widget für iOS
+- **Google Maps**: Directions API zur Berechnung von Routen
+- **Geolocator**: Export von Standorten
+- **Home Widget**: Breite Bereitstellung von Home Screen Widgets
+- **Shared Preferences**: Lokales Speichern von Daten
+
+## Beitragende
+
+Dieses Projekt wurde von folgenden Personen entwickelt:
+
+- [Julian Knoll](https://www.linkedin.com/in/julian-knoll-19b21a2a2)
+- [Niklas Schäuble](https://www.linkedin.com/in/niklas-schaeuble)
+- [Lennart Hesse](https://www.linkedin.com/in/lennart-hesse-7077212a3/)
+- [Leon Dimitrov](https://www.linkedin.com/in/leon-dimitrov-73859b283/)
+- [Janick Bunzel](https://www.linkedin.com/in/janickbunzel/)
+
+## Lizenz
+
+Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen finden Sie in der [LICENSE](LICENSE)-Datei.
+
+## Kontakt
+
+Bei Fragen oder Anregungen können Sie uns gerne kontaktieren:
+
+- Projekt-Maintainer: [Euer Name](mailto:euremail@example.com)
+- Offizielles Repository: [GetHome auf GitHub](https://github.com/deinbenutzername/gethome)
