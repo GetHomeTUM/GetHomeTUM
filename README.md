@@ -1,5 +1,8 @@
 # GetHome
 
+![E040047F-5A81-4DB7-A811-E8E9219CE7CB_1_105_c](https://github.com/user-attachments/assets/929687aa-68d2-4752-98a1-75990006c057)
+
+
 Ein Projekt von Informatikstudenten der TUM, um praktische Erfahrung im Bereich Softwareentwicklung zu sammeln und eine nützliche Anwendung zu erstellen. GetHome ist eine App, die Nutzern hilft, bequem und einfach die nächstmöglichen Routen nach Hause zu erkennen, indem sie verschiedene Transportmöglichkeiten und Echtzeit-Informationen bietet.
 
 ## Inhalt
@@ -51,10 +54,3 @@ Dieses Projekt wurde von folgenden Personen entwickelt:
 ## Lizenz
 
 Dieses Projekt steht unter der MIT-Lizenz. Weitere Informationen finden Sie in der [LICENSE](LICENSE)-Datei.
-
-## Kontakt
-
-Bei Fragen oder Anregungen können Sie uns gerne kontaktieren:
-
-- Projekt-Maintainer: [Euer Name](mailto:euremail@example.com)
-- Offizielles Repository: [GetHome auf GitHub](https://github.com/deinbenutzername/gethome)
